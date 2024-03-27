@@ -1,0 +1,19 @@
+{
+  "name": "dbml-to-json-table-schema",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "types": "src/index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest --collectCoverage."
+  },
+  "dependencies": {
+    "@dbml/core": "^3.4.0",
+    "json-pick-keys": "^0.1.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.3"
+  }
+}
