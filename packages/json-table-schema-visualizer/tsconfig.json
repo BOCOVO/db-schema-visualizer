@@ -1,4 +1,5 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
@@ -7,23 +8,8 @@
       "@/*": ["./*"]
     },
     "allowJs": true,
-    "checkJs": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
-    "jsx": "react-jsx",
-    "composite": true
+    "checkJs": true
   },
-  "include": ["./src"]
+  "exclude": ["node_modules", "vite.config.js"],
+  "include": ["**/*.ts", "**/*.tsx"]
 }
