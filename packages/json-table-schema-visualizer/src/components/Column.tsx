@@ -29,7 +29,7 @@ const Column = ({ colName, type, isPrimaryKey = false }: ColumnProps) => {
   return (
     <Group>
       <Rect
-        fill={hovered ? "aliceblue" : "transparent"}
+        fill={hovered ? theme.colAccent : "transparent"}
         width={TABLE_WIDTH}
         height={COLUMN_HEIGHT}
       />

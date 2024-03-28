@@ -4,7 +4,18 @@ export const defaultThemeConfig: ThemeConfigValue = {
   text: {
     "900": "#636363",
     "700": "#9C9C9C",
-    "500": "#CCCCCC",
-    "300": "#E6E6E6",
+  },
+  connection: {
+    active: "#1010ff",
+    default: "#888",
+  },
+  colAccent: "aliceblue",
+  table: {
+    bg: "white",
+    shadow: "black",
+  },
+  tableHeader: {
+    bg: "#F8FAFC",
+    fg: "black",
   },
 };
