@@ -1,0 +1,16 @@
+{
+  "name": "json-table-schema-visualizer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "konva": "^9.3.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-konva": "^18.2.10"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.3",
+    "vite": "^5.2.6"
+  }
+}
