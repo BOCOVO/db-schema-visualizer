@@ -7,10 +7,16 @@ import { useState } from "react";
 interface ColumnProps {
   colName: string;
   type: string;
-  isPrimaryKey: boolean;
+  isPrimaryKey?: boolean;
+  offsetY?: number;
 }
 
-const Column = ({ colName, type, isPrimaryKey = false }: ColumnProps) => {
+const Column = ({
+  colName,
+  type,
+  isPrimaryKey = false,
+  offsetY,
+}: ColumnProps) => {
   const theme = useTheme();
   const [hovered, setHovered] = useState(false);
 
@@ -27,7 +33,7 @@ const Column = ({ colName, type, isPrimaryKey = false }: ColumnProps) => {
   const fontStyle = isPrimaryKey ? "bold" : "normal";
 
   return (
-    <Group>
+    <Group y={offsetY}>
       <Rect
         fill={hovered ? theme.colAccent : "transparent"}
         width={TABLE_WIDTH}
