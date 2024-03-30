@@ -5,6 +5,7 @@ import ConnectionPath from "./ConnectionPath";
 import type { RelationItem } from "@/types/relation";
 
 import { useRelationsCoords } from "@/hooks/relationConnection";
+import { computeConnectionPathWithSymbols } from "@/utils/computeConnectionPaths";
 
 interface RelationConnectionProps {
   source: RelationItem;
@@ -19,13 +20,13 @@ const RelationConnection = ({ source, target }: RelationConnectionProps) => {
   const { x: targetX, y: targetY } = targetXY;
 
   const linePath = useMemo(() => {
-    return computeConnectionPath({
+    return computeConnectionPathWithSymbols({
+      targetXY,
+      sourceXY,
       sourcePosition,
       targetPosition,
-      sourceX,
-      targetX,
-      sourceY,
-      targetY,
+      relationSource: source.relation,
+      relationTarget: target.relation,
     });
   }, [sourcePosition, targetPosition, sourceX, targetX, sourceY, targetY]);
 

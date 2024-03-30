@@ -60,20 +60,18 @@ const getDirection = ({
 const distance = (a: XYPosition, b: XYPosition): number =>
   Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
 
-// ith this function we try to mimic a orthogonal edge routing behavior
-// It's not as good as a real orthogonal edge routing but it's faster and good enough as a default for step and smooth step edges
-function getPoints({
+export function getConnectionLinePoints({
   source,
   sourcePosition = Position.Left,
   target,
   targetPosition = Position.Left,
-  offset,
+  offset = CONNECTION_HANDLE_OFFSET,
 }: {
   source: XYPosition;
   sourcePosition?: Position;
   target: XYPosition;
   targetPosition?: Position;
-  offset: number;
+  offset?: number;
 }): XYPosition[] {
   const sourceDir = handleDirections[sourcePosition];
   const targetDir = handleDirections[targetPosition];
@@ -254,23 +252,7 @@ function getBend(
   return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
 }
 
-export function computeConnectionPath({
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  offset = CONNECTION_HANDLE_OFFSET,
-  sourcePosition,
-  targetPosition,
-}: GetSmoothStepPathParams): string {
-  const points = getPoints({
-    source: { x: sourceX, y: sourceY },
-    sourcePosition,
-    target: { x: targetX, y: targetY },
-    targetPosition,
-    offset,
-  });
-
+export const computePathFromPoints = (points: XYPosition[]): string => {
   const path = points.reduce<string>((res, p, i) => {
     let segment = "";
 
@@ -286,4 +268,4 @@ export function computeConnectionPath({
   }, "");
 
   return path;
-}
+};
