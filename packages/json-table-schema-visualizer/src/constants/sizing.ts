@@ -7,7 +7,7 @@ export const CONNECTION_STROKE = 2;
 export const DEFAULT_PADDING = 5;
 export const CROSS_CONNECTION_MIN_MARGIN = 20;
 export const CONNECTION_MARGIN = 40;
-
+export const CONNECTION_HANDLE_OFFSET = 20;
 export const PADDINGS = {
   xs: 5,
   sm: 8,
