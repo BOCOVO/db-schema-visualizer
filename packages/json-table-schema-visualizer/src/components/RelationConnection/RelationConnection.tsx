@@ -1,11 +1,9 @@
 import { useMemo } from "react";
 
-import { RelationsTextIndicators } from "./RelationsTextIndicators";
 import ConnectionPath from "./ConnectionPath";
 
 import type { RelationItem } from "@/types/relation";
 
-import { computeConnectionPath } from "@/utils/computeConnectionPath";
 import { useRelationsCoords } from "@/hooks/relationConnection";
 
 interface RelationConnectionProps {
@@ -33,15 +31,6 @@ const RelationConnection = ({ source, target }: RelationConnectionProps) => {
 
   return (
     <>
-      <RelationsTextIndicators
-        sourceRelation={source.relation}
-        targetRelation={target.relation}
-        sourcePosition={sourcePosition}
-        targetPosition={targetPosition}
-        sourceXY={sourceXY}
-        targetXY={targetXY}
-      />
-
       <ConnectionPath
         path={linePath}
         sourceTableName={source.tableName}
