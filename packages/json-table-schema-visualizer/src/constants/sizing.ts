@@ -7,6 +7,10 @@ export const CONNECTION_STROKE = 2;
 export const DEFAULT_PADDING = 5;
 export const CROSS_CONNECTION_MIN_MARGIN = 20;
 export const CONNECTION_MARGIN = 40;
+export const COLS_OFFSET_Y_TO_COL_MIDDLE =
+  TABLE_COLOR_HEIGHT +
+  COLUMN_HEIGHT +
+  COLUMN_HEIGHT / 2; /* to point to cols middle */
 export const CONNECTION_HANDLE_OFFSET = 20;
 export const PADDINGS = {
   xs: 5,
