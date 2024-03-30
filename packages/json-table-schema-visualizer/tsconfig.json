@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"]
+    },
+    "allowJs": true,
+    "checkJs": true
+  },
+  "exclude": ["node_modules", "vite.config.js"],
+  "include": ["**/*.ts", "**/*.tsx"]
+}

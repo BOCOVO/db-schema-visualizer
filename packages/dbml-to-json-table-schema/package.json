@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@dbml/core": "^3.4.0",
-    "json-pick-keys": "^0.1.4"
+    "json-pick-keys": "^0.1.4",
+    "shared": "0.0.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
