@@ -18,12 +18,14 @@ import {
 import { useTheme } from "@/hooks/theme";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
+import { useTablesInfo } from "@/hooks/table";
 
 interface TableProps extends JSONTableTable {}
 
 const Table = ({ fields, name }: TableProps) => {
   const theme = useTheme();
   const tableRef = useRef<null | Konva.Group>(null);
+  const { setHoveredTableName } = useTablesInfo();
 
   useEffect(() => {
     if (tableRef.current != null) {
@@ -44,6 +46,14 @@ const Table = ({ fields, name }: TableProps) => {
     propagateCoordinates(event.target as Konva.Group);
   };
 
+  const handleOnHover = () => {
+    setHoveredTableName(name);
+  };
+
+  const handleOnBlur = () => {
+    setHoveredTableName(null);
+  };
+
   return (
     <Group
       ref={tableRef}
@@ -51,6 +61,8 @@ const Table = ({ fields, name }: TableProps) => {
       onDragMove={handleOnDrag}
       width={TABLE_WIDTH}
       height={tableHeight}
+      onMouseEnter={handleOnHover}
+      onMouseLeave={handleOnBlur}
     >
       <Rect
         shadowBlur={PADDINGS.xs}
