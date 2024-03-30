@@ -1,3 +1,4 @@
 .eslintrc.
 vite.config.js
 .lintstagedrc.js
+jest.config.js
