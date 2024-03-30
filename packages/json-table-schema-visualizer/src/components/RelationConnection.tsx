@@ -1,11 +1,14 @@
-import { useTheme } from "@/hooks/theme";
-import { computeConnectionPath } from "@/utils/computeConnectionPath";
-import type Konva from "konva";
 import { useMemo, useRef } from "react";
 import { Path } from "react-konva";
+
 import KonvaText from "./dumb/KonvaText";
+
+import type Konva from "konva";
 import type { Position, XYPosition } from "@/types/positions";
 import type { RelationItem } from "@/types/relation";
+
+import { computeConnectionPath } from "@/utils/computeConnectionPath";
+import { useTheme } from "@/hooks/theme";
 import { useRelationsCoords } from "@/hooks/relationConnection";
 import { computeRelationTextPosition } from "@/utils/computeRelationTextPosition";
 

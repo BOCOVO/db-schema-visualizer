@@ -1,6 +1,8 @@
-import { defaultThemeConfig } from "@/constants/theme";
-import type { ThemeConfigValue } from "@/types/theme";
 import { createContext, type PropsWithChildren } from "react";
+
+import type { ThemeConfigValue } from "@/types/theme";
+
+import { defaultThemeConfig } from "@/constants/theme";
 
 export const ThemeContext = createContext<ThemeConfigValue>(defaultThemeConfig);
 

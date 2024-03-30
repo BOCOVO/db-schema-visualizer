@@ -1,3 +1,13 @@
+import { Group, Rect } from "react-konva";
+import { useEffect, useRef } from "react";
+
+import TableHeader from "./TableHeader";
+import Column from "./Column";
+
+import type { JSONTableTable } from "shared/types/tableSchema";
+import type { KonvaEventObject } from "konva/lib/Node";
+import type Konva from "konva";
+
 import {
   COLUMN_HEIGHT,
   PADDINGS,
@@ -6,16 +16,8 @@ import {
   TABLE_WIDTH,
 } from "@/constants/sizing";
 import { useTheme } from "@/hooks/theme";
-import { Group, Rect } from "react-konva";
-import TableHeader from "./TableHeader";
-import Column from "./Column";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
-
-import type { JSONTableTable } from "shared/types/tableSchema";
-import type { KonvaEventObject } from "konva/lib/Node";
-import { useEffect, useRef } from "react";
-import type Konva from "konva";
 
 interface TableProps extends JSONTableTable {}
 

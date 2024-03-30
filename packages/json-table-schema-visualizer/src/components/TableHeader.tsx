@@ -1,3 +1,7 @@
+import { Group, Rect } from "react-konva";
+
+import KonvaText from "./dumb/KonvaText";
+
 import {
   COLUMN_HEIGHT,
   FONT_SIZES,
@@ -6,8 +10,6 @@ import {
   TABLE_WIDTH,
 } from "@/constants/sizing";
 import { useTheme } from "@/hooks/theme";
-import { Group, Rect } from "react-konva";
-import KonvaText from "./dumb/KonvaText";
 
 interface TableHeaderProps {
   title: string;

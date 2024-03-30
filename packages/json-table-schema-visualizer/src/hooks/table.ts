@@ -1,6 +1,8 @@
-import { TablesInfoContext } from "@/providers/TablesInfoProvider";
-import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
 import { useContext } from "react";
+
+import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
+
+import { TablesInfoContext } from "@/providers/TablesInfoProvider";
 
 export const useTablesInfo = (): TablesInfoProviderValue => {
   const tablesInfo = useContext(TablesInfoContext);

@@ -1,5 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
+
 import { computeColIndexes } from "./computeColIndexes";
+
 import { exampleData } from "@/fake/fakeJsonTables";
 
 describe("compute cols index map", () => {

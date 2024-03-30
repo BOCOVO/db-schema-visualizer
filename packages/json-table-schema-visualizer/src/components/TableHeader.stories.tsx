@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import TableHeader from "./TableHeader";
+
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
   component: TableHeader,

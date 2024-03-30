@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import Table from "./Table";
+
+import type { Meta, StoryObj } from "@storybook/react";
 import type { JSONTableTable } from "shared/types/tableSchema";
 
 const meta: Meta = {

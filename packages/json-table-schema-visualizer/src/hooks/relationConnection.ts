@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
+
 import { useTablesInfo } from "./table";
-import { computeColY } from "@/utils/computeColY";
 
 import type { RelationItem } from "@/types/relation";
-import { useEffect, useState } from "react";
 import type { Position, XYPosition } from "@/types/positions";
+
+import { computeColY } from "@/utils/computeColY";
 import { computeTableDragEventName } from "@/utils/eventName";
 import eventEmitter from "@/events-emitter";
 import { computeConnectionHandlePos } from "@/utils/computeConnectionHandlePositions";

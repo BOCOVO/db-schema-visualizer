@@ -1,6 +1,8 @@
 import { createContext, type ReactNode } from "react";
+
 import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
 import type { JSONTableTable } from "shared/types/tableSchema";
+
 import { computeColIndexes } from "@/utils/computeColIndexes";
 
 export const TablesInfoContext = createContext<

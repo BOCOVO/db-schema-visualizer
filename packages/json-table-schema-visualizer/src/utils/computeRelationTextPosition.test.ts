@@ -1,5 +1,7 @@
 import { describe, test, expect } from "@jest/globals";
+
 import { computeRelationTextPosition } from "./computeRelationTextPosition";
+
 import { Position } from "@/types/positions";
 import { CONNECTION_HANDLE_OFFSET, FONT_SIZES } from "@/constants/sizing";
 

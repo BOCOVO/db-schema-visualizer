@@ -1,7 +1,9 @@
 import { Parser } from "@dbml/core";
-import type { JSONTableSchema } from "shared/types/tableSchema"
 import pickKeys from "json-pick-keys";
+
 import defaultPickConfig from "./configs/pickerKeys";
+
+import type { JSONTableSchema } from "shared/types/tableSchema"
 
 export const parseDBMLToJSON = (
   dbmlCode: string,

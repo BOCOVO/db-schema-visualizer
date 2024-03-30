@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import RelationConnection from "./RelationConnection";
 import Table from "./Table";
+
+import type { Meta, StoryObj } from "@storybook/react";
+
 import { exampleData } from "@/fake/fakeJsonTables";
 import TablesInfoProvider from "@/providers/TablesInfoProvider";
 

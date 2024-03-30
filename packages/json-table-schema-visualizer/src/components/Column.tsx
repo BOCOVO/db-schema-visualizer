@@ -1,8 +1,10 @@
-import { COLUMN_HEIGHT, PADDINGS, TABLE_WIDTH } from "@/constants/sizing";
 import { Group, Rect } from "react-konva";
-import KonvaText from "./dumb/KonvaText";
-import { useTheme } from "@/hooks/theme";
 import { useState } from "react";
+
+import KonvaText from "./dumb/KonvaText";
+
+import { COLUMN_HEIGHT, PADDINGS, TABLE_WIDTH } from "@/constants/sizing";
+import { useTheme } from "@/hooks/theme";
 
 interface ColumnProps {
   colName: string;

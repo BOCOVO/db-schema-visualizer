@@ -1,7 +1,9 @@
-import { COLS_OFFSET_Y_TO_COL_MIDDLE, COLUMN_HEIGHT } from "@/constants/sizing";
+import { computeColIndexesKey } from "./computeColIndexes";
+
 import type { RelationItem } from "@/types/relation";
 import type { ColsIndexesMap } from "@/types/tablesInfoProviderValue";
-import { computeColIndexesKey } from "./computeColIndexes";
+
+import { COLS_OFFSET_Y_TO_COL_MIDDLE, COLUMN_HEIGHT } from "@/constants/sizing";
 
 export const computeColY = (
   colsIndexesMap: ColsIndexesMap,
