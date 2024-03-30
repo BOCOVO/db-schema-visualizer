@@ -1,4 +1,4 @@
-import { createContext, type ReactNode } from "react";
+import { createContext, useState, type ReactNode } from "react";
 
 import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
 import type { JSONTableTable } from "shared/types/tableSchema";
@@ -15,10 +15,13 @@ interface TablesInfoProviderProps {
 }
 
 const TablesInfoProvider = ({ children, tables }: TablesInfoProviderProps) => {
+  const [hoveredTableName, setHoveredTableName] = useState<string | null>(null);
   const colsIndexes = computeColIndexes(tables);
 
   return (
-    <TablesInfoContext.Provider value={{ colsIndexes }}>
+    <TablesInfoContext.Provider
+      value={{ colsIndexes, hoveredTableName, setHoveredTableName }}
+    >
       {children}
     </TablesInfoContext.Provider>
   );

@@ -1,5 +1,6 @@
+import Table from "../Table";
+
 import RelationConnection from "./RelationConnection";
-import Table from "./Table";
 
 import type { Meta, StoryObj } from "@storybook/react";
 

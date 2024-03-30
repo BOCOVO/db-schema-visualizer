@@ -6,7 +6,7 @@ export const defaultThemeConfig: ThemeConfigValue = {
     "700": "#9C9C9C",
   },
   connection: {
-    active: "#1010ff",
+    active: "#029CFD",
     default: "#888",
   },
   colAccent: "aliceblue",
