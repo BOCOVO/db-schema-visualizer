@@ -3,7 +3,6 @@ import type Enum from "@dbml/core/types/model_structure/enum";
 import type Field from "@dbml/core/types/model_structure/field";
 import type IndexColumn from "@dbml/core/types/model_structure/indexColumn";
 import type Index from "@dbml/core/types/model_structure/indexes";
-import type Ref from "@dbml/core/types/model_structure/ref";
 import type Table from "@dbml/core/types/model_structure/table";
 import type { PartialRequired } from "./utils";
 
@@ -16,8 +15,9 @@ export interface JSONTableSchema {
 export interface JSONTableEnum
   extends PartialRequired<Pick<Enum, "name" | "note">, "name"> {}
 
-export interface JSONTableRef extends Pick<Ref, "id" | "name"> {
-  endpoints: Pick<Endpoint, "relation" | "tableName" | "fieldNames">;
+export interface JSONTableRef  {
+  name?: string;
+  endpoints: Array<Pick<Endpoint, "relation" | "tableName" | "fieldNames">>;
 }
 
 export interface JSONTableField
