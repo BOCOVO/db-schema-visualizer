@@ -1,13 +1,18 @@
-import { Group, Rect } from "react-konva";
-import { useState } from "react";
+import KonvaText from "../dumb/KonvaText";
 
-import KonvaText from "./dumb/KonvaText";
+import ColumnWrapper from "./ColumnWrapper";
 
-import { COLUMN_HEIGHT, PADDINGS, TABLE_WIDTH } from "@/constants/sizing";
+import {
+  COLUMN_HEIGHT,
+  FONT_SIZES,
+  PADDINGS,
+  TABLE_WIDTH,
+} from "@/constants/sizing";
 import { useTheme } from "@/hooks/theme";
 
 interface ColumnProps {
   colName: string;
+  tableName: string;
   type: string;
   isPrimaryKey?: boolean;
   offsetY?: number;
@@ -15,33 +20,19 @@ interface ColumnProps {
 
 const Column = ({
   colName,
+  tableName,
   type,
   isPrimaryKey = false,
   offsetY,
 }: ColumnProps) => {
   const theme = useTheme();
-  const [hovered, setHovered] = useState(false);
-
-  const handleOnHover = () => {
-    setHovered(true);
-  };
-
-  const handleOnLeave = () => {
-    setHovered(false);
-  };
 
   const colTextColor = theme.text[900];
   const typeTextColor = theme.text[700];
   const fontStyle = isPrimaryKey ? "bold" : "normal";
 
   return (
-    <Group y={offsetY}>
-      <Rect
-        fill={hovered ? theme.colAccent : "transparent"}
-        width={TABLE_WIDTH}
-        height={COLUMN_HEIGHT}
-      />
-
+    <ColumnWrapper fieldName={colName} offsetY={offsetY} tableName={tableName}>
       <KonvaText
         ellipsis
         wrap="none"
@@ -51,6 +42,7 @@ const Column = ({
         fontStyle={fontStyle}
         padding={PADDINGS.sm}
         height={COLUMN_HEIGHT}
+        fontSize={FONT_SIZES.md}
       />
 
       <KonvaText
@@ -60,11 +52,10 @@ const Column = ({
         fill={typeTextColor}
         padding={PADDINGS.sm}
         fontStyle={fontStyle}
+        fontSize={FONT_SIZES.md}
         height={COLUMN_HEIGHT}
-        onMouseOver={handleOnHover}
-        onMouseLeave={handleOnLeave}
       />
-    </Group>
+    </ColumnWrapper>
   );
 };
 

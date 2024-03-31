@@ -2,7 +2,7 @@ import { Group, Rect } from "react-konva";
 import { useEffect, useRef } from "react";
 
 import TableHeader from "./TableHeader";
-import Column from "./Column";
+import Column from "./Column/Column";
 
 import type { JSONTableTable } from "shared/types/tableSchema";
 import type { KonvaEventObject } from "konva/lib/Node";
@@ -80,6 +80,7 @@ const Table = ({ fields, name }: TableProps) => {
           <Column
             key={field.name}
             colName={field.name}
+            tableName={name}
             type={field.type.type_name}
             isPrimaryKey={field.pk}
             offsetY={index * COLUMN_HEIGHT}
