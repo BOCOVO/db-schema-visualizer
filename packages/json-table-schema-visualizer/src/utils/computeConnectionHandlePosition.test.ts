@@ -1,5 +1,3 @@
-import { describe, expect, test } from "@jest/globals";
-
 import { computeConnectionHandlePos } from "./computeConnectionHandlePositions";
 
 import { Position } from "@/types/positions";

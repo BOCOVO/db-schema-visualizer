@@ -10,7 +10,7 @@ module.exports = {
       rules: {
         "@typescript-eslint/explicit-function-return-type": "off",
       },
-    },
+    }
   ],
   parserOptions: {
     ecmaVersion: "latest",
@@ -34,6 +34,6 @@ module.exports = {
         ],
         "newlines-between": "always",
       },
-    ]
+    ],
   },
 };

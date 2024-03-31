@@ -5,7 +5,7 @@
   "types": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest --collectCoverage."
+    "test": "jest --collectCoverage"
   },
   "dependencies": {
     "@dbml/core": "^3.4.0",
@@ -13,8 +13,6 @@
     "shared": "0.0.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2",
     "typescript": "^5.4.3"
   }
 }
