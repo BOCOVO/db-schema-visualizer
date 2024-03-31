@@ -7,16 +7,16 @@ import type Table from "@dbml/core/types/model_structure/table";
 import type { PartialRequired } from "./utils";
 
 export interface JSONTableSchema {
-  refs: JSONTableRef;
+  refs: JSONTableRef[];
   enums: JSONTableEnum[];
-  tables: JSONTableTable;
+  tables: JSONTableTable[];
 }
 
 export interface JSONTableEnum
   extends PartialRequired<Pick<Enum, "name" | "note">, "name"> {}
 
 export interface JSONTableRef  {
-  name?: string;
+  name?: string | null;
   endpoints: Array<Pick<Endpoint, "relation" | "tableName" | "fieldNames">>;
 }
 

@@ -1,4 +1,6 @@
-export const exampleData = {
+import type { JSONTableSchema } from "shared/types/tableSchema";
+
+export const exampleData: JSONTableSchema = {
   refs: [
     {
       name: null,
