@@ -1,4 +1,4 @@
-import { computeConnectionHandlePos } from "./computeConnectionHandlePositions";
+import { computeConnectionHandlePos } from "../computeConnectionHandlePositions";
 
 import { Position } from "@/types/positions";
 

@@ -8,7 +8,7 @@ import { COLS_OFFSET_Y_TO_COL_MIDDLE, COLUMN_HEIGHT } from "@/constants/sizing";
 export const computeColY = (
   colsIndexesMap: ColsIndexesMap,
   relation: RelationItem,
-) => {
+): number => {
   const indexKey = computeColIndexesKey(
     relation.tableName,
     relation.fieldNames[0],

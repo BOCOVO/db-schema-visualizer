@@ -1,4 +1,4 @@
-import { computeColY } from "./computeColY";
+import { computeColY } from "../computeColY";
 
 import { COLS_OFFSET_Y_TO_COL_MIDDLE } from "@/constants/sizing";
 describe("computing col y", () => {

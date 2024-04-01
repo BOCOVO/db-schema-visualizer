@@ -1,4 +1,4 @@
-import { getRefsSet } from "./getRefsSet";
+import { getRefsSet } from "../getRefsSet";
 
 import { exampleData } from "@/fake/fakeJsonTables";
 

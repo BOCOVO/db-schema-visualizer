@@ -1,4 +1,4 @@
-import { computeColIndexes } from "./computeColIndexes";
+import { computeColIndexes } from "../computeColIndexes";
 
 import { exampleData } from "@/fake/fakeJsonTables";
 
