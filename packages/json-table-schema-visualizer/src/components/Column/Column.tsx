@@ -15,6 +15,7 @@ interface ColumnProps {
   tableName: string;
   type: string;
   isPrimaryKey?: boolean;
+  relationalTables?: Set<string> | null;
   offsetY?: number;
 }
 
@@ -24,6 +25,7 @@ const Column = ({
   type,
   isPrimaryKey = false,
   offsetY,
+  relationalTables,
 }: ColumnProps) => {
   const theme = useTheme();
 
@@ -32,7 +34,11 @@ const Column = ({
   const fontStyle = isPrimaryKey ? "bold" : "normal";
 
   return (
-    <ColumnWrapper fieldName={colName} offsetY={offsetY} tableName={tableName}>
+    <ColumnWrapper
+      relationalTables={relationalTables}
+      offsetY={offsetY}
+      tableName={tableName}
+    >
       <KonvaText
         ellipsis
         wrap="none"
