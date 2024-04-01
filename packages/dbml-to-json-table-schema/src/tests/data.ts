@@ -1,175 +1,38 @@
-export const onlyTablesSchemaDBMLCode = `
-  Table follows {
-    id integer [primary key, not null, increment]
-    following_user_id integer
-    view integer [default: 0]
-  }
-`;
+import { Parser } from "@dbml/core";
 
-export const onlyTablesSchemaJSON = {
-  refs: [],
-  enums: [],
-  tables: [
-    {
-      name: "follows",
-      fields: [
-        {
-          name: "id",
-          pk: true,
-          increment: true,
-          not_null: true,
-          type: {
-            type_name: "integer",
-          },
-        },
-        {
-          name: "following_user_id",
-          type: {
-            type_name: "integer",
-          },
-        },
-        {
-          name: "view",
-          type: {
-            type_name: "integer",
-          },
-          dbdefault: {
-            type: "number",
-            value: 0,
-          },
-        },
-      ],
-      indexes: [],
-    },
-  ],
-};
-
-export const withEnumDBMLCode = `
+export const dbmlTestCode = `
   Enum status {
-    active
-    inactive
+    active [note: "a note"]
+    inactive [note: "a note"]
   }
 
   Table follows {
-    status status
-  }
-`;
+    id integer [primary key, not null, increment, note: "a note"]
+    view integer [default: 0, note: "a note"]
+    following_user_id integer [note: "a note"]
+    created_at timestamp [note: "a note"]
+    status status [note: "a note"]
 
-export const withEnumJSON = {
-  refs: [],
-  enums: [
-    {
-      name: "status",
-      values: [
-        {
-          name: "active",
-        },
-        {
-          name: "inactive",
-        },
-      ],
-    },
-  ],
-  tables: [
-    {
-      name: "follows",
-      fields: [
-        {
-          name: "status",
-          type: {
-            type_name: "status",
-          },
-        },
-      ],
-      indexes: [],
-    },
-  ],
-};
-
-export const withRelationsAndUniquenessDBMLCode = `
-  Table follows {
-    following_user_id integer
-    created_at timestamp 
+    Note: 'a note'
   }
 
   Table users {
-    id integer [primary key]
-    email varchar [unique]
+    id integer [primary key, note: "a note"]
+    email varchar [unique, note: "a note"]
+
+    Note: 'a note'
   }
 
-  Ref: users.id < follows.following_user_id
-`;
-
-export const withRelationsAndUniquenessJSON = {
-  refs: [
-    {
-      name: null,
-      endpoints: [
-        {
-          relation: "1",
-          tableName: "users",
-          fieldNames: ["id"],
-        },
-        {
-          relation: "*",
-          tableName: "follows",
-          fieldNames: ["following_user_id"],
-        },
-      ],
-    },
-  ],
-  enums: [],
-  tables: [
-    {
-      name: "follows",
-      fields: [
-        {
-          name: "following_user_id",
-          type: {
-            type_name: "integer",
-          },
-        },
-        {
-          name: "created_at",
-          type: {
-            type_name: "timestamp",
-          },
-        },
-      ],
-      indexes: [],
-    },
-    {
-      name: "users",
-      fields: [
-        {
-          name: "id",
-          type: {
-            type_name: "integer",
-          },
-          pk: true,
-        },
-        {
-          name: "email",
-          type: {
-            type_name: "varchar",
-          },
-          unique: true,
-        },
-      ],
-      indexes: [],
-    },
-  ],
-};
-
-export const dbmlSchemaWithIndexes = `
   Table bookings {
-    id integer
-    country varchar
-    booking_date date
+    id integer [note: "a note"]
+    country varchar [note: "a note"]
+    booking_date date [note: "a note"]
+
+    Note: 'a note'
 
     indexes {
         (id, country) [pk] // composite primary key
-        created_at [name: 'created_at_index', note: 'Date']
+        created_at [name: 'created_at_index', note: 'a note']
         booking_date
         (country, booking_date) [unique]
         booking_date [type: hash]
@@ -178,135 +41,259 @@ export const dbmlSchemaWithIndexes = `
         (\`id*3\`,id)
     }
   }
+
+  Ref: users.id < follows.following_user_id
 `;
 
-export const withIndexesJSON = {
-  refs: [],
-  enums: [],
+export const dbmlTestCodeInJSONTableFormat = {
+  refs: [
+    {
+      name: null,
+      endpoints: [
+        { relation: "1", tableName: "users", fieldNames: ["id"] },
+        {
+          relation: "*",
+          tableName: "follows",
+          fieldNames: ["following_user_id"],
+        },
+      ],
+    },
+  ],
+  enums: [
+    {
+      name: "status",
+      values: [
+        {
+          name: "active",
+          note: "a note",
+        },
+        {
+          name: "inactive",
+          note: "a note",
+        },
+      ],
+    },
+  ],
   tables: [
     {
-      name: "bookings",
+      name: "follows",
+      note: "a note",
       fields: [
         {
           name: "id",
-          type: {
-            type_name: "integer",
-          },
+          type: { type_name: "integer", is_enum: false },
+          pk: true,
+          note: "a note",
+          increment: true,
+          not_null: true,
+          is_relation: false,
+          dbdefault: undefined,
+          unique: undefined,
+          relational_tables: null,
+        },
+        {
+          name: "view",
+          type: { type_name: "integer", is_enum: false },
+          note: "a note",
+          dbdefault: { type: "number", value: 0 },
+          is_relation: false,
+          unique: undefined,
+          relational_tables: null,
+          increment: undefined,
+          pk: undefined,
+          not_null: undefined,
+        },
+        {
+          name: "following_user_id",
+          type: { type_name: "integer", is_enum: false },
+          note: "a note",
+          dbdefault: undefined,
+          is_relation: true,
+          unique: undefined,
+          relational_tables: new Set(["users"]),
+          increment: undefined,
+          not_null: undefined,
+          pk: undefined,
+        },
+        {
+          name: "created_at",
+          type: { type_name: "timestamp", is_enum: false },
+          note: "a note",
+          dbdefault: undefined,
+          is_relation: false,
+          relational_tables: null,
+          increment: undefined,
+          pk: undefined,
+          not_null: undefined,
+          unique: undefined,
+        },
+        {
+          name: "status",
+          type: { type_name: "status", is_enum: true },
+          note: "a note",
+          dbdefault: undefined,
+          pk: undefined,
+          is_relation: false,
+          unique: undefined,
+          relational_tables: null,
+          increment: undefined,
+          not_null: undefined,
+        },
+      ],
+      indexes: [],
+    },
+    {
+      name: "users",
+      note: "a note",
+      fields: [
+        {
+          name: "id",
+          type: { type_name: "integer", is_enum: false },
+          pk: true,
+          note: "a note",
+          dbdefault: undefined,
+          is_relation: true,
+          unique: undefined,
+          relational_tables: new Set(["follows"]),
+          increment: undefined,
+          not_null: undefined,
+        },
+        {
+          name: "email",
+          type: { type_name: "varchar", is_enum: false },
+          unique: true,
+          note: "a note",
+          dbdefault: undefined,
+          pk: undefined,
+          is_relation: false,
+          relational_tables: null,
+          increment: undefined,
+          not_null: undefined,
+        },
+      ],
+      indexes: [],
+    },
+    {
+      name: "bookings",
+      note: "a note",
+      fields: [
+        {
+          name: "id",
+          type: { type_name: "integer", is_enum: false },
+          note: "a note",
+          dbdefault: undefined,
+          pk: undefined,
+          is_relation: false,
+          unique: undefined,
+          relational_tables: null,
+          increment: undefined,
+          not_null: undefined,
         },
         {
           name: "country",
-          type: {
-            type_name: "varchar",
-          },
+          type: { type_name: "varchar", is_enum: false },
+          note: "a note",
+          dbdefault: undefined,
+          pk: undefined,
+          is_relation: false,
+          unique: undefined,
+          relational_tables: null,
+          increment: undefined,
+          not_null: undefined,
         },
         {
           name: "booking_date",
-          type: {
-            type_name: "date",
-          },
+          type: { type_name: "date", is_enum: false },
+          note: "a note",
+          dbdefault: undefined,
+          pk: undefined,
+          is_relation: false,
+          unique: undefined,
+          relational_tables: null,
+          increment: undefined,
+          not_null: undefined,
         },
       ],
       indexes: [
         {
           pk: true,
           columns: [
-            {
-              type: "column",
-              value: "id",
-            },
-            {
-              type: "column",
-              value: "country",
-            },
+            { type: "column", value: "id" },
+            { type: "column", value: "country" },
           ],
+          name: undefined,
+          note: undefined,
+          type: undefined,
+          unique: undefined,
         },
         {
           name: "created_at_index",
-          note: {
-            value: "Date",
-            token: {
-              start: {
-                offset: 190,
-                line: 9,
-                column: 47,
-              },
-              end: {
-                offset: 202,
-                line: 9,
-                column: 59,
-              },
-            },
-          },
-          columns: [
-            {
-              type: "column",
-              value: "created_at",
-            },
-          ],
+          note: "a note",
+          columns: [{ type: "column", value: "created_at" }],
+          pk: undefined,
+          type: undefined,
+          unique: undefined,
         },
         {
-          columns: [
-            {
-              type: "column",
-              value: "booking_date",
-            },
-          ],
+          name: undefined,
+          note: undefined,
+          pk: undefined,
+          type: undefined,
+          unique: undefined,
+          columns: [{ type: "column", value: "booking_date" }],
         },
         {
           unique: true,
           columns: [
-            {
-              type: "column",
-              value: "country",
-            },
-            {
-              type: "column",
-              value: "booking_date",
-            },
+            { type: "column", value: "country" },
+            { type: "column", value: "booking_date" },
           ],
+          name: undefined,
+          note: undefined,
+          pk: undefined,
+          type: undefined,
         },
         {
+          name: undefined,
+          note: undefined,
+          pk: undefined,
           type: "hash",
+          unique: undefined,
+          columns: [{ type: "column", value: "booking_date" }],
+        },
+        {
+          name: undefined,
+          note: undefined,
+          pk: undefined,
+          type: undefined,
+          unique: undefined,
+          columns: [{ type: "expression", value: "id*2" }],
+        },
+        {
+          name: undefined,
+          note: undefined,
+          pk: undefined,
+          type: undefined,
+          unique: undefined,
           columns: [
-            {
-              type: "column",
-              value: "booking_date",
-            },
+            { type: "expression", value: "id*3" },
+            { type: "expression", value: "getdate()" },
           ],
         },
         {
+          name: undefined,
+          note: undefined,
+          pk: undefined,
+          type: undefined,
+          unique: undefined,
           columns: [
-            {
-              type: "expression",
-              value: "id*2",
-            },
-          ],
-        },
-        {
-          columns: [
-            {
-              type: "expression",
-              value: "id*3",
-            },
-            {
-              type: "expression",
-              value: "getdate()",
-            },
-          ],
-        },
-        {
-          columns: [
-            {
-              type: "expression",
-              value: "id*3",
-            },
-            {
-              type: "column",
-              value: "id",
-            },
+            { type: "expression", value: "id*3" },
+            { type: "column", value: "id" },
           ],
         },
       ],
     },
   ],
 };
+
+export const parsedDBML = Parser.parseDBMLToJSON(dbmlTestCode);

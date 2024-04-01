@@ -13,9 +13,11 @@ export interface JSONTableSchema {
 }
 
 export interface JSONTableEnum
-  extends PartialRequired<Pick<Enum, "name" | "note">, "name"> {}
+  extends PartialRequired<Pick<Enum, "name">, "name"> {
+  values: Array<{ name: string; note?: string }>;
+}
 
-export interface JSONTableRef  {
+export interface JSONTableRef {
   name?: string | null;
   endpoints: Array<Pick<Endpoint, "relation" | "tableName" | "fieldNames">>;
 }
@@ -28,7 +30,9 @@ export interface JSONTableField
     >,
     "name"
   > {
-  type: { type_name: string };
+  type: { type_name: string; is_enum: boolean };
+  is_relation: boolean;
+  relational_tables?: Set<string> | null;
 }
 
 export interface JSONTableIndexColumn
