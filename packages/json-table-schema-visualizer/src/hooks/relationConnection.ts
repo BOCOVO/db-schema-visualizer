@@ -1,11 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useTablesInfo } from "./table";
 
-import type {
-  RelationalFieldsSetProviderValue,
-  RelationItem,
-} from "@/types/relation";
+import type { RelationItem } from "@/types/relation";
 import type { Position, XYPosition } from "@/types/positions";
 
 import { computeColY } from "@/utils/computeColY";
@@ -13,7 +10,6 @@ import { computeTableDragEventName } from "@/utils/eventName";
 import eventEmitter from "@/events-emitter";
 import { computeConnectionHandlePos } from "@/utils/computeConnectionHandlePositions";
 import { TABLE_WIDTH } from "@/constants/sizing";
-import { RelationalFieldsSetContext } from "@/providers/RelationalFieldsSetProvider";
 
 interface UseRelationTablesCoordsReturn {
   sourceXY: XYPosition;
@@ -100,16 +96,4 @@ export const useRelationsCoords = (
     sourceXY: { x: finalSourceX, y: finalSourceY },
     targetXY: { x: finalTargetX, y: finalTargetY },
   };
-};
-
-export const useRelationalFieldsSet = (): RelationalFieldsSetProviderValue => {
-  const relationalFieldsSet = useContext(RelationalFieldsSetContext);
-
-  if (relationalFieldsSet === null) {
-    throw new Error(
-      "You need to wrap your component with RelationalFieldsSetContext before use this hook",
-    );
-  }
-
-  return relationalFieldsSet;
 };

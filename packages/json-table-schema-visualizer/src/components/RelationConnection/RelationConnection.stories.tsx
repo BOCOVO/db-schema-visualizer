@@ -6,7 +6,6 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { exampleData } from "@/fake/fakeJsonTables";
 import TablesInfoProvider from "@/providers/TablesInfoProvider";
-import RelationalFieldsSetProvider from "@/providers/RelationalFieldsSetProvider";
 
 const meta: Meta = {
   component: RelationConnection,
@@ -19,15 +18,15 @@ type Story = StoryObj<typeof RelationConnection>;
 
 export const TableStory: Story = {
   render: (props) => (
-    <RelationalFieldsSetProvider refs={exampleData.refs}>
-      <TablesInfoProvider tables={exampleData.tables}>
-        <RelationConnection {...props} />
+    <TablesInfoProvider tables={exampleData.tables}>
+      <RelationConnection {...props} />
 
-        <Table {...exampleData.tables[0]} />
+      <Table {...exampleData.tables[0]} />
 
-        <Table {...exampleData.tables[1]} />
-      </TablesInfoProvider>
-    </RelationalFieldsSetProvider>
+      <Table {...exampleData.tables[1]} />
+
+      <Table {...exampleData.tables[2]} />
+    </TablesInfoProvider>
   ),
   args: {
     source: exampleData.refs[0].endpoints[0],
