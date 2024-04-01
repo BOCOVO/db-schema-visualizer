@@ -39,7 +39,9 @@ export interface JSONTableIndexColumn
   extends Pick<IndexColumn, "type" | "value"> {}
 
 export interface JSONTableIndex
-  extends Pick<Index, "unique" | "type" | "pk" | "name" | "note"> {
+  extends Partial<Pick<Index, "unique" | "type" | "name" | "note">> {
+  // the parser return `pk` as boolean not string
+  pk?: boolean;
   columns: JSONTableIndexColumn[];
 }
 
