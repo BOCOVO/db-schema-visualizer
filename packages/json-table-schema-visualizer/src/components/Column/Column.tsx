@@ -1,4 +1,5 @@
 import KonvaText from "../dumb/KonvaText";
+import FieldDetails from "../FieldDetails/FieldDetails";
 
 import ColumnWrapper from "./ColumnWrapper";
 
@@ -15,8 +16,10 @@ interface ColumnProps {
   tableName: string;
   type: string;
   isPrimaryKey?: boolean;
+  isEnum: boolean;
   relationalTables?: Set<string> | null;
   offsetY?: number;
+  note?: string;
 }
 
 const Column = ({
@@ -26,6 +29,8 @@ const Column = ({
   isPrimaryKey = false,
   offsetY,
   relationalTables,
+  isEnum,
+  note,
 }: ColumnProps) => {
   const theme = useTheme();
 
@@ -52,7 +57,7 @@ const Column = ({
       />
 
       <KonvaText
-        text={type}
+        text={isEnum ? `${type} 🅴` : type}
         align="right"
         width={TABLE_WIDTH}
         fill={typeTextColor}
@@ -61,6 +66,10 @@ const Column = ({
         fontSize={FONT_SIZES.md}
         height={COLUMN_HEIGHT}
       />
+
+      {note != null || isEnum ? (
+        <FieldDetails note={note ?? ""} enumName={type} />
+      ) : null}
     </ColumnWrapper>
   );
 };

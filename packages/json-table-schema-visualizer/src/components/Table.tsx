@@ -81,6 +81,7 @@ const Table = ({ fields, name }: TableProps) => {
             key={field.name}
             colName={field.name}
             tableName={name}
+            isEnum={field.type.is_enum}
             type={field.type.type_name}
             isPrimaryKey={field.pk}
             offsetY={index * COLUMN_HEIGHT}
