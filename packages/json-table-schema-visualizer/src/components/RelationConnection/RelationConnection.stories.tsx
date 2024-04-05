@@ -5,7 +5,7 @@ import RelationConnection from "./RelationConnection";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { exampleData } from "@/fake/fakeJsonTables";
-import TablesInfoProvider from "@/providers/TablesInfoProvider";
+import MainProviders from "@/providers/MainProviders";
 
 const meta: Meta = {
   component: RelationConnection,
@@ -16,9 +16,9 @@ export default meta;
 
 type Story = StoryObj<typeof RelationConnection>;
 
-export const TableStory: Story = {
+export const RelationConnectionStory: Story = {
   render: (props) => (
-    <TablesInfoProvider tables={exampleData.tables}>
+    <MainProviders enums={exampleData.enums} tables={exampleData.tables}>
       <RelationConnection {...props} />
 
       <Table {...exampleData.tables[0]} />
@@ -26,7 +26,7 @@ export const TableStory: Story = {
       <Table {...exampleData.tables[1]} />
 
       <Table {...exampleData.tables[2]} />
-    </TablesInfoProvider>
+    </MainProviders>
   ),
   args: {
     source: exampleData.refs[0].endpoints[0],
