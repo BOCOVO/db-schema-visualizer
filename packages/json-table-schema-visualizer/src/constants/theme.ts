@@ -18,4 +18,9 @@ export const defaultThemeConfig: ThemeConfigValue = {
     bg: "#F8FAFC",
     fg: "black",
   },
+  red: "red",
+  green: "green",
+  enumItem: "#ccc",
+  white: "white",
+  noteBg: "#000000d6",
 };
