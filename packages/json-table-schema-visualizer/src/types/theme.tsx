@@ -16,4 +16,9 @@ export interface ThemeConfigValue {
     bg: string;
     shadow: string;
   };
+  red: string;
+  green: string;
+  enumItem: string;
+  white: string;
+  noteBg: string;
 }
