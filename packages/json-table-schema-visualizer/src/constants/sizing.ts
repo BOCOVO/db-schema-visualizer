@@ -15,9 +15,18 @@ export const CONNECTION_HANDLE_OFFSET = 20;
 export const PADDINGS = {
   xs: 5,
   sm: 8,
+  md: 10,
+  lg: 20,
 };
 
 export const FONT_SIZES = {
   md: 13,
   lg: 15,
 };
+
+export const FIELD_DETAILS_CARET = {
+  w: 5,
+  h: 5,
+};
+
+export const FIELD_DETAILS_TOOLTIPS_W = 200;
