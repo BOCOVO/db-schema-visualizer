@@ -15,18 +15,18 @@ export const computeFieldDetailBoxDimension = (
   const finalW = Math.max(enumDetailMaxW, FIELD_DETAILS_TOOLTIPS_W);
 
   const letterApproximateDim = getLetterApproximateDimension();
-  const noteH =
-    note !== undefined
-      ? estimateSentenceLineCount(note, finalW) * letterApproximateDim.height
-      : 0;
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  const noteH = note
+    ? estimateSentenceLineCount(note, finalW) * letterApproximateDim.height
+    : 0;
 
   const enumsDetailsH =
     enumObject === undefined
       ? 0
       : letterApproximateDim.height *
-        /* the 1 added is for the title line */ (1 + enumObject.values.length);
+        (1 + enumObject.values.length); /* the 1 added is for the title line */
 
-  const noteHWithPadding = noteH + PADDINGS.lg;
+  const noteHWithPadding = noteH + (noteH !== 0 ? PADDINGS.lg : PADDINGS.md);
   const totalH =
     enumsDetailsH +
     noteHWithPadding +
