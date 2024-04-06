@@ -86,6 +86,7 @@ const Table = ({ fields, name }: TableProps) => {
             isPrimaryKey={field.pk}
             offsetY={index * COLUMN_HEIGHT}
             relationalTables={field.relational_tables}
+            note={field.note}
           />
         ))}
       </Group>
