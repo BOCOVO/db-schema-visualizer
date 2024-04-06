@@ -6,6 +6,7 @@ import { useGetEnum } from "@/hooks/enums";
 import { useTheme } from "@/hooks/theme";
 import { computeTextSize } from "@/utils/computeTextSize";
 import { PADDINGS } from "@/constants/sizing";
+import { createEnumItemText } from "@/utils/createEnumItemText";
 
 interface EnumDetailsProps {
   enumName: string;
@@ -34,7 +35,7 @@ const EnumDetails = ({ enumName, y }: EnumDetailsProps) => {
         <KonvaText
           key={item.name}
           y={(index + 1) * enumTextSize.height}
-          text={`- ${item.name}`}
+          text={createEnumItemText(item.name)}
           fill={theme.enumItem}
         />
       ))}
