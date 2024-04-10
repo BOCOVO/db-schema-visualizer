@@ -1,4 +1,4 @@
-import type { JSONTableSchema } from "shared/types/tableSchema";
+import type { JSONTableSchema, JSONTableTable } from "shared/types/tableSchema";
 
 export const exampleData: JSONTableSchema = {
   refs: [
@@ -170,4 +170,11 @@ export const exampleData: JSONTableSchema = {
       ],
     },
   ],
+};
+
+export const createBookingsTableClone = (key: string): JSONTableTable => {
+  return {
+    ...exampleData.tables[2],
+    name: `bookings_${key}`,
+  };
 };
