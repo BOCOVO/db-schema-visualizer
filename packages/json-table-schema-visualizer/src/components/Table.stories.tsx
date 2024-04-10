@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 
 import { exampleData } from "@/fake/fakeJsonTables";
 import MainProviders from "@/providers/MainProviders";
+import TablesPositionsProvider from "@/providers/TablesPositionsProvider";
 
 const meta: Meta = {
   component: Table,
@@ -16,9 +17,11 @@ type Story = StoryObj<typeof Table>;
 
 export const TableStory: Story = {
   render: (props) => (
-    <MainProviders enums={exampleData.enums} tables={exampleData.tables}>
-      <Table {...props} />
-    </MainProviders>
+    <TablesPositionsProvider tables={[]}>
+      <MainProviders enums={exampleData.enums} tables={exampleData.tables}>
+        <Table {...props} />
+      </MainProviders>
+    </TablesPositionsProvider>
   ),
   args: {
     ...exampleData.tables[0],
