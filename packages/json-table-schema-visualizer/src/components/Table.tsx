@@ -18,7 +18,7 @@ import {
 import { useTheme } from "@/hooks/theme";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
-import { useTablesInfo } from "@/hooks/table";
+import { useTablePosition, useTablesInfo } from "@/hooks/table";
 
 interface TableProps extends JSONTableTable {}
 
@@ -26,6 +26,14 @@ const Table = ({ fields, name }: TableProps) => {
   const theme = useTheme();
   const tableRef = useRef<null | Konva.Group>(null);
   const { setHoveredTableName } = useTablesInfo();
+  const tablePosition = useTablePosition(name);
+
+  useEffect(() => {
+    if (tableRef.current != null && tablePosition.length === 2) {
+      tableRef.current.x(tablePosition[0]);
+      tableRef.current.y(tablePosition[1]);
+    }
+  }, [tablePosition]);
 
   useEffect(() => {
     if (tableRef.current != null) {
