@@ -51,6 +51,7 @@ const Table = ({ fields, name }: TableProps) => {
   };
 
   const handleOnDrag = (event: KonvaEventObject<DragEvent>) => {
+    event.currentTarget.moveToTop();
     propagateCoordinates(event.target as Konva.Group);
   };
 
