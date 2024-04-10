@@ -5,6 +5,7 @@ import { type KonvaEventObject } from "konva/lib/Node";
 import type { Stage as CoreStage } from "konva/lib/Stage";
 
 import { useWindowSize } from "@/hooks/window";
+import { useCursorChanger } from "@/hooks/cursor";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -13,6 +14,8 @@ interface DiagramWrapperProps {
 const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const scaleBy = 1.02;
   const { height, width } = useWindowSize();
+  const { onChange: onGrabbing, onRestore: onGrabRelease } =
+    useCursorChanger("grabbing");
 
   const handleZooming = (e: KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -48,7 +51,14 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
 
   return (
     <main>
-      <Stage onWheel={handleZooming} width={width} height={height}>
+      <Stage
+        draggable
+        onDragStart={onGrabbing}
+        onDragEnd={onGrabRelease}
+        onWheel={handleZooming}
+        width={width}
+        height={height}
+      >
         <Layer>{children}</Layer>
       </Stage>
     </main>
