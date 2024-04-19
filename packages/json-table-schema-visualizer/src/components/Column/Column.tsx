@@ -17,7 +17,7 @@ interface ColumnProps {
   type: string;
   isPrimaryKey?: boolean;
   isEnum: boolean;
-  relationalTables?: Set<string> | null;
+  relationalTables?: string[] | null;
   offsetY?: number;
   note?: string;
 }

@@ -3,7 +3,7 @@ export const shouldHighLightCol = (
   hovered: boolean,
   tableName: string | null,
   hoveredTable: string | null,
-  relationalTables?: Set<string> | null,
+  relationalTables?: string[] | null,
 ): boolean => {
   if (hovered) {
     return true;
@@ -13,11 +13,7 @@ export const shouldHighLightCol = (
     return true;
   }
 
-  if (
-    !!relationalTables &&
-    !!hoveredTable &&
-    relationalTables.has(hoveredTable)
-  ) {
+  if (!!hoveredTable && relationalTables?.includes(hoveredTable)) {
     return true;
   }
 

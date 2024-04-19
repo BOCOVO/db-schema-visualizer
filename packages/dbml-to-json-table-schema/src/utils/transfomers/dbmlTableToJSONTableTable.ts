@@ -7,7 +7,7 @@ import type Table from "@dbml/core/types/model_structure/table";
 
 export const dbmlTableToJSONTableTable = (
   { name, note, fields, indexes }: Table,
-  relationalFieldMap: Map<string, Set<string>>,
+  relationalFieldMap: Map<string, string[]>,
   enumsMap: Set<string>,
 ): JSONTableTable => {
   return {

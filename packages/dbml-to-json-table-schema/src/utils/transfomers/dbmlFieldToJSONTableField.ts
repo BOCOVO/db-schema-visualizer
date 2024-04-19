@@ -5,7 +5,7 @@ import type Field from "@dbml/core/types/model_structure/field";
 
 interface DbmlToJSONTableFieldParams {
   field: Field;
-  relationalFieldMap: Map<string, Set<string>>;
+  relationalFieldMap: Map<string, string[]>;
   enumsSet: Set<string>;
   ownerTable: string;
 }

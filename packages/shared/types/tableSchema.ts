@@ -32,7 +32,7 @@ export interface JSONTableField
   > {
   type: { type_name: string; is_enum: boolean };
   is_relation: boolean;
-  relational_tables?: Set<string> | null;
+  relational_tables?: string[] | null;
 }
 
 export interface JSONTableIndexColumn

@@ -10,7 +10,7 @@ interface ColumnWrapperProps {
   children: ReactNode;
   offsetY?: number;
   tableName: string;
-  relationalTables?: Set<string> | null;
+  relationalTables?: string[] | null;
 }
 
 const ColumnWrapper = ({

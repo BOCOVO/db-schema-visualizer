@@ -4,8 +4,8 @@ import type Ref from "@dbml/core/types/model_structure/ref";
 
 export const createRelationalTalesMap = (
   refs: Ref[],
-): Map<string, Set<string>> => {
-  let map = new Map<string, Set<string>>();
+): Map<string, string[]> => {
+  let map = new Map<string, string[]>();
 
   refs.forEach((ref) => {
     const [sourceEndpoint, targetEndpoint] = ref.endpoints;
@@ -34,18 +34,18 @@ export const createRelationalTalesMap = (
 };
 
 const appendRelationalTablesMap = (
-  map: Map<string, Set<string>>,
+  map: Map<string, string[]>,
   fieldKey: string,
   tableToAdd: string,
-): Map<string, Set<string>> => {
-  const newMap = new Map<string, Set<string>>(map);
+): Map<string, string[]> => {
+  const newMap = new Map<string, string[]>(map);
 
   if (newMap.has(fieldKey)) {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const tablesSet = newMap.get(fieldKey)!;
-    tablesSet.add(tableToAdd);
+    tablesSet.push(tableToAdd);
   } else {
-    const tablesSet = new Set([tableToAdd]);
+    const tablesSet = [tableToAdd];
     newMap.set(fieldKey, tablesSet);
   }
 
