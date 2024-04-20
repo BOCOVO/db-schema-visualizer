@@ -35,8 +35,6 @@ const ConnectionPath = ({
     setIsHovered(false);
   };
 
-  console.log("path", path);
-
   return (
     <Path
       data={path}

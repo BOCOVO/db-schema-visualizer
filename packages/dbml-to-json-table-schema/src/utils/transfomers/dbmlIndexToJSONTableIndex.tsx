@@ -15,7 +15,7 @@ export const dbmlIndexToJSONTableIndex = ({
   return {
     unique,
     type,
-    pk,
+    pk: Boolean(pk),
     name,
     // the note returned by the dbml parser is not string
     // but an object there is an typing error in their package
