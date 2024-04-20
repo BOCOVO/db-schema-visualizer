@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./dist/extension.js",
+  "main": "./dist/extension/index.js",
   "contributes": {
     "commands": [
       {
@@ -21,27 +21,38 @@
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
-    "compile": "webpack",
-    "watch": "webpack --watch",
-    "package": "webpack --mode production --devtool hidden-source-map",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "pretest": "yarn run compile-tests && yarn run build && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/vscode": "^1.87.0",
+    "@tomjs/vite-plugin-vscode": "^2.2.0",
+    "@tomjs/vscode-extension-webview": "^1.2.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
+    "@types/react": "^18.2.75",
+    "@types/react-dom": "^18.2.24",
+    "@types/vscode": "^1.87.0",
     "@typescript-eslint/eslint-plugin": "^7.4.0",
     "@typescript-eslint/parser": "^7.4.0",
-    "eslint": "^8.57.0",
-    "typescript": "^5.3.3",
-    "ts-loader": "^9.5.1",
-    "webpack": "^5.91.0",
-    "webpack-cli": "^5.1.4",
+    "@vitejs/plugin-react-swc": "^3.6.0",
     "@vscode/test-cli": "^0.0.8",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.57.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.2.8",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "dependencies": {
+    "dbml-to-json-table-schema": "0.0.0",
+    "json-table-schema-visualizer": "1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "shared": "0.0.0"
   }
 }
