@@ -14,10 +14,23 @@
   "contributes": {
     "commands": [
       {
-        "command": "db-diagram-visualizer.helloWorld",
-        "title": "Hello World"
+        "command": "db-diagram-visualizer.previewDiagrams",
+        "title": "Hello World",
+        "icon": {
+          "light": "./assets/icons/eye.svg",
+          "dark": "./assets/icons/eye.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == dbml",
+          "command": "db-diagram-visualizer.previewDiagrams",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "yarn run package",
