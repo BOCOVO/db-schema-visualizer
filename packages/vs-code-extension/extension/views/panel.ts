@@ -7,6 +7,7 @@ import {
 } from "vscode";
 import { WebviewHelper } from "./helper";
 import { parseDBMLToJSON } from "dbml-to-json-table-schema";
+import { WEB_VIEW_NAME, WEB_VIEW_TITLE } from "../constants";
 
 export class MainPanel {
   public static currentPanel: MainPanel | undefined;
@@ -21,8 +22,6 @@ export class MainPanel {
       this._panel.webview,
       context,
     );
-
-    WebviewHelper.setupWebviewHooks(this._panel.webview, this._disposables);
   }
 
   public static render(context: ExtensionContext) {
@@ -43,8 +42,8 @@ export class MainPanel {
       MainPanel.currentPanel._panel.reveal(previewColumn);
     } else {
       const panel = window.createWebviewPanel(
-        "showHelloWorld",
-        "Hello World",
+        WEB_VIEW_NAME,
+        WEB_VIEW_TITLE,
         previewColumn,
         {
           enableScripts: true,
@@ -83,8 +82,6 @@ export class MainPanel {
       type: "setSchema",
       payload: schema,
     });
-
-    console.log("schema", schema)
   };
 
   /**
