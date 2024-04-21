@@ -1,7 +1,7 @@
 {
-  "name": "db-diagram-visualizer",
-  "displayName": "db-diagram-visualizer",
-  "description": "Database diagram viewer",
+  "name": "dbml-erd-visualizer",
+  "displayName": "DBML Entity-Relationship Diagrams visualizer",
+  "description": "An Vscode extension to visualize the database schema in ERD ( Entity Relationship Diagram ) from dbml or prisma file in your vscode.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.87.0"
@@ -14,7 +14,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "db-diagram-visualizer.previewDiagrams",
+        "command": "dbml-erd-visualizer.previewDiagrams",
         "title": "Show diagram",
         "icon": {
           "light": "./assets/icons/eye.svg",
@@ -26,7 +26,7 @@
       "editor/title": [
         {
           "when": "resourceLangId == dbml",
-          "command": "db-diagram-visualizer.previewDiagrams",
+          "command": "dbml-erd-visualizer.previewDiagrams",
           "group": "navigation"
         }
       ]

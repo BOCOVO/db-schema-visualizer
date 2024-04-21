@@ -1,6 +1,6 @@
-# db-diagram-visualizer README
+# dbml-erd-visualizer README
 
-This is the README for your extension "db-diagram-visualizer". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "dbml-erd-visualizer". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
