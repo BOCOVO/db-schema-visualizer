@@ -34,3 +34,4 @@ export const FIELD_DETAILS_TOOLTIPS_W = 200;
 export const TABLES_GAP_X = 50;
 export const TABLES_GAP_Y = 50;
 export const DIAGRAM_PADDING = 60;
+export const CONNECTION_RELATION_SYMBOL_OFFSET = 8;

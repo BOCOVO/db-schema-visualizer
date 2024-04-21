@@ -5,7 +5,7 @@ import { CONNECTION_HANDLE_OFFSET } from "@/constants/sizing";
 import { Position, type XYPosition } from "@/types/positions";
 
 // this is used for straight edges and simple smoothstep edges (LTR, RTL, BTT, TTB)
-export function getEdgeCenter({
+function getEdgeCenter({
   sourceX,
   sourceY,
   targetX,
@@ -60,7 +60,7 @@ const getDirection = ({
 const distance = (a: XYPosition, b: XYPosition): number =>
   Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2));
 
-export function getConnectionLinePoints({
+export function computeSmoothEdge({
   source,
   sourcePosition = Position.Left,
   target,
@@ -72,7 +72,7 @@ export function getConnectionLinePoints({
   target: XYPosition;
   targetPosition?: Position;
   offset?: number;
-}): XYPosition[] {
+}): string {
   const sourceDir = handleDirections[sourcePosition];
   const targetDir = handleDirections[targetPosition];
   const sourceGapped: XYPosition = {
@@ -223,7 +223,9 @@ export function getConnectionLinePoints({
     target,
   ];
 
-  return pathPoints;
+  const path = computePathFromPoints(pathPoints);
+
+  return path;
 }
 
 function getBend(
@@ -252,7 +254,7 @@ function getBend(
   return `L ${x},${y + bendSize * yDir}Q ${x},${y} ${x + bendSize * xDir},${y}`;
 }
 
-export const computePathFromPoints = (points: XYPosition[]): string => {
+const computePathFromPoints = (points: XYPosition[]): string => {
   const path = points.reduce<string>((res, p, i) => {
     let segment = "";
 

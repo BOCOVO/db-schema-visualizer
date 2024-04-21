@@ -7,7 +7,7 @@ import {
 } from "./computeTextSize";
 import { estimateSentenceLineCount } from "./estimateSentenceLineCount";
 
-import { PADDINGS } from "@/constants/sizing";
+import { FIELD_DETAILS_TOOLTIPS_W, PADDINGS } from "@/constants/sizing";
 
 export const computeFieldDetailBoxDimension = (
   note?: string,
@@ -16,12 +16,13 @@ export const computeFieldDetailBoxDimension = (
   const enumDetailMaxW =
     enumObject === undefined ? 0 : computeEnumDetailBoxMaxW(enumObject);
   const oneLineNoteW = note != null ? computeTextSize(note).width : 0;
-  const finalW = Math.max(enumDetailMaxW, oneLineNoteW) + PADDINGS.md;
+  const preferredWidth = Math.max(enumDetailMaxW, oneLineNoteW) + PADDINGS.md;
+  const finalWidth = Math.min(preferredWidth, FIELD_DETAILS_TOOLTIPS_W);
 
   const letterApproximateDim = getLetterApproximateDimension();
   // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
   const noteH = note
-    ? estimateSentenceLineCount(note, finalW) * letterApproximateDim.height
+    ? estimateSentenceLineCount(note, finalWidth) * letterApproximateDim.height
     : 0;
 
   const enumsDetailsH =
@@ -36,5 +37,5 @@ export const computeFieldDetailBoxDimension = (
   const noteHWithPadding = noteH + (noteH !== 0 ? PADDINGS.lg : PADDINGS.md);
   const totalH = noteHWithPadding + enumsPanelHWithPadding;
 
-  return { w: finalW, h: totalH, noteH: noteHWithPadding };
+  return { w: finalWidth, h: totalH, noteH: noteHWithPadding };
 };
