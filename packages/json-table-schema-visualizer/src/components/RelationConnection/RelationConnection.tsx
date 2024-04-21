@@ -30,12 +30,16 @@ const RelationConnection = ({ source, target }: RelationConnectionProps) => {
     });
   }, [sourcePosition, targetPosition, sourceX, targetX, sourceY, targetY]);
 
+  const relationOwner =
+    source.relation === "1" ? source.tableName : target.tableName;
+
   return (
     <>
       <ConnectionPath
         path={linePath}
         sourceTableName={source.tableName}
         targetTableName={target.tableName}
+        relationOwner={relationOwner}
       />
     </>
   );
