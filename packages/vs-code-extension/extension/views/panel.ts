@@ -106,7 +106,7 @@ export class MainPanel {
         payload: schema,
       });
     } catch (error) {
-      window.showErrorMessage("Error while parsing dbml");
+      window.showErrorMessage(`${error}`);
     }
   };
 
