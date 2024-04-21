@@ -57,7 +57,7 @@ export const exampleData: JSONTableSchema = {
           type: { type_name: "integer", is_enum: false },
           note: "a note",
           is_relation: true,
-          relational_tables: new Set(["users"]),
+          relational_tables: ["users"],
         },
         {
           name: "created_at",
@@ -86,7 +86,7 @@ export const exampleData: JSONTableSchema = {
           pk: true,
           note: "a note",
           is_relation: true,
-          relational_tables: new Set(["follows"]),
+          relational_tables: ["follows"],
         },
         {
           name: "email",

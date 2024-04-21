@@ -6,6 +6,7 @@ import { type ReactNode } from "react";
 
 import TablesInfoProvider from "./TablesInfoProvider";
 import EnumsProvider from "./EnumsProvider";
+import TablesColorProvider from "./TablesColorProvider";
 
 interface MainProvidersProps {
   tables: JSONTableTable[];
@@ -15,7 +16,9 @@ interface MainProvidersProps {
 const MainProviders = ({ enums, tables, children }: MainProvidersProps) => {
   return (
     <TablesInfoProvider tables={tables}>
-      <EnumsProvider enums={enums}>{children}</EnumsProvider>
+      <TablesColorProvider tables={tables}>
+        <EnumsProvider enums={enums}>{children}</EnumsProvider>
+      </TablesColorProvider>
     </TablesInfoProvider>
   );
 };

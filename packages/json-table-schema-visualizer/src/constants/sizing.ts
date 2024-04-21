@@ -1,5 +1,5 @@
 export const TABLE_WIDTH = 180;
-export const TABLE_COLOR_HEIGHT = 5;
+export const TABLE_COLOR_HEIGHT = 6;
 export const TABLE_LINE_HEIGHT = 25;
 export const COLUMN_HEIGHT = 30;
 export const TABLE_HEADER_HEIGHT = COLUMN_HEIGHT + TABLE_COLOR_HEIGHT;
