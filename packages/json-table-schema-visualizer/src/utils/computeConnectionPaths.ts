@@ -1,7 +1,4 @@
-import {
-  computePathFromPoints,
-  getConnectionLinePoints,
-} from "./computeConnectionPath";
+import { getBezierPath } from "./computeEgde/computeBezierEdge";
 import { getRelationSymbol } from "./getRelationSymbol";
 
 import { type Position, type XYPosition } from "@/types/positions";
@@ -23,24 +20,23 @@ export const computeConnectionPathWithSymbols = ({
   sourcePosition,
   targetPosition,
 }: Props): string => {
-  const points = getConnectionLinePoints({
+  const linePath = getBezierPath({
     sourcePosition,
     targetPosition,
     source: sourceXY,
     target: targetXY,
   });
 
-  const linePath = computePathFromPoints(points);
-
-  const sourcePoint = points.at(0);
-  const targetPoint = points.at(-1);
-
-  const sourceSymbolPath =
-    sourcePoint != null &&
-    getRelationSymbol(relationSource, sourcePosition, sourcePoint);
-  const targetSymbolPath =
-    targetPoint != null &&
-    getRelationSymbol(relationTarget, targetPosition, targetPoint);
+  const sourceSymbolPath = getRelationSymbol(
+    relationSource,
+    sourcePosition,
+    sourceXY,
+  );
+  const targetSymbolPath = getRelationSymbol(
+    relationTarget,
+    targetPosition,
+    targetXY,
+  );
 
   return `${linePath} ${sourceSymbolPath} ${targetSymbolPath}`;
 };
