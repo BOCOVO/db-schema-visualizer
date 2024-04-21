@@ -6,7 +6,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug Extension",
+      "name": "Debug DBML Extension",
       "type": "extensionHost",
       "request": "launch",
       "args": [
@@ -18,7 +18,7 @@
       "preLaunchTask": "npm: dev"
     },
     {
-      "name": "Preview Extension",
+      "name": "Preview DBML Extension",
       "type": "extensionHost",
       "request": "launch",
       "args": [
