@@ -1,4 +1,4 @@
-import { Layer, Stage } from "react-konva";
+import { Group, Layer, Stage } from "react-konva";
 import { type ReactNode } from "react";
 import { type KonvaEventObject } from "konva/lib/Node";
 
@@ -6,6 +6,7 @@ import type { Stage as CoreStage } from "konva/lib/Stage";
 
 import { useWindowSize } from "@/hooks/window";
 import { useCursorChanger } from "@/hooks/cursor";
+import { DIAGRAM_PADDING } from "@/constants/sizing";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -59,7 +60,11 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         width={width}
         height={height}
       >
-        <Layer>{children}</Layer>
+        <Layer>
+          <Group offsetX={-DIAGRAM_PADDING} offsetY={-DIAGRAM_PADDING}>
+            {children}
+          </Group>
+        </Layer>
       </Stage>
     </main>
   );

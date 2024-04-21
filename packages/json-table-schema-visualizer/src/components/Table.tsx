@@ -42,7 +42,10 @@ const Table = ({ fields, name }: TableProps) => {
   }, []);
 
   const tableHeight =
-    TABLE_COLOR_HEIGHT * 2 + COLUMN_HEIGHT + fields.length * COLUMN_HEIGHT;
+    TABLE_COLOR_HEIGHT +
+    COLUMN_HEIGHT +
+    fields.length * COLUMN_HEIGHT +
+    PADDINGS.sm;
 
   const tableDragEventName = computeTableDragEventName(name);
 
@@ -80,6 +83,7 @@ const Table = ({ fields, name }: TableProps) => {
         height={tableHeight}
         width={TABLE_WIDTH}
         fill={theme.table.bg}
+        cornerRadius={PADDINGS.sm}
       />
 
       <TableHeader title={name} />
