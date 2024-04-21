@@ -20,8 +20,8 @@ export const PADDINGS = {
 };
 
 export const FONT_SIZES = {
-  md: 13,
-  lg: 15,
+  md: 15,
+  lg: 18,
 };
 
 export const FIELD_DETAILS_CARET = {

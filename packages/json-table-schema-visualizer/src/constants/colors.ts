@@ -1,39 +1,39 @@
 export const tableColors = [
   {
     regular: "#6366f1",
-    lighter: "#d3dcff",
+    lighter: "#e4e6ff",
   },
   {
     regular: "#8b5cf6",
-    lighter: "#e3eaff",
+    lighter: "#f0f1ff",
   },
   {
     regular: "#a855f7",
-    lighter: "#f0e7ff",
+    lighter: "#f8f7ff",
   },
   {
     regular: "#d946ef",
-    lighter: "#fde7f5",
+    lighter: "#fdfbff",
   },
   {
     regular: "#ec4899",
-    lighter: "#ffe8ec",
+    lighter: "#ffe6f0",
   },
   {
     regular: "#f43f5e",
-    lighter: "#ffd9db",
+    lighter: "#ffebec",
   },
   {
     regular: "#ef4444",
-    lighter: "#ffe9d4",
+    lighter: "#ffefec",
   },
   {
     regular: "#f97316",
-    lighter: "#fff6e8",
+    lighter: "#fff8f5",
   },
   {
     regular: "#f59e0b",
-    lighter: "#fffae5",
+    lighter: "#fffaf1",
   },
   {
     regular: "#eab308",
@@ -41,7 +41,7 @@ export const tableColors = [
   },
   {
     regular: "#84cc16",
-    lighter: "#f6ffe0",
+    lighter: "#f6ffdf",
   },
   {
     regular: "#22c55e",
@@ -49,7 +49,7 @@ export const tableColors = [
   },
   {
     regular: "#10b981",
-    lighter: "#e2ffec",
+    lighter: "#e1ffed",
   },
   {
     regular: "#14b8a6",
@@ -57,7 +57,7 @@ export const tableColors = [
   },
   {
     regular: "#06b6d4",
-    lighter: "#e6fcff",
+    lighter: "#e7f8ff",
   },
   {
     regular: "#0ea5e9",

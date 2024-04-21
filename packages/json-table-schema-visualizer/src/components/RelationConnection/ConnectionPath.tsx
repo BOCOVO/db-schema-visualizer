@@ -3,19 +3,23 @@ import { useState } from "react";
 
 import { useTheme } from "@/hooks/theme";
 import { useTablesInfo } from "@/hooks/table";
+import { useTableColor } from "@/hooks/tableColor";
 
 interface ConnectionPathProps {
   path: string;
   sourceTableName: string;
   targetTableName: string;
+  relationOwner: string;
 }
 const ConnectionPath = ({
   path,
   sourceTableName,
   targetTableName,
+  relationOwner,
 }: ConnectionPathProps) => {
   const theme = useTheme();
   const { hoveredTableName } = useTablesInfo();
+  const sourceTableColors = useTableColor(relationOwner);
   const [isHovered, setIsHovered] = useState(false);
 
   const highlight =
@@ -24,7 +28,7 @@ const ConnectionPath = ({
     isHovered;
 
   const strokeColor = highlight
-    ? theme.connection.active
+    ? sourceTableColors?.regular ?? theme.connection.active
     : theme.connection.default;
 
   const handleOnHover = () => {
