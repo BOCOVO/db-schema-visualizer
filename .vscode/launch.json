@@ -10,10 +10,10 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vs-code-extension"
       ],
       "outFiles": [
-        "${workspaceFolder}/dist/extension/*.js"
+        "${workspaceFolder}/packages/vs-code-extension/dist/extension/*.js"
       ],
       "preLaunchTask": "npm: dev"
     },
@@ -22,10 +22,10 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--extensionDevelopmentPath=${workspaceFolder}/packages/vs-code-extension"
       ],
       "outFiles": [
-        "${workspaceFolder}/dist/extension/*.js"
+        "${workspaceFolder}/packages/vs-code-extension/dist/extension/*.js"
       ],
       "preLaunchTask": "npm: build"
     }
