@@ -15,7 +15,7 @@
     "commands": [
       {
         "command": "db-diagram-visualizer.previewDiagrams",
-        "title": "Hello World",
+        "title": "Show diagram",
         "icon": {
           "light": "./assets/icons/eye.svg",
           "dark": "./assets/icons/eye.svg"
