@@ -20,7 +20,12 @@ const TableHeader = ({ title }: TableHeaderProps) => {
 
   return (
     <Group>
-      <Rect fill="red" height={TABLE_COLOR_HEIGHT} width={TABLE_WIDTH} />
+      <Rect
+        cornerRadius={[PADDINGS.sm, PADDINGS.sm]}
+        fill="red"
+        height={TABLE_COLOR_HEIGHT}
+        width={TABLE_WIDTH}
+      />
 
       <Rect
         y={TABLE_COLOR_HEIGHT}
