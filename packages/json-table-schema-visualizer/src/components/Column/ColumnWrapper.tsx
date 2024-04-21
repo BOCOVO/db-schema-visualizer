@@ -2,15 +2,15 @@ import { type ReactNode, useState } from "react";
 import { Group, Rect } from "react-konva";
 
 import { COLUMN_HEIGHT, TABLE_WIDTH } from "@/constants/sizing";
-import { useTheme } from "@/hooks/theme";
 import { useTablesInfo } from "@/hooks/table";
 import { shouldHighLightCol } from "@/utils/shouldHighLightCol";
 
 interface ColumnWrapperProps {
-  children: ReactNode;
+  children: (highlighted: boolean) => ReactNode;
   offsetY?: number;
   tableName: string;
   relationalTables?: string[] | null;
+  highlightColor: string;
 }
 
 const ColumnWrapper = ({
@@ -18,8 +18,8 @@ const ColumnWrapper = ({
   offsetY,
   tableName,
   relationalTables,
+  highlightColor,
 }: ColumnWrapperProps) => {
-  const theme = useTheme();
   const { hoveredTableName } = useTablesInfo();
   const [hovered, setHovered] = useState(false);
 
@@ -41,11 +41,11 @@ const ColumnWrapper = ({
   return (
     <Group onMouseOver={handleOnHover} onMouseLeave={handleOnLeave} y={offsetY}>
       <Rect
-        fill={highlighted ? theme.colAccent : "transparent"}
+        fill={highlighted ? highlightColor : "transparent"}
         width={TABLE_WIDTH}
         height={COLUMN_HEIGHT}
       />
-      {children}
+      {children(highlighted)}
     </Group>
   );
 };

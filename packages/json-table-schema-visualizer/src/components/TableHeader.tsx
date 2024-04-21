@@ -10,6 +10,7 @@ import {
   TABLE_WIDTH,
 } from "@/constants/sizing";
 import { useTheme } from "@/hooks/theme";
+import { useTableColor } from "@/hooks/tableColor";
 
 interface TableHeaderProps {
   title: string;
@@ -17,12 +18,15 @@ interface TableHeaderProps {
 
 const TableHeader = ({ title }: TableHeaderProps) => {
   const theme = useTheme();
+  const tableColors = useTableColor(title);
+
+  const tableMarkerColor = tableColors?.regular ?? "red";
 
   return (
     <Group>
       <Rect
         cornerRadius={[PADDINGS.sm, PADDINGS.sm]}
-        fill="red"
+        fill={tableMarkerColor}
         height={TABLE_COLOR_HEIGHT}
         width={TABLE_WIDTH}
       />

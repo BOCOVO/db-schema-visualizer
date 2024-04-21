@@ -3,6 +3,7 @@ import FieldDetails from "../FieldDetails/FieldDetails";
 
 import ColumnWrapper from "./ColumnWrapper";
 
+import { useTableColor } from "@/hooks/tableColor";
 import {
   COLUMN_HEIGHT,
   FONT_SIZES,
@@ -33,6 +34,7 @@ const Column = ({
   note,
 }: ColumnProps) => {
   const theme = useTheme();
+  const tableColors = useTableColor(tableName);
 
   const colTextColor = theme.text[900];
   const typeTextColor = theme.text[700];
@@ -40,36 +42,43 @@ const Column = ({
 
   return (
     <ColumnWrapper
+      highlightColor={tableColors?.lighter ?? theme.colAccent}
       relationalTables={relationalTables}
       offsetY={offsetY}
       tableName={tableName}
     >
-      <KonvaText
-        ellipsis
-        wrap="none"
-        text={colName}
-        fill={colTextColor}
-        width={TABLE_WIDTH}
-        fontStyle={fontStyle}
-        padding={PADDINGS.sm}
-        height={COLUMN_HEIGHT}
-        fontSize={FONT_SIZES.md}
-      />
+      {(highlighted) => (
+        <>
+          <KonvaText
+            ellipsis
+            wrap="none"
+            text={colName}
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
+            fill={(highlighted && tableColors?.regular) || colTextColor}
+            width={TABLE_WIDTH}
+            fontStyle={fontStyle}
+            padding={PADDINGS.sm}
+            height={COLUMN_HEIGHT}
+            fontSize={FONT_SIZES.md}
+          />
 
-      <KonvaText
-        text={isEnum ? `${type} 🅴` : type}
-        align="right"
-        width={TABLE_WIDTH}
-        fill={typeTextColor}
-        padding={PADDINGS.sm}
-        fontStyle={fontStyle}
-        fontSize={FONT_SIZES.md}
-        height={COLUMN_HEIGHT}
-      />
+          <KonvaText
+            text={isEnum ? `${type} 🅴` : type}
+            align="right"
+            width={TABLE_WIDTH}
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
+            fill={(highlighted && tableColors?.regular) || typeTextColor}
+            padding={PADDINGS.sm}
+            fontStyle={fontStyle}
+            fontSize={FONT_SIZES.md}
+            height={COLUMN_HEIGHT}
+          />
 
-      {note != null || isEnum ? (
-        <FieldDetails note={note ?? ""} enumName={type} />
-      ) : null}
+          {note != null || isEnum ? (
+            <FieldDetails note={note ?? ""} enumName={type} />
+          ) : null}
+        </>
+      )}
     </ColumnWrapper>
   );
 };
