@@ -1,18 +1,26 @@
 import {
   Disposable,
   ExtensionContext,
+  TextDocument,
   ViewColumn,
   WebviewPanel,
   window,
+  workspace,
 } from "vscode";
 import { WebviewHelper } from "./helper";
 import { parseDBMLToJSON } from "dbml-to-json-table-schema";
-import { WEB_VIEW_NAME, WEB_VIEW_TITLE } from "../constants";
+import {
+  DIAGRAM_UPDATER_DEBOUNCE_TIME,
+  WEB_VIEW_NAME,
+  WEB_VIEW_TITLE,
+} from "../constants";
 
 export class MainPanel {
   public static currentPanel: MainPanel | undefined;
   private readonly _panel: WebviewPanel;
   private _disposables: Disposable[] = [];
+  // to add debouncing on diagram update after a file change
+  private _lastTimeout: NodeJS.Timeout | null = null;
 
   private constructor(panel: WebviewPanel, context: ExtensionContext) {
     this._panel = panel;
@@ -22,6 +30,25 @@ export class MainPanel {
       this._panel.webview,
       context,
     );
+  }
+
+  /**
+   * listen for file changes and update the diagram
+   */
+  public static registerDiagramUpdaterOnfFileChange() {
+    const disposable = workspace.onDidChangeTextDocument(async (event) => {
+      if (event.document.languageId === "dbml") {
+        if (MainPanel.currentPanel?._lastTimeout) {
+          clearTimeout(MainPanel.currentPanel?._lastTimeout);
+        }
+
+        MainPanel.currentPanel!._lastTimeout = setTimeout(() => {
+          MainPanel.publishSchema(event.document);
+        }, DIAGRAM_UPDATER_DEBOUNCE_TIME);
+      }
+    });
+
+    MainPanel.currentPanel?._disposables.push(disposable);
   }
 
   public static render(context: ExtensionContext) {
@@ -51,9 +78,10 @@ export class MainPanel {
       );
 
       MainPanel.currentPanel = new MainPanel(panel, context);
+      MainPanel.registerDiagramUpdaterOnfFileChange();
     }
 
-    MainPanel.publishSchema();
+    MainPanel.publishSchema(editor.document);
   }
 
   static getCurrentEditor() {
@@ -68,20 +96,18 @@ export class MainPanel {
     return editor;
   }
 
-  static publishSchema = () => {
-    const editor = MainPanel.getCurrentEditor();
-    if (!editor) {
-      return;
-    }
-
-    const document = editor.document;
+  static publishSchema = (document: TextDocument) => {
     const dbmlContent = document.getText();
-    const schema = parseDBMLToJSON(dbmlContent);
+    try {
+      const schema = parseDBMLToJSON(dbmlContent);
 
-    this.currentPanel?._panel.webview.postMessage({
-      type: "setSchema",
-      payload: schema,
-    });
+      this.currentPanel?._panel.webview.postMessage({
+        type: "setSchema",
+        payload: schema,
+      });
+    } catch (error) {
+      window.showErrorMessage("Error while parsing dbml");
+    }
   };
 
   /**
