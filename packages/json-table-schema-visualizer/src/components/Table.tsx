@@ -66,6 +66,12 @@ const Table = ({ fields, name }: TableProps) => {
     setHoveredTableName(null);
   };
 
+  const moveTableToTop = () => {
+    if (tableRef.current != null) {
+      tableRef.current.moveToTop();
+    }
+  };
+
   return (
     <Group
       ref={tableRef}
@@ -75,6 +81,7 @@ const Table = ({ fields, name }: TableProps) => {
       height={tableHeight}
       onMouseEnter={handleOnHover}
       onMouseLeave={handleOnBlur}
+      onClick={moveTableToTop}
     >
       <Rect
         shadowBlur={PADDINGS.xs}
