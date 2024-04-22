@@ -28,6 +28,9 @@
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "options": {
+        "cwd": "${workspaceFolder}/packages/dbml-vs-code-extension"
       }
     },
     {
@@ -37,7 +40,10 @@
         "kind": "build",
         "isDefault": true
       },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/packages/dbml-vs-code-extension"
+      }
     }
   ]
 }
