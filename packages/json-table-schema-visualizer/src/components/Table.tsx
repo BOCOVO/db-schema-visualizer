@@ -32,6 +32,7 @@ const Table = ({ fields, name }: TableProps) => {
     if (tableRef.current != null && tablePosition.length === 2) {
       tableRef.current.x(tablePosition[0]);
       tableRef.current.y(tablePosition[1]);
+      propagateCoordinates(tableRef.current);
     }
   }, [tablePosition]);
 
