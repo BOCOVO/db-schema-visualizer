@@ -19,6 +19,7 @@ import { useTheme } from "@/hooks/theme";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
 import { useTablePosition, useTablesInfo } from "@/hooks/table";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 interface TableProps extends JSONTableTable {}
 
@@ -40,6 +41,10 @@ const Table = ({ fields, name }: TableProps) => {
     if (tableRef.current != null) {
       propagateCoordinates(tableRef.current);
     }
+
+    return () => {
+      tableCoordsStore.remove(name);
+    };
   }, []);
 
   const tableHeight =
@@ -51,7 +56,9 @@ const Table = ({ fields, name }: TableProps) => {
   const tableDragEventName = computeTableDragEventName(name);
 
   const propagateCoordinates = (node: Konva.Group) => {
-    eventEmitter.emit(tableDragEventName, { x: node.x(), y: node.y() });
+    const tableCoords = { x: node.x(), y: node.y() };
+    eventEmitter.emit(tableDragEventName, tableCoords);
+    tableCoordsStore.setCoords(name, tableCoords);
   };
 
   const handleOnDrag = (event: KonvaEventObject<DragEvent>) => {

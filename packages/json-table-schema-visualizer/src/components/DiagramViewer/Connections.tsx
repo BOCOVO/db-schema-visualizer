@@ -11,7 +11,7 @@ const RelationsConnections = ({ refs }: RelationsConnectionsProps) => {
     const source = ref.endpoints[0];
     const target = ref.endpoints[1];
 
-    const key = `${source.fieldNames[0]}${target.fieldNames[0]}`;
+    const key = `${source.tableName}-${source.fieldNames[0]}-${target.tableName}-${target.fieldNames[0]}`;
 
     return <RelationConnection key={key} source={source} target={target} />;
   });
