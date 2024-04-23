@@ -15,7 +15,7 @@ interface ThemeProviderProps extends PropsWithChildren {
 const TablesPositionsProvider = ({ tables, children }: ThemeProviderProps) => {
   const tablesPositions = useMemo(() => {
     return computeTablesPositions(tables);
-  }, [tables]);
+  }, []);
 
   return (
     <TablesPositionsContext.Provider value={{ tablesPositions }}>

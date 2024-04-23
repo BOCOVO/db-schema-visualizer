@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useTablesInfo } from "./table";
 
@@ -10,6 +10,7 @@ import { computeTableDragEventName } from "@/utils/eventName";
 import eventEmitter from "@/events-emitter";
 import { computeConnectionHandlePos } from "@/utils/computeConnectionHandlePositions";
 import { TABLE_WIDTH } from "@/constants/sizing";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 interface UseRelationTablesCoordsReturn {
   sourceXY: XYPosition;
@@ -38,14 +39,23 @@ export const useRelationsCoords = (
   source: RelationItem,
   target: RelationItem,
 ): UseRelationTablesCoordsReturn => {
-  const [sourceTableCoords, setSourceTableCoords] = useState<XYPosition>({
-    x: 0,
-    y: 0,
-  });
-  const [targetTableCoords, setTargetTableCoords] = useState<XYPosition>({
-    x: 0,
-    y: 0,
-  });
+  // by default use table position available in the
+  // table coords store
+  const sourceTableDefaultCoords = useMemo(
+    () => tableCoordsStore.getCoords(source.tableName),
+    [],
+  );
+  const targetTableDefaultCoords = useMemo(
+    () => tableCoordsStore.getCoords(target.tableName),
+    [],
+  );
+
+  const [sourceTableCoords, setSourceTableCoords] = useState<XYPosition>(
+    sourceTableDefaultCoords,
+  );
+  const [targetTableCoords, setTargetTableCoords] = useState<XYPosition>(
+    targetTableDefaultCoords,
+  );
   const [sourceColY, targetColY] = useRelationsColsY(source, target);
 
   const sourceTableDragEventName = computeTableDragEventName(source?.tableName);
