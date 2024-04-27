@@ -6,7 +6,7 @@
     "lib": ["ES2022", "DOM"],
     "sourceMap": true,
     "rootDir": "./",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "strict": true,
     "jsx": "react-jsx",
     "paths": {
