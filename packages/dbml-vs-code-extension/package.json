@@ -30,6 +30,23 @@
           "group": "navigation"
         }
       ]
+    },
+    "configuration": {
+      "title": "DBML Entity Relationship Diagram",
+      "properties": {
+        "dbmlERDPreviewer.preferredTheme": {
+          "type": "string",
+          "default": "dark",
+          "enum": [
+            "dark",
+            "light"
+          ],
+          "enumDescriptions": [
+            "To use dark mode theme colors",
+            "To use light mode theme colors"
+          ]
+        }
+      }
     }
   },
   "scripts": {
