@@ -10,7 +10,7 @@ import {
   PADDINGS,
   TABLE_WIDTH,
 } from "@/constants/sizing";
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 
 interface ColumnProps {
   colName: string;
@@ -33,16 +33,16 @@ const Column = ({
   isEnum,
   note,
 }: ColumnProps) => {
-  const theme = useTheme();
+  const themeColors = useThemeColors();
   const tableColors = useTableColor(tableName);
 
-  const colTextColor = theme.text[900];
-  const typeTextColor = theme.text[700];
+  const colTextColor = themeColors.text[900];
+  const typeTextColor = themeColors.text[700];
   const fontStyle = isPrimaryKey ? "bold" : "normal";
 
   return (
     <ColumnWrapper
-      highlightColor={tableColors?.lighter ?? theme.colAccent}
+      highlightColor={tableColors?.lighter ?? themeColors.colAccent}
       relationalTables={relationalTables}
       offsetY={offsetY}
       tableName={tableName}

@@ -15,7 +15,7 @@ import {
   TABLE_HEADER_HEIGHT,
   TABLE_WIDTH,
 } from "@/constants/sizing";
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
 import { useTablePosition, useTablesInfo } from "@/hooks/table";
@@ -24,7 +24,7 @@ import { tableCoordsStore } from "@/stores/tableCoords";
 interface TableProps extends JSONTableTable {}
 
 const Table = ({ fields, name }: TableProps) => {
-  const theme = useTheme();
+  const themeColors = useThemeColors();
   const tableRef = useRef<null | Konva.Group>(null);
   const { setHoveredTableName } = useTablesInfo();
   const tablePosition = useTablePosition(name);
@@ -94,10 +94,10 @@ const Table = ({ fields, name }: TableProps) => {
       <Rect
         shadowBlur={PADDINGS.xs}
         shadowOpacity={0.2}
-        shadowColor={theme.table.shadow}
+        shadowColor={themeColors.table.shadow}
         height={tableHeight}
         width={TABLE_WIDTH}
-        fill={theme.table.bg}
+        fill={themeColors.table.bg}
         cornerRadius={PADDINGS.sm}
       />
 

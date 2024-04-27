@@ -1,18 +1,34 @@
 import { createContext, type PropsWithChildren } from "react";
 
-import type { ThemeConfigValue } from "@/types/theme";
+import {
+  type ThemeColors,
+  type ThemeProviderValue,
+  Theme,
+} from "@/types/theme";
+import { darkThemeConfig } from "@/constants/theme";
 
-import { defaultThemeConfig } from "@/constants/theme";
-
-export const ThemeContext = createContext<ThemeConfigValue>(defaultThemeConfig);
+export const ThemeContext = createContext<ThemeProviderValue>({
+  themeColors: darkThemeConfig,
+  theme: Theme.dark,
+  setTheme: () => {},
+});
 
 interface ThemeProviderProps extends PropsWithChildren {
-  theme: ThemeConfigValue;
+  theme: Theme;
+  themeColors: ThemeColors;
+  setTheme: (value: Theme) => void;
 }
 
-const ThemeProvider = ({ theme, children }: ThemeProviderProps) => {
+const ThemeProvider = ({
+  theme,
+  themeColors,
+  setTheme,
+  children,
+}: ThemeProviderProps) => {
   return (
-    <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ setTheme, theme, themeColors }}>
+      {children}
+    </ThemeContext.Provider>
   );
 };
 
