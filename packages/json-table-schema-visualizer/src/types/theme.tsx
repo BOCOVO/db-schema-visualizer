@@ -1,4 +1,8 @@
-export interface ThemeConfigValue {
+export enum Theme {
+  light = "light",
+  dark = "dark",
+}
+export interface ThemeColors {
   text: {
     900: string;
     700: string;
@@ -21,4 +25,11 @@ export interface ThemeConfigValue {
   enumItem: string;
   white: string;
   noteBg: string;
+  bg: string;
+}
+
+export interface ThemeProviderValue {
+  themeColors: ThemeColors;
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
 }

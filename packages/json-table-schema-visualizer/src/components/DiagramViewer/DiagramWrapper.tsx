@@ -2,11 +2,15 @@ import { Group, Layer, Stage } from "react-konva";
 import { type ReactNode } from "react";
 import { type KonvaEventObject } from "konva/lib/Node";
 
+import ThemeToggler from "../ThemeToggler/ThemeToggler";
+
 import type { Stage as CoreStage } from "konva/lib/Stage";
 
 import { useWindowSize } from "@/hooks/window";
 import { useCursorChanger } from "@/hooks/cursor";
 import { DIAGRAM_PADDING } from "@/constants/sizing";
+import { useThemeColors, useThemeContext } from "@/hooks/theme";
+import { Theme } from "@/types/theme";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -15,8 +19,10 @@ interface DiagramWrapperProps {
 const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const scaleBy = 1.02;
   const { height, width } = useWindowSize();
+  const { theme } = useThemeContext();
   const { onChange: onGrabbing, onRestore: onGrabRelease } =
     useCursorChanger("grabbing");
+  const themeColors = useThemeColors();
 
   const handleZooming = (e: KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -51,7 +57,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   };
 
   return (
-    <main>
+    <main className={`relative ${theme === Theme.dark ? "dark" : ""}`}>
       <Stage
         draggable
         onDragStart={onGrabbing}
@@ -59,6 +65,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         onWheel={handleZooming}
         width={width}
         height={height}
+        style={{ backgroundColor: themeColors.bg }}
       >
         <Layer>
           <Group offsetX={-DIAGRAM_PADDING} offsetY={-DIAGRAM_PADDING}>
@@ -66,6 +73,10 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
           </Group>
         </Layer>
       </Stage>
+
+      <div className="absolute top-5 right-5">
+        <ThemeToggler />
+      </div>
     </main>
   );
 };
