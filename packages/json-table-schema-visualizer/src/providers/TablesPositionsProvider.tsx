@@ -8,11 +8,14 @@ import computeTablesPositions from "@/utils/tablePositioning/computeTablesPositi
 export const TablesPositionsContext =
   createContext<TablesPositionsContextValue | null>(null);
 
-interface ThemeProviderProps extends PropsWithChildren {
+interface TablesPositionsProviderProps extends PropsWithChildren {
   tables: JSONTableTable[];
 }
 
-const TablesPositionsProvider = ({ tables, children }: ThemeProviderProps) => {
+const TablesPositionsProvider = ({
+  tables,
+  children,
+}: TablesPositionsProviderProps) => {
   const tablesPositions = useMemo(() => {
     return computeTablesPositions(tables);
   }, []);
