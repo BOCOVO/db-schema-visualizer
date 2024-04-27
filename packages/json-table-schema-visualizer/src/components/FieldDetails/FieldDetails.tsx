@@ -5,7 +5,7 @@ import KonvaText from "../dumb/KonvaText";
 import EnumDetails from "./EnumDetails";
 import FieldDetailWrapper from "./FieldDetailWrapper";
 
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { computeFieldDetailBoxDimension } from "@/utils/computeFieldDetailBoxDimension";
 import { useGetEnum } from "@/hooks/enums";
 import { PADDINGS } from "@/constants/sizing";
@@ -16,7 +16,7 @@ interface FieldDetailsProps {
 }
 
 const FieldDetails = ({ note, enumName = "" }: FieldDetailsProps) => {
-  const theme = useTheme();
+  const themeColors = useThemeColors();
   const enumObject = useGetEnum(enumName);
 
   const contentDimension = computeFieldDetailBoxDimension(note, enumObject);
@@ -24,7 +24,7 @@ const FieldDetails = ({ note, enumName = "" }: FieldDetailsProps) => {
     <FieldDetailWrapper>
       <Group>
         <Rect
-          fill={theme.noteBg}
+          fill={themeColors.noteBg}
           width={contentDimension.w + PADDINGS.md * 2}
           height={contentDimension.h}
           cornerRadius={5}
@@ -34,7 +34,7 @@ const FieldDetails = ({ note, enumName = "" }: FieldDetailsProps) => {
           <KonvaText
             y={PADDINGS.md}
             width={contentDimension.w}
-            fill={theme.white}
+            fill={themeColors.white}
             text={note}
           />
 

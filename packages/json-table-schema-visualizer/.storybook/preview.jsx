@@ -1,7 +1,8 @@
 import React from "react";
 import { Layer, Stage } from "react-konva";
-import { defaultThemeConfig } from "../src/constants/theme";
+import { darkThemeConfig } from "../src/constants/theme";
 import ThemeProvider from "../src/providers/ThemeProvider";
+import "../src/styles/index.css";
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -16,7 +17,7 @@ const preview = {
   decorators: [
     (Story, configs) =>
       configs.parameters.withKonvaWrapper ? (
-        <ThemeProvider theme={defaultThemeConfig}>
+        <ThemeProvider themeColors={darkThemeConfig} theme={"light"}>
           <Stage width={window.innerWidth} height={window.innerHeight}>
             <Layer>
               <Story />

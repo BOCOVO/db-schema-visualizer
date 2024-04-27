@@ -2,7 +2,7 @@ import { Group, Line, Rect } from "react-konva";
 import { useState, type ReactNode } from "react";
 
 import { COLUMN_HEIGHT, PADDINGS, TABLE_WIDTH } from "@/constants/sizing";
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { computeCaretPoints } from "@/utils/computeCaretPoints";
 
 interface FieldDetailWrapperProps {
@@ -11,7 +11,7 @@ interface FieldDetailWrapperProps {
 
 const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
   const [isDetailVisible, setIsDetailVisible] = useState(false);
-  const theme = useTheme();
+  const themeColors = useThemeColors();
 
   const handleOnHover = () => {
     setIsDetailVisible(true);
@@ -36,7 +36,7 @@ const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
 
       {isDetailVisible ? (
         <Line
-          fill={theme.noteBg}
+          fill={themeColors.noteBg}
           closed
           points={computeCaretPoints(popoverX, COLUMN_HEIGHT)}
         />

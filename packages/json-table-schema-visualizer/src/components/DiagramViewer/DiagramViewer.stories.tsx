@@ -3,7 +3,6 @@ import DiagramViewer from "./DiagramViewer";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { createBookingsTableClone, exampleData } from "@/fake/fakeJsonTables";
-import { defaultThemeConfig } from "@/constants/theme";
 
 const meta: Meta<typeof DiagramViewer> = {
   component: DiagramViewer,
@@ -28,7 +27,6 @@ export const DiagramViewerStory: Story = {
   render: (props) => <DiagramViewer {...props} />,
   args: {
     tables,
-    theme: defaultThemeConfig,
     enums: exampleData.enums,
     refs: exampleData.refs,
   },
