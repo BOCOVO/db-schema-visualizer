@@ -1,4 +1,13 @@
-import { ExtensionContext, Webview } from "vscode";
+import {
+  Disposable,
+  ExtensionContext,
+  Webview,
+} from "vscode";
+import { WebviewCommand, WebviewPostMessage } from "@/extension/types/webviewCommand";
+import { WEBVIEW_HTML_MARKER_FOR_DEFAULT_CONFIG } from "../constants";
+import { DefaultPageConfig } from "../types/defaultPageConfig";
+import { ExtensionConfig } from "../helper/extensionConfigs";
+import { Theme } from "json-table-schema-visualizer/src/types/theme";
 
 export class WebviewHelper {
   public static setupHtml(
@@ -25,5 +34,39 @@ export class WebviewHelper {
       `,
     );
   }
+
+  public static handleWebviewMessage(
+    command: string,
+    message: string,
+    extensionConfig: ExtensionConfig,
+  ): void {
+    switch (command) {
+      case WebviewCommand.SET_THEME_PREFERENCES:
+        extensionConfig.setTheme(message as Theme);
+        return;
+      default:
+        return;
+    }
+  }
+
+  public static setupWebviewHooks(
+    webview: Webview,
+    extensionConfig: ExtensionConfig,
+    disposables: Disposable[],
+  ) {
+    webview.onDidReceiveMessage(
+      (message: WebviewPostMessage) => {
+        const command = message.command;
+        const textMessage = message.message;
+        console.log("Received message", command, textMessage);
+        WebviewHelper.handleWebviewMessage(
+          command,
+          textMessage,
+          extensionConfig,
+        );
+      },
+      undefined,
+      disposables,
+    );
   }
 }

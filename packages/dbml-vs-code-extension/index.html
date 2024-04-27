@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" crossorigin href="/assets/index.css" />
     <title>Document</title>
   </head>
   <body>
@@ -12,6 +13,12 @@
 
     <script type="text/javascript">
       // <%DEFAULT-SCRIPT%>
+    </script>
+
+    <script>
+      // I add this because calling acquireVsCodeApi from the don't work
+      // i getting error that the parent is not defined on window object
+      var vsCodeWebviewAPI = acquireVsCodeApi();
     </script>
   </body>
 </html>
