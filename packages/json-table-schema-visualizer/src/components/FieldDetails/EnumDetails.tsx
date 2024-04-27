@@ -3,7 +3,7 @@ import { Group } from "react-konva";
 import KonvaText from "../dumb/KonvaText";
 
 import { useGetEnum } from "@/hooks/enums";
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { computeTextSize } from "@/utils/computeTextSize";
 import { PADDINGS } from "@/constants/sizing";
 import { createEnumItemText } from "@/utils/createEnumItemText";
@@ -17,7 +17,7 @@ const enumTextSize = computeTextSize("Enum");
 
 const EnumDetails = ({ enumName, y }: EnumDetailsProps) => {
   const enumObject = useGetEnum(enumName);
-  const theme = useTheme();
+  const themeColors = useThemeColors();
 
   if (enumObject === undefined) {
     return null;
@@ -27,16 +27,20 @@ const EnumDetails = ({ enumName, y }: EnumDetailsProps) => {
 
   return (
     <Group y={y}>
-      <KonvaText fontStyle="bold" fill={theme.red} text="Enum" />
+      <KonvaText fontStyle="bold" fill={themeColors.red} text="Enum" />
 
-      <KonvaText x={enumNameX} fill={theme.green} text={enumObject.name} />
+      <KonvaText
+        x={enumNameX}
+        fill={themeColors.green}
+        text={enumObject.name}
+      />
 
       {enumObject.values.map((item, index) => (
         <KonvaText
           key={item.name}
           y={(index + 1) * enumTextSize.height}
           text={createEnumItemText(item.name)}
-          fill={theme.enumItem}
+          fill={themeColors.enumItem}
         />
       ))}
     </Group>

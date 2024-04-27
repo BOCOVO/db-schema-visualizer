@@ -9,7 +9,7 @@ import {
   TABLE_COLOR_HEIGHT,
   TABLE_WIDTH,
 } from "@/constants/sizing";
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { useTableColor } from "@/hooks/tableColor";
 
 interface TableHeaderProps {
@@ -17,7 +17,7 @@ interface TableHeaderProps {
 }
 
 const TableHeader = ({ title }: TableHeaderProps) => {
-  const theme = useTheme();
+  const themeColors = useThemeColors();
   const tableColors = useTableColor(title);
 
   const tableMarkerColor = tableColors?.regular ?? "red";
@@ -33,7 +33,7 @@ const TableHeader = ({ title }: TableHeaderProps) => {
 
       <Rect
         y={TABLE_COLOR_HEIGHT}
-        fill={theme.tableHeader.bg}
+        fill={themeColors.tableHeader.bg}
         width={TABLE_WIDTH}
         height={COLUMN_HEIGHT}
       />
@@ -41,7 +41,7 @@ const TableHeader = ({ title }: TableHeaderProps) => {
       <KonvaText
         text={title}
         y={TABLE_COLOR_HEIGHT}
-        fill={theme.tableHeader.fg}
+        fill={themeColors.tableHeader.fg}
         width={TABLE_WIDTH}
         height={COLUMN_HEIGHT}
         align="center"

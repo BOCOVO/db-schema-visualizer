@@ -1,7 +1,7 @@
 import { Path } from "react-konva";
 import { useState } from "react";
 
-import { useTheme } from "@/hooks/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { useTablesInfo } from "@/hooks/table";
 import { useTableColor } from "@/hooks/tableColor";
 
@@ -17,7 +17,7 @@ const ConnectionPath = ({
   targetTableName,
   relationOwner,
 }: ConnectionPathProps) => {
-  const theme = useTheme();
+  const themeColors = useThemeColors();
   const { hoveredTableName } = useTablesInfo();
   const sourceTableColors = useTableColor(relationOwner);
   const [isHovered, setIsHovered] = useState(false);
@@ -28,8 +28,8 @@ const ConnectionPath = ({
     isHovered;
 
   const strokeColor = highlight
-    ? sourceTableColors?.regular ?? theme.connection.active
-    : theme.connection.default;
+    ? sourceTableColors?.regular ?? themeColors.connection.active
+    : themeColors.connection.default;
 
   const handleOnHover = () => {
     setIsHovered(true);
