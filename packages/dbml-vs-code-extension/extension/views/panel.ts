@@ -14,21 +14,39 @@ import {
   WEB_VIEW_NAME,
   WEB_VIEW_TITLE,
 } from "../constants";
+import { ExtensionConfig } from "../helper/extensionConfigs";
 
 export class MainPanel {
   public static currentPanel: MainPanel | undefined;
   private readonly _panel: WebviewPanel;
+  public static extensionConfig: ExtensionConfig;
   private _disposables: Disposable[] = [];
   // to add debouncing on diagram update after a file change
   private _lastTimeout: NodeJS.Timeout | null = null;
 
-  private constructor(panel: WebviewPanel, context: ExtensionContext) {
+  private constructor(
+    panel: WebviewPanel,
+    context: ExtensionContext,
+    extensionConfigSession: string,
+  ) {
     this._panel = panel;
-
     this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
-    this._panel.webview.html = WebviewHelper.setupHtml(
+
+    const extensionConfig = new ExtensionConfig(extensionConfigSession);
+    const defaultPageConfig = extensionConfig.getDefaultPageConfig();
+
+    const html = WebviewHelper.setupHtml(
       this._panel.webview,
       context,
+      defaultPageConfig,
+    );
+
+    this._panel.webview.html = html;
+
+    WebviewHelper.setupWebviewHooks(
+      this._panel.webview,
+      extensionConfig,
+      this._disposables,
     );
   }
 
@@ -51,7 +69,10 @@ export class MainPanel {
     MainPanel.currentPanel?._disposables.push(disposable);
   }
 
-  public static render(context: ExtensionContext) {
+  public static render(
+    context: ExtensionContext,
+    extensionConfigSession: string,
+  ) {
     const editor = window.activeTextEditor;
     if (!editor) {
       window.showErrorMessage(
@@ -77,7 +98,11 @@ export class MainPanel {
         },
       );
 
-      MainPanel.currentPanel = new MainPanel(panel, context);
+      MainPanel.currentPanel = new MainPanel(
+        panel,
+        context,
+        extensionConfigSession,
+      );
       MainPanel.registerDiagramUpdaterOnfFileChange();
     }
 
