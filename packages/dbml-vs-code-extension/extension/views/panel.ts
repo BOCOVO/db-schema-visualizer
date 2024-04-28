@@ -2,6 +2,7 @@ import {
   Disposable,
   ExtensionContext,
   TextDocument,
+  Uri,
   ViewColumn,
   WebviewPanel,
   window,
@@ -95,8 +96,24 @@ export class MainPanel {
         previewColumn,
         {
           enableScripts: true,
+          retainContextWhenHidden: true,
         },
       );
+
+      panel.iconPath = {
+        dark: Uri.joinPath(
+          context.extensionUri,
+          "assets",
+          "icons",
+          "preview-dark.svg",
+        ),
+        light: Uri.joinPath(
+          context.extensionUri,
+          "assets",
+          "icons",
+          "preview.svg",
+        ),
+      };
 
       MainPanel.currentPanel = new MainPanel(
         panel,
