@@ -3,6 +3,7 @@
   "displayName": "DBML Entity-Relationship Diagrams visualizer",
   "description": "An Vscode extension to visualize the database schema in ERD ( Entity Relationship Diagram ) from dbml or prisma file in your vscode.",
   "version": "0.0.1",
+  "icon": "assets/logo.png",
   "engines": {
     "vscode": "^1.87.0"
   },
@@ -17,8 +18,8 @@
         "command": "dbml-erd-visualizer.previewDiagrams",
         "title": "Show diagram",
         "icon": {
-          "light": "./assets/icons/eye.svg",
-          "dark": "./assets/icons/eye.svg"
+          "light": "./assets/icons/open-preview.svg",
+          "dark": "./assets/icons/open-preview-dark.svg"
         }
       }
     ],
@@ -57,6 +58,7 @@
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "build": "vite build && yarn run generate:css",
+    "package":"yarn run build",
     "preview": "vite preview",
     "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../dbml-vs-code-extension/dist/webview/assets/index.css --minify"
   },
@@ -85,5 +87,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "shared": "0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BOCOVO/db-schema-visualizer"
   }
 }
