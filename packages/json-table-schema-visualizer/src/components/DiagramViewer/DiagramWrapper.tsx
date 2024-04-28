@@ -65,7 +65,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         onWheel={handleZooming}
         width={width}
         height={height}
-        style={{ backgroundColor: themeColors.bg }}
+        style={{ width: "fit-content", backgroundColor: themeColors.bg }}
       >
         <Layer>
           <Group offsetX={-DIAGRAM_PADDING} offsetY={-DIAGRAM_PADDING}>
