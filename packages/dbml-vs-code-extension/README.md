@@ -4,7 +4,7 @@ Allow to visualize the database schema in ERD ( Entity Relationship Diagram ) fr
 
 ## Features
 
-![Demo](./assets/demo.gif)
+![Demo](https://github.com/BOCOVO/db-schema-visualizer/assets/51182814/a59fd0c0-246d-4f00-be39-9885d88b8b85)
 
 - Create Entity Relationship Diagram from your dbml file
 - Allow you to drag diagrams

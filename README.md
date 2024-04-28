@@ -3,12 +3,12 @@
 An Vscode extension to visualize the database schema in E from dbml or prisma file in your vscode.
 
 ## Demo
-![DBML Demo](./packages/dbml-vs-code-extension/assets/demo.gif)
+![DBML Demo](./assets/demo.gif)
 
 ## Features
 
-- Create diagram from you DBML/Prisma code
-- Has light and dark mode
+- Create entity relations diagrams from your DBML/Prisma code
+- Available in light and dark modes
 
 ## Extensions
 
@@ -17,4 +17,4 @@ An Vscode extension to visualize the database schema in E from dbml or prisma fi
 
 ## Contribute
 
-If you want to contribute to this project please read the [contribution note](./)
+If you want to contribute to this project please read the [contribution note](./CODE_OF_CONDUCT.md)
