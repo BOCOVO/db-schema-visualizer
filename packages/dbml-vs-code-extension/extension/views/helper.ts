@@ -1,12 +1,11 @@
+import { Disposable, ExtensionContext, Webview } from "vscode";
 import {
-  Disposable,
-  ExtensionContext,
-  Webview,
-} from "vscode";
-import { WebviewCommand, WebviewPostMessage } from "@/extension/types/webviewCommand";
-import { WEBVIEW_HTML_MARKER_FOR_DEFAULT_CONFIG } from "../constants";
-import { DefaultPageConfig } from "../types/defaultPageConfig";
-import { ExtensionConfig } from "../helper/extensionConfigs";
+  WebviewCommand,
+  WebviewPostMessage,
+} from "@/extension/types/webviewCommand";
+import { WEBVIEW_HTML_MARKER_FOR_DEFAULT_CONFIG } from "@/extension/constants";
+import { DefaultPageConfig } from "@/extension/types/defaultPageConfig";
+import { ExtensionConfig } from "@/extension/helper/extensionConfigs";
 import { Theme } from "json-table-schema-visualizer/src/types/theme";
 
 export class WebviewHelper {

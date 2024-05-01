@@ -1,7 +1,7 @@
 import { Theme } from "json-table-schema-visualizer/src/types/theme";
 import { workspace, WorkspaceConfiguration } from "vscode";
-import { ConfigKeys } from "../types/configKeys";
-import { DefaultPageConfig } from "../types/defaultPageConfig";
+import { ConfigKeys } from "@/extension/types/configKeys";
+import { DefaultPageConfig } from "@/extension/types/defaultPageConfig";
 
 export class ExtensionConfig {
   private config: WorkspaceConfiguration;
