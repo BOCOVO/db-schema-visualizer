@@ -59,7 +59,7 @@
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "build": "vite build && yarn run generate:css",
-    "package":"yarn run build",
+    "package": "yarn run build",
     "preview": "vite preview",
     "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../dbml-vs-code-extension/dist/webview/assets/index.css --minify"
   },
@@ -78,7 +78,6 @@
     "@vscode/test-electron": "^2.3.9",
     "eslint": "^8.57.0",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
     "vite": "^5.2.8",
     "vite-tsconfig-paths": "^4.3.2"
   },
