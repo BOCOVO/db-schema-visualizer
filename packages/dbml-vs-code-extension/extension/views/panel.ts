@@ -8,14 +8,14 @@ import {
   window,
   workspace,
 } from "vscode";
-import { WebviewHelper } from "./helper";
+import { WebviewHelper } from "@/extension/views/helper";
 import { parseDBMLToJSON } from "dbml-to-json-table-schema";
 import {
   DIAGRAM_UPDATER_DEBOUNCE_TIME,
   WEB_VIEW_NAME,
   WEB_VIEW_TITLE,
-} from "../constants";
-import { ExtensionConfig } from "../helper/extensionConfigs";
+} from "@/extension/constants";
+import { ExtensionConfig } from "@/extension/helper/extensionConfigs";
 
 export class MainPanel {
   public static currentPanel: MainPanel | undefined;

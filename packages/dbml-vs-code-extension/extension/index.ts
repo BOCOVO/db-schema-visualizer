@@ -1,6 +1,6 @@
 import { commands, ExtensionContext } from "vscode";
-import { MainPanel } from "./views/panel";
-import { EXTENSION_CONFIG_SESSION } from "./constants";
+import { MainPanel } from "@/extension/views/panel";
+import { EXTENSION_CONFIG_SESSION } from "@/extension/constants";
 
 export function activate(context: ExtensionContext) {
   // Add command to the extension context
