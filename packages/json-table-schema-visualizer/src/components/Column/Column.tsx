@@ -8,9 +8,10 @@ import {
   COLUMN_HEIGHT,
   FONT_SIZES,
   PADDINGS,
-  TABLE_WIDTH,
+  TABLE_FIELD_TYPE_PADDING,
 } from "@/constants/sizing";
 import { useThemeColors } from "@/hooks/theme";
+import { useTableWidth } from "@/hooks/table";
 
 interface ColumnProps {
   colName: string;
@@ -35,6 +36,7 @@ const Column = ({
 }: ColumnProps) => {
   const themeColors = useThemeColors();
   const tableColors = useTableColor(tableName);
+  const tablePreferredWidth = useTableWidth();
 
   const colTextColor = themeColors.text[900];
   const typeTextColor = themeColors.text[700];
@@ -55,7 +57,7 @@ const Column = ({
             text={colName}
             // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
             fill={(highlighted && tableColors?.regular) || colTextColor}
-            width={TABLE_WIDTH}
+            width={tablePreferredWidth}
             fontStyle={fontStyle}
             padding={PADDINGS.sm}
             height={COLUMN_HEIGHT}
@@ -63,12 +65,12 @@ const Column = ({
           />
 
           <KonvaText
-            text={isEnum ? `${type} 🅴` : type}
+            text={type}
             align="right"
-            width={TABLE_WIDTH}
+            width={tablePreferredWidth}
             // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
             fill={(highlighted && tableColors?.regular) || typeTextColor}
-            padding={PADDINGS.sm}
+            padding={TABLE_FIELD_TYPE_PADDING}
             fontStyle={fontStyle}
             fontSize={FONT_SIZES.md}
             height={COLUMN_HEIGHT}

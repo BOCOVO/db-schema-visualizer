@@ -7,10 +7,10 @@ import {
   FONT_SIZES,
   PADDINGS,
   TABLE_COLOR_HEIGHT,
-  TABLE_WIDTH,
 } from "@/constants/sizing";
 import { useThemeColors } from "@/hooks/theme";
 import { useTableColor } from "@/hooks/tableColor";
+import { useTableWidth } from "@/hooks/table";
 
 interface TableHeaderProps {
   title: string;
@@ -19,7 +19,7 @@ interface TableHeaderProps {
 const TableHeader = ({ title }: TableHeaderProps) => {
   const themeColors = useThemeColors();
   const tableColors = useTableColor(title);
-
+  const tablePreferredWidth = useTableWidth();
   const tableMarkerColor = tableColors?.regular ?? "red";
 
   return (
@@ -28,13 +28,13 @@ const TableHeader = ({ title }: TableHeaderProps) => {
         cornerRadius={[PADDINGS.sm, PADDINGS.sm]}
         fill={tableMarkerColor}
         height={TABLE_COLOR_HEIGHT}
-        width={TABLE_WIDTH}
+        width={tablePreferredWidth}
       />
 
       <Rect
         y={TABLE_COLOR_HEIGHT}
         fill={themeColors.tableHeader.bg}
-        width={TABLE_WIDTH}
+        width={tablePreferredWidth}
         height={COLUMN_HEIGHT}
       />
 
@@ -42,7 +42,7 @@ const TableHeader = ({ title }: TableHeaderProps) => {
         text={title}
         y={TABLE_COLOR_HEIGHT}
         fill={themeColors.tableHeader.fg}
-        width={TABLE_WIDTH}
+        width={tablePreferredWidth}
         height={COLUMN_HEIGHT}
         align="center"
         strokeWidth={PADDINGS.xs}
