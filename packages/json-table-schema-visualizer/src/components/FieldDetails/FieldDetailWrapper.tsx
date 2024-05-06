@@ -1,9 +1,10 @@
 import { Group, Line, Rect } from "react-konva";
 import { useState, type ReactNode } from "react";
 
-import { COLUMN_HEIGHT, PADDINGS, TABLE_WIDTH } from "@/constants/sizing";
+import { COLUMN_HEIGHT, PADDINGS } from "@/constants/sizing";
 import { useThemeColors } from "@/hooks/theme";
 import { computeCaretPoints } from "@/utils/computeCaretPoints";
+import { useTableWidth } from "@/hooks/table";
 
 interface FieldDetailWrapperProps {
   children: ReactNode;
@@ -12,7 +13,7 @@ interface FieldDetailWrapperProps {
 const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
   const [isDetailVisible, setIsDetailVisible] = useState(false);
   const themeColors = useThemeColors();
-
+  const tablePreferredWidth = useTableWidth();
   const handleOnHover = () => {
     setIsDetailVisible(true);
   };
@@ -21,7 +22,7 @@ const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
     setIsDetailVisible(false);
   };
 
-  const popoverX = TABLE_WIDTH;
+  const popoverX = tablePreferredWidth;
 
   return (
     <Group
@@ -30,9 +31,9 @@ const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
       x={0}
       y={0}
       height={COLUMN_HEIGHT}
-      width={TABLE_WIDTH}
+      width={tablePreferredWidth}
     >
-      <Rect x={0} y={0} height={COLUMN_HEIGHT} width={TABLE_WIDTH} />
+      <Rect x={0} y={0} height={COLUMN_HEIGHT} width={tablePreferredWidth} />
 
       {isDetailVisible ? (
         <Line
@@ -41,7 +42,7 @@ const FieldDetailWrapper = ({ children }: FieldDetailWrapperProps) => {
           points={computeCaretPoints(popoverX, COLUMN_HEIGHT)}
         />
       ) : null}
-      <Group x={TABLE_WIDTH}>
+      <Group x={tablePreferredWidth}>
         <Group x={PADDINGS.xs}>{isDetailVisible ? children : null}</Group>
       </Group>
     </Group>
