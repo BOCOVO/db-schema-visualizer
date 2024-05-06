@@ -4,7 +4,7 @@ import { getColsNumber } from "../getColsNumber";
 import {
   COLUMN_HEIGHT,
   TABLE_HEADER_HEIGHT,
-  TABLE_WIDTH,
+  TABLE_DEFAULT_MIN_WIDTH,
   TABLES_GAP_X,
   TABLES_GAP_Y,
 } from "@/constants/sizing";
@@ -14,7 +14,7 @@ jest.mock("../getColsNumber", () => ({
   getColsNumber: jest.fn(),
 }));
 
-const TABLE_WIDTH_WITH_GAP = TABLE_WIDTH + TABLES_GAP_X;
+const TABLE_WIDTH_WITH_GAP = TABLE_DEFAULT_MIN_WIDTH + TABLES_GAP_X;
 
 describe("compute tables positions", () => {
   test("less than 6 tables positions", () => {

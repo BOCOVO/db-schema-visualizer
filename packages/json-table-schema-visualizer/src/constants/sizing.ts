@@ -1,4 +1,4 @@
-export const TABLE_WIDTH = 180;
+export const TABLE_DEFAULT_MIN_WIDTH = 150;
 export const TABLE_COLOR_HEIGHT = 6;
 export const TABLE_LINE_HEIGHT = 25;
 export const COLUMN_HEIGHT = 30;
@@ -18,6 +18,7 @@ export const PADDINGS = {
   md: 10,
   lg: 20,
 };
+export const TABLE_FIELD_TYPE_PADDING = PADDINGS.sm;
 
 export const FONT_SIZES = {
   md: 15,
