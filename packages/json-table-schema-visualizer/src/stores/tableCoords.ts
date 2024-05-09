@@ -2,7 +2,6 @@ import type { XYPosition } from "@/types/positions";
 
 // to track tables position. react context do the job but it will
 // require to have a lot of components memoization for better performance
-export const tableCoords = new Map<string, XYPosition>();
 
 class TableCoordsStore {
   private readonly tableCoords = new Map<string, XYPosition>();
