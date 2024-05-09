@@ -11,27 +11,40 @@ const computeTablesPositions = (
 ): Map<string, [number, number]> => {
   const colNumber = getColsNumber(tables.length);
 
-  const nextColsY = new Map<number, number>();
-
-  let nextTableX = 0;
+  let nextColsY = 0;
 
   const tablesPositions = new Map<string, [number, number]>();
+  let nextTableX = 0;
 
-  tables.forEach((table, index) => {
-    const colIndex = index % colNumber;
-    const colY = nextColsY.get(colIndex) ?? 0;
+  for (let colIndex = 0; colIndex < colNumber; colIndex++) {
+    let currentColMaxW = 0;
 
-    tablesPositions.set(table.name, [nextTableX, colY]);
+    const currentColX = nextTableX;
 
-    const tableDimension = computeTableDimension(table);
-    const nextColY = colY + tableDimension.height + TABLES_GAP_Y;
-    nextColsY.set(colIndex, nextColY);
+    for (
+      let tableIndex = colIndex;
+      tableIndex < tables.length;
+      tableIndex += colNumber
+    ) {
+      const table = tables[tableIndex];
+      const colY = nextColsY ?? 0;
 
-    nextTableX =
-      colIndex === colNumber - 1
+      tablesPositions.set(table.name, [currentColX, colY]);
+
+      const tableDimension = computeTableDimension(table);
+      const isLastTableInCol = tableIndex + colNumber > tables.length - 1;
+      nextColsY = isLastTableInCol
         ? 0
-        : nextTableX + tableDimension.width + TABLES_GAP_X;
-  });
+        : colY + tableDimension.height + TABLES_GAP_Y;
+
+      currentColMaxW = Math.max(tableDimension.width, currentColMaxW);
+
+      nextTableX = isLastTableInCol
+        ? currentColMaxW + TABLES_GAP_X + currentColX
+        : currentColX;
+      console.log("nextTableX", nextTableX);
+    }
+  }
 
   return tablesPositions;
 };
