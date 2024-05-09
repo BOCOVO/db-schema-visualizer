@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { useTablesInfo } from "./table";
+import { useTableWidthStoredValue } from "./tableWidthStore";
 
 import type { RelationItem } from "@/types/relation";
 import type { Position, XYPosition } from "@/types/positions";
@@ -9,7 +10,6 @@ import { computeColY } from "@/utils/computeColY";
 import { computeTableDragEventName } from "@/utils/eventName";
 import eventEmitter from "@/events-emitter";
 import { computeConnectionHandlePos } from "@/utils/computeConnectionHandlePositions";
-import { TABLE_WIDTH } from "@/constants/sizing";
 import { tableCoordsStore } from "@/stores/tableCoords";
 
 interface UseRelationTablesCoordsReturn {
@@ -58,6 +58,9 @@ export const useRelationsCoords = (
   );
   const [sourceColY, targetColY] = useRelationsColsY(source, target);
 
+  const sourceTableWidth = useTableWidthStoredValue(source.tableName);
+  const targetTableWidth = useTableWidthStoredValue(target.tableName);
+
   const sourceTableDragEventName = computeTableDragEventName(source?.tableName);
   const targetTableDragEventName = computeTableDragEventName(target?.tableName);
 
@@ -89,9 +92,9 @@ export const useRelationsCoords = (
 
   const [sourcePosition, targetPosition, finalSourceX, finalTargetX] =
     computeConnectionHandlePos({
-      sourceW: TABLE_WIDTH,
+      sourceW: sourceTableWidth,
       sourceX: sourceTableCoords.x,
-      targetW: TABLE_WIDTH,
+      targetW: targetTableWidth,
       targetX: targetTableCoords.x,
     });
 
