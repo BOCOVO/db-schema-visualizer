@@ -5,12 +5,18 @@ import { useWindowSize } from "./window";
 
 import { DIAGRAM_PADDING, STAGE_SCALE_FACTOR } from "@/constants/sizing";
 import { type StageState } from "@/types/stage";
+import { stageStateStore } from "@/stores/stagesState";
 
 export const useStageStartingState = (): StageState => {
   const { tablesPositions } = useTablePositionContext();
   const { height: windowHeight, width: windowWidth } = useWindowSize();
 
   const state = useMemo(() => {
+    const savedStageState = stageStateStore.getCurrentStageState();
+    if (savedStageState !== null) {
+      return savedStageState;
+    }
+
     let maxX = 0;
     let maxY = 0;
     let minX = 0;
@@ -37,7 +43,12 @@ export const useStageStartingState = (): StageState => {
     const centerPositionX = -minX * scale + (windowWidth - scaledW) / 4;
     const centerPositionY = -minY * scale + (windowHeight - scaledH) / 4;
 
-    return { scale, position: { x: centerPositionX, y: centerPositionY } };
+    const state = {
+      scale,
+      position: { x: centerPositionX, y: centerPositionY },
+    };
+
+    return state;
   }, []);
 
   return state;
