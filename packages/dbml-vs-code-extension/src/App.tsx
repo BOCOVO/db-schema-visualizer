@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { JSONTableSchema } from "shared/types/tableSchema";
 import DiagramViewer from "json-table-schema-visualizer/src/components/DiagramViewer/DiagramViewer";
 import { useCreateTheme } from "json-table-schema-visualizer/src/hooks/theme";
 import ThemeProvider from "json-table-schema-visualizer/src/providers/ThemeProvider";
@@ -9,21 +7,13 @@ import {
   WebviewCommand,
   WebviewPostMessage,
 } from "@/extension/types/webviewCommand";
+import { useSchema } from "./hooks/schema";
 
 const App = () => {
-  const [schema, setSchema] = useState<JSONTableSchema | null>(null);
   const { setTheme, theme, themeColors } = useCreateTheme(
     window.EXTENSION_DEFAULT_CONFIG?.theme,
   );
-
-  useEffect(() => {
-    window.addEventListener("message", (e: MessageEvent) => {
-      const message = e.data;
-      if (message.type === "setSchema" && typeof message.payload === "object") {
-        setSchema(message.payload);
-      }
-    });
-  }, []);
+  const { schema, key } = useSchema();
 
   if (schema === null) {
     return <NoSchemaMessage />;
@@ -52,7 +42,7 @@ const App = () => {
       setTheme={saveThemePreference}
       themeColors={themeColors}
     >
-      <DiagramViewer {...schema} />
+      <DiagramViewer key={key} {...schema} />
     </ThemeProvider>
   );
 };

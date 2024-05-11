@@ -18,6 +18,7 @@ interface DiagramViewerProps {
   refs: JSONTableRef[];
   enums: JSONTableEnum[];
 }
+
 const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
   if (tables.length === 0) {
     return <EmptyTableMessage />;
