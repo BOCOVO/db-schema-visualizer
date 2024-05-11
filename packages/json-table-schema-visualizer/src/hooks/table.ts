@@ -11,6 +11,7 @@ import { TABLE_DEFAULT_MIN_WIDTH } from "@/constants/sizing";
 import { getTableLinesText } from "@/utils/tableWComputation/getTableLinesText";
 import { computeTablePreferredWidth } from "@/utils/tableWComputation/computeTablePreferredWidth";
 import { tableWidthStore } from "@/stores/tableWidth";
+import { type TablesPositionsContextValue } from "@/types/dimension";
 
 export const useTablesInfo = (): TablesInfoProviderValue => {
   const tablesInfo = useContext(TablesInfoContext);
@@ -22,7 +23,7 @@ export const useTablesInfo = (): TablesInfoProviderValue => {
   return tablesInfo;
 };
 
-export const useTablePosition = (tableName: string): XYPosition => {
+export const useTablePositionContext = (): TablesPositionsContextValue => {
   const tablesPositionsMap = useContext(TablesPositionsContext);
 
   if (tablesPositionsMap == null) {
@@ -30,6 +31,12 @@ export const useTablePosition = (tableName: string): XYPosition => {
       "useTablePosition must be used within the TablesPositionsContext",
     );
   }
+
+  return tablesPositionsMap;
+};
+
+export const useTablePosition = (tableName: string): XYPosition => {
+  const tablesPositionsMap = useTablePositionContext();
 
   return tablesPositionsMap.tablesPositions.get(tableName) ?? { x: 0, y: 0 };
 };
