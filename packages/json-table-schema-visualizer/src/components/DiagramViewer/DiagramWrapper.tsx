@@ -12,6 +12,7 @@ import { DIAGRAM_PADDING } from "@/constants/sizing";
 import { useThemeColors, useThemeContext } from "@/hooks/theme";
 import { Theme } from "@/types/theme";
 import { useStageStartingState } from "@/hooks/stage";
+import { stageStateStore } from "@/stores/stagesState";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -69,6 +70,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
       y: pointer.y - mousePointTo.y * newScale,
     };
     stage.position(newPos);
+    stageStateStore.set({ scale: newScale, position: newPos });
   };
 
   return (
