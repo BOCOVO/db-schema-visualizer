@@ -16,6 +16,7 @@ interface DiagramViewerProps {
   refs: JSONTableRef[];
   enums: JSONTableEnum[];
 }
+
 const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
   return (
     <TablesPositionsProvider tables={tables}>
