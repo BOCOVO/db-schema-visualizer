@@ -4,8 +4,8 @@ import { type Dimension } from "@/types/dimension";
 
 export function useWindowSize(): Dimension {
   const [size, setSize] = useState<Dimension>({
-    width: NaN,
-    height: NaN,
+    width: window.innerWidth,
+    height: window.innerHeight,
   });
 
   useLayoutEffect(() => {
@@ -23,6 +23,5 @@ export function useWindowSize(): Dimension {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
   return size;
 }
