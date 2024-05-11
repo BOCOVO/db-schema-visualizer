@@ -146,6 +146,7 @@ export class MainPanel {
       this.currentPanel?._panel.webview.postMessage({
         type: "setSchema",
         payload: schema,
+        key: document.uri.toString(),
       });
     } catch (error) {
       window.showErrorMessage(`${error}`);
