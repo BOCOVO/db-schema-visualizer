@@ -26,16 +26,16 @@ const Table = ({ fields, name }: TableProps) => {
   const themeColors = useThemeColors();
   const tableRef = useRef<null | Konva.Group>(null);
   const { setHoveredTableName } = useTablesInfo();
-  const tablePosition = useTablePosition(name);
+  const { x: tableX, y: tableY } = useTablePosition(name);
   const tablePreferredWidth = useTableWidth();
 
   useEffect(() => {
-    if (tableRef.current != null && tablePosition.length === 2) {
-      tableRef.current.x(tablePosition[0]);
-      tableRef.current.y(tablePosition[1]);
+    if (tableRef.current != null) {
+      tableRef.current.x(tableX);
+      tableRef.current.y(tableY);
       propagateCoordinates(tableRef.current);
     }
-  }, [tablePosition]);
+  }, [tableX, tableY]);
 
   useEffect(() => {
     if (tableRef.current != null) {
