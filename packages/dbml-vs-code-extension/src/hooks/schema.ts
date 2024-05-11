@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { JSONTableSchema } from "shared/types/tableSchema";
 import { tableCoordsStore } from "json-table-schema-visualizer/src/stores/tableCoords";
+import { stageStateStore } from "json-table-schema-visualizer/src/stores/stagesState";
 
 export const useSchema = () => {
   const [schema, setSchema] = useState<JSONTableSchema | null>(null);
@@ -14,9 +15,10 @@ export const useSchema = () => {
       return;
     }
 
-    if (message.key) {
+    if (message.key && message.key !== schemaKey) {
       // update stores
       tableCoordsStore.switchTo(message.key);
+      stageStateStore.switchTo(message.key);
 
       setSchemaKey(message.key);
     }
