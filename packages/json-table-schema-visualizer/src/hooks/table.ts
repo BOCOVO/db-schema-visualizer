@@ -2,6 +2,7 @@ import { useContext, useMemo } from "react";
 import { type JSONTableTable } from "shared/types/tableSchema";
 
 import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
+import type { XYPosition } from "@/types/positions";
 
 import { TablesInfoContext } from "@/providers/TablesInfoProvider";
 import { TablesPositionsContext } from "@/providers/TablesPositionsProvider";
@@ -21,7 +22,7 @@ export const useTablesInfo = (): TablesInfoProviderValue => {
   return tablesInfo;
 };
 
-export const useTablePosition = (tableName: string): [number, number] | [] => {
+export const useTablePosition = (tableName: string): XYPosition => {
   const tablesPositionsMap = useContext(TablesPositionsContext);
 
   if (tablesPositionsMap == null) {
@@ -30,7 +31,7 @@ export const useTablePosition = (tableName: string): [number, number] | [] => {
     );
   }
 
-  return tablesPositionsMap.tablesPositions.get(tableName) ?? [];
+  return tablesPositionsMap.tablesPositions.get(tableName) ?? { x: 0, y: 0 };
 };
 
 export const useGetTableMinWidth = (table: JSONTableTable): number => {
