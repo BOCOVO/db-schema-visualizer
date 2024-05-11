@@ -1,5 +1,5 @@
 import { Group, Layer, Stage } from "react-konva";
-import { type ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { type KonvaEventObject } from "konva/lib/Node";
 
 import ThemeToggler from "../ThemeToggler/ThemeToggler";
@@ -11,6 +11,7 @@ import { useCursorChanger } from "@/hooks/cursor";
 import { DIAGRAM_PADDING } from "@/constants/sizing";
 import { useThemeColors, useThemeContext } from "@/hooks/theme";
 import { Theme } from "@/types/theme";
+import { useStageStartingState } from "@/hooks/stage";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -18,11 +19,25 @@ interface DiagramWrapperProps {
 
 const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const scaleBy = 1.02;
-  const { height, width } = useWindowSize();
+  const { height: windowHeight, width: windowWidth } = useWindowSize();
   const { theme } = useThemeContext();
   const { onChange: onGrabbing, onRestore: onGrabRelease } =
     useCursorChanger("grabbing");
   const themeColors = useThemeColors();
+  const stageRef = useRef<null | CoreStage>(null);
+
+  // repositioning the stage only once
+  const { scale: defaultStageScale, position: defaultStagePosition } =
+    useStageStartingState();
+  useEffect(() => {
+    if (stageRef.current != null) {
+      stageRef.current.scale({
+        x: defaultStageScale,
+        y: defaultStageScale,
+      });
+      stageRef.current.position(defaultStagePosition);
+    }
+  }, [defaultStageScale, defaultStagePosition]);
 
   const handleZooming = (e: KonvaEventObject<WheelEvent>) => {
     e.evt.preventDefault();
@@ -60,11 +75,12 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     <main className={`relative ${theme === Theme.dark ? "dark" : ""}`}>
       <Stage
         draggable
+        ref={stageRef}
         onDragStart={onGrabbing}
         onDragEnd={onGrabRelease}
         onWheel={handleZooming}
-        width={width}
-        height={height}
+        width={windowWidth}
+        height={windowHeight}
         style={{ width: "fit-content", backgroundColor: themeColors.bg }}
       >
         <Layer>
