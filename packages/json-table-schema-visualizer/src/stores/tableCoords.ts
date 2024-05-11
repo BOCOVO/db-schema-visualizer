@@ -1,10 +1,38 @@
+import { PersistableStore } from "./PersitableStore";
+
 import type { XYPosition } from "@/types/positions";
 
 // to track tables position. react context do the job but it will
 // require to have a lot of components memoization for better performance
 
-class TableCoordsStore {
-  private readonly tableCoords = new Map<string, XYPosition>();
+class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
+  private tableCoords = new Map<string, XYPosition>();
+  private currentStoreKey = "none";
+
+  constructor() {
+    super("tableCoords");
+  }
+
+  public getCurrentStoreValue(): Map<string, XYPosition> {
+    return this.tableCoords;
+  }
+
+  public switchTo(newStoreKey: string): void {
+    // convert the map object to array before store it
+    const storeValue = Array.from(this.tableCoords);
+
+    this.persist(this.currentStoreKey, storeValue);
+
+    this.currentStoreKey = newStoreKey;
+    const recoveredStore = this.retrieve(this.currentStoreKey) as Array<
+      [string, XYPosition]
+    >;
+    if (recoveredStore === null || !Array.isArray(recoveredStore)) {
+      this.tableCoords = new Map<string, XYPosition>();
+    }
+
+    this.tableCoords = new Map<string, XYPosition>(recoveredStore);
+  }
 
   public getCoords(table: string): XYPosition {
     return this.tableCoords.get(table) ?? { x: 0, y: 0 };
