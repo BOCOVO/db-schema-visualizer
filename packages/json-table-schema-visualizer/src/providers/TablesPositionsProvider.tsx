@@ -4,6 +4,7 @@ import { type JSONTableTable } from "shared/types/tableSchema";
 import type { TablesPositionsContextValue } from "@/types/dimension";
 
 import computeTablesPositions from "@/utils/tablePositioning/computeTablesPositions";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 export const TablesPositionsContext =
   createContext<TablesPositionsContextValue | null>(null);
@@ -17,7 +18,13 @@ const TablesPositionsProvider = ({
   children,
 }: TablesPositionsProviderProps) => {
   const tablesPositions = useMemo(() => {
-    return computeTablesPositions(tables);
+    const existingPositions = tableCoordsStore.getCurrentStoreValue();
+    if (existingPositions.size !== tables.length) {
+      // TODO improve checking, maybe ensure all table is present in the store before
+      return computeTablesPositions(tables);
+    }
+
+    return new Map(existingPositions);
   }, []);
 
   return (
