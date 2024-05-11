@@ -17,11 +17,15 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
     return this.tableCoords;
   }
 
-  public switchTo(newStoreKey: string): void {
+  public saveCurrentStore(): void {
     // convert the map object to array before store it
     const storeValue = Array.from(this.tableCoords);
 
     this.persist(this.currentStoreKey, storeValue);
+  }
+
+  public switchTo(newStoreKey: string): void {
+    this.saveCurrentStore();
 
     this.currentStoreKey = newStoreKey;
     const recoveredStore = this.retrieve(this.currentStoreKey) as Array<
