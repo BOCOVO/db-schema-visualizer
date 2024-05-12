@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useTablesInfo } from "./table";
 import { useTableWidthStoredValue } from "./tableWidthStore";
@@ -41,20 +41,12 @@ export const useRelationsCoords = (
 ): UseRelationTablesCoordsReturn => {
   // by default use table position available in the
   // table coords store
-  const sourceTableDefaultCoords = useMemo(
-    () => tableCoordsStore.getCoords(source.tableName),
-    [],
-  );
-  const targetTableDefaultCoords = useMemo(
-    () => tableCoordsStore.getCoords(target.tableName),
-    [],
-  );
 
-  const [sourceTableCoords, setSourceTableCoords] = useState<XYPosition>(
-    sourceTableDefaultCoords,
+  const [sourceTableCoords, setSourceTableCoords] = useState<XYPosition>(() =>
+    tableCoordsStore.getCoords(source.tableName),
   );
-  const [targetTableCoords, setTargetTableCoords] = useState<XYPosition>(
-    targetTableDefaultCoords,
+  const [targetTableCoords, setTargetTableCoords] = useState<XYPosition>(() =>
+    tableCoordsStore.getCoords(target.tableName),
   );
   const [sourceColY, targetColY] = useRelationsColsY(source, target);
 
