@@ -1,14 +1,13 @@
 import { useMemo } from "react";
 
-import { useTablePositionContext } from "./table";
 import { useWindowSize } from "./window";
 
 import { DIAGRAM_PADDING, STAGE_SCALE_FACTOR } from "@/constants/sizing";
 import { type StageState } from "@/types/stage";
 import { stageStateStore } from "@/stores/stagesState";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 export const useStageStartingState = (): StageState => {
-  const { tablesPositions } = useTablePositionContext();
   const { height: windowHeight, width: windowWidth } = useWindowSize();
 
   const state = useMemo(() => {
@@ -22,7 +21,7 @@ export const useStageStartingState = (): StageState => {
     let minX = 0;
     let minY = 0;
 
-    tablesPositions.forEach(({ x, y }) => {
+    tableCoordsStore.getCurrentStore().forEach(({ x, y }) => {
       maxX = Math.max(maxX, x);
       maxY = Math.max(maxY, y);
       minX = Math.min(minX, x);
