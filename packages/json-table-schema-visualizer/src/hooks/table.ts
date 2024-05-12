@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useSyncExternalStore } from "react";
 import { type JSONTableTable } from "shared/types/tableSchema";
 
 import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
@@ -12,6 +12,7 @@ import { getTableLinesText } from "@/utils/tableWComputation/getTableLinesText";
 import { computeTablePreferredWidth } from "@/utils/tableWComputation/computeTablePreferredWidth";
 import { tableWidthStore } from "@/stores/tableWidth";
 import { type TablesPositionsContextValue } from "@/types/dimension";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 export const useTablesInfo = (): TablesInfoProviderValue => {
   const tablesInfo = useContext(TablesInfoContext);
@@ -35,10 +36,17 @@ export const useTablePositionContext = (): TablesPositionsContextValue => {
   return tablesPositionsMap;
 };
 
-export const useTablePosition = (tableName: string): XYPosition => {
-  const tablesPositionsMap = useTablePositionContext();
+export const useTableDefaultPosition = (tableName: string): XYPosition => {
+  const tablesPositions = useSyncExternalStore(
+    (callback) => {
+      return tableCoordsStore.subscribeToReset(callback);
+    },
+    () => {
+      return tableCoordsStore.getCoords(tableName);
+    },
+  );
 
-  return tablesPositionsMap.tablesPositions.get(tableName) ?? { x: 0, y: 0 };
+  return tablesPositions;
 };
 
 export const useGetTableMinWidth = (table: JSONTableTable): number => {
