@@ -3,6 +3,7 @@ import { JSONTableSchema } from "shared/types/tableSchema";
 import DiagramViewer from "json-table-schema-visualizer/src/components/DiagramViewer/DiagramViewer";
 import { useCreateTheme } from "json-table-schema-visualizer/src/hooks/theme";
 import ThemeProvider from "json-table-schema-visualizer/src/providers/ThemeProvider";
+import NoSchemaMessage from "json-table-schema-visualizer/src/components/Messages/NoSchemaMessage";
 import { Theme } from "json-table-schema-visualizer/src/types/theme";
 import {
   WebviewCommand,
@@ -25,7 +26,7 @@ const App = () => {
   }, []);
 
   if (schema === null) {
-    return "Loading...";
+    return <NoSchemaMessage />;
   }
 
   // update the preference in the extension settings
