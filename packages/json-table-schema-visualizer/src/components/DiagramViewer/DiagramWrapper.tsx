@@ -2,7 +2,7 @@ import { Group, Layer, Stage } from "react-konva";
 import { useEffect, useRef, type ReactNode } from "react";
 import { type KonvaEventObject } from "konva/lib/Node";
 
-import ThemeToggler from "../ThemeToggler/ThemeToggler";
+import Toolbar from "../Toolbar/Toolbar";
 
 import type { Stage as CoreStage } from "konva/lib/Stage";
 
@@ -74,7 +74,9 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   };
 
   return (
-    <main className={`relative ${theme === Theme.dark ? "dark" : ""}`}>
+    <main
+      className={`relative flex flex-col items-center ${theme === Theme.dark ? "dark" : ""}`}
+    >
       <Stage
         draggable
         ref={stageRef}
@@ -92,9 +94,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         </Layer>
       </Stage>
 
-      <div className="absolute top-5 right-5">
-        <ThemeToggler />
-      </div>
+      <Toolbar />
     </main>
   );
 };
