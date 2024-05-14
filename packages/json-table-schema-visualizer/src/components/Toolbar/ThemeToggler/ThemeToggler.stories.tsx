@@ -6,14 +6,14 @@ import { Theme } from "@/types/theme";
 
 const meta: Meta = {
   component: ThemeToggler,
-  title: "components/ThemeToggler",
+  title: "components/Toolbar/ThemeToggler",
 };
 
 export default meta;
 
 type Story = StoryObj<typeof ThemeToggler>;
 
-export const TableStory: Story = {
+export const ThemeTogglerStory: Story = {
   render: () => (
     <div>
       <ThemeToggler />
