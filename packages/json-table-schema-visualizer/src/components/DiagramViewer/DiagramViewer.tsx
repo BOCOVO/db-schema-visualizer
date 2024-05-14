@@ -4,6 +4,8 @@ import {
   type JSONTableTable,
 } from "shared/types/tableSchema";
 
+import EmptyTableMessage from "../Messages/EmptyTableMessage";
+
 import Tables from "./Tables";
 import RelationsConnections from "./Connections";
 import DiagramWrapper from "./DiagramWrapper";
@@ -17,6 +19,10 @@ interface DiagramViewerProps {
   enums: JSONTableEnum[];
 }
 const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
+  if (tables.length === 0) {
+    return <EmptyTableMessage />;
+  }
+
   return (
     <TablesPositionsProvider tables={tables}>
       <MainProviders tables={tables} enums={enums}>
