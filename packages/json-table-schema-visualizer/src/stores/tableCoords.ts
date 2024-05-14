@@ -6,6 +6,7 @@ import type { XYPosition } from "@/types/positions";
 
 import computeTablesPositions from "@/utils/tablePositioning/computeTablesPositions";
 import eventEmitter from "@/events-emitter";
+import { defaultTableCoord } from "@/constants/tableCoords";
 
 // to track tables position. react context do the job but it will
 // require to have a lot of components memoization for better performance
@@ -66,7 +67,7 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
   }
 
   public getCoords(table: string): XYPosition {
-    return this.tableCoords.get(table) ?? { x: 0, y: 0 };
+    return this.tableCoords.get(table) ?? defaultTableCoord;
   }
 
   public setCoords(table: string, coords: XYPosition): void {
