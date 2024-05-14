@@ -3,6 +3,7 @@ import DiagramViewer from "./DiagramViewer";
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { createBookingsTableClone, exampleData } from "@/fake/fakeJsonTables";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 const meta: Meta<typeof DiagramViewer> = {
   component: DiagramViewer,
@@ -30,4 +31,11 @@ export const DiagramViewerStory: Story = {
     enums: exampleData.enums,
     refs: exampleData.refs,
   },
+  decorators: [
+    (Story) => {
+      tableCoordsStore.resetPositions(tables);
+
+      return <Story />;
+    },
+  ],
 };
