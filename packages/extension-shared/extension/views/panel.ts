@@ -1,29 +1,31 @@
 import {
-  Disposable,
-  ExtensionContext,
-  TextDocument,
+  type Disposable,
+  type ExtensionContext,
+  type TextDocument,
+  type TextEditor,
   Uri,
   ViewColumn,
-  WebviewPanel,
+  type WebviewPanel,
   window,
   workspace,
 } from "vscode";
-import { WebviewHelper } from "@/extension/views/helper";
-import { parseDBMLToJSON } from "dbml-to-json-table-schema";
-import {
-  DIAGRAM_UPDATER_DEBOUNCE_TIME,
-  WEB_VIEW_NAME,
-  WEB_VIEW_TITLE,
-} from "@/extension/constants";
-import { ExtensionConfig } from "@/extension/helper/extensionConfigs";
+import { type JSONTableSchema } from "shared/types/tableSchema";
+
+import { DIAGRAM_UPDATER_DEBOUNCE_TIME } from "../constants";
+import { ExtensionConfig } from "../helper/extensionConfigs";
+import { type ExtensionRenderProps } from "../types";
+
+import { WebviewHelper } from "./helper";
 
 export class MainPanel {
   public static currentPanel: MainPanel | undefined;
   private readonly _panel: WebviewPanel;
   public static extensionConfig: ExtensionConfig;
-  private _disposables: Disposable[] = [];
+  private readonly _disposables: Disposable[] = [];
   // to add debouncing on diagram update after a file change
   private _lastTimeout: NodeJS.Timeout | null = null;
+  public static parseCode: (code: string) => JSONTableSchema;
+  public static fileExt: string;
 
   private constructor(
     panel: WebviewPanel,
@@ -31,7 +33,13 @@ export class MainPanel {
     extensionConfigSession: string,
   ) {
     this._panel = panel;
-    this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+    this._panel.onDidDispose(
+      () => {
+        this.dispose();
+      },
+      null,
+      this._disposables,
+    );
 
     const extensionConfig = new ExtensionConfig(extensionConfigSession);
     const defaultPageConfig = extensionConfig.getDefaultPageConfig();
@@ -54,31 +62,38 @@ export class MainPanel {
   /**
    * listen for file changes and update the diagram
    */
-  public static registerDiagramUpdaterOnfFileChange() {
+  public static registerDiagramUpdaterOnfFileChange(): void {
     const disposable = workspace.onDidChangeTextDocument(async (event) => {
-      if (event.document.languageId === "dbml") {
-        if (MainPanel.currentPanel?._lastTimeout) {
+      if (event.document.languageId === MainPanel.fileExt) {
+        if (MainPanel.currentPanel?._lastTimeout !== null) {
           clearTimeout(MainPanel.currentPanel?._lastTimeout);
         }
 
-        MainPanel.currentPanel!._lastTimeout = setTimeout(() => {
-          MainPanel.publishSchema(event.document);
-        }, DIAGRAM_UPDATER_DEBOUNCE_TIME);
+        if (MainPanel.currentPanel !== undefined) {
+          MainPanel.currentPanel._lastTimeout = setTimeout(() => {
+            MainPanel.publishSchema(event.document);
+          }, DIAGRAM_UPDATER_DEBOUNCE_TIME);
+        }
       }
     });
 
     MainPanel.currentPanel?._disposables.push(disposable);
   }
 
-  public static render(
-    context: ExtensionContext,
-    extensionConfigSession: string,
-  ) {
+  public static render({
+    context,
+    extensionConfigSession,
+    webviewConfig,
+    parser,
+    fileExt,
+  }: ExtensionRenderProps): void {
+    MainPanel.parseCode = parser;
+    MainPanel.fileExt = fileExt;
+
     const editor = window.activeTextEditor;
-    if (!editor) {
-      window.showErrorMessage(
-        "No active text editor found. Open a DBML file to preview it diagrams.",
-      );
+    if (editor == null) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      window.showErrorMessage("No active text editor found.");
       return;
     }
 
@@ -87,12 +102,12 @@ export class MainPanel {
 
     const previewColumn = activeTextEditorColumn + 1;
 
-    if (MainPanel.currentPanel) {
+    if (MainPanel.currentPanel != null) {
       MainPanel.currentPanel._panel.reveal(previewColumn);
     } else {
       const panel = window.createWebviewPanel(
-        WEB_VIEW_NAME,
-        WEB_VIEW_TITLE,
+        webviewConfig.name,
+        webviewConfig.title,
         previewColumn,
         {
           enableScripts: true,
@@ -126,46 +141,47 @@ export class MainPanel {
     MainPanel.publishSchema(editor.document);
   }
 
-  static getCurrentEditor() {
+  static getCurrentEditor(): TextEditor | undefined {
     const editor = window.activeTextEditor;
-    if (!editor) {
-      window.showErrorMessage(
-        "No active text editor found. Open a DBML file to preview it diagrams.",
-      );
+    if (editor == null) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      window.showErrorMessage("No active text editor found.");
       return;
     }
 
     return editor;
   }
 
-  static publishSchema = (document: TextDocument) => {
-    const dbmlContent = document.getText();
+  static publishSchema = (document: TextDocument): void => {
+    const code = document.getText();
     try {
-      const schema = parseDBMLToJSON(dbmlContent);
+      const schema = MainPanel.parseCode(code);
 
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       this.currentPanel?._panel.webview.postMessage({
         type: "setSchema",
         payload: schema,
         key: document.uri.toString(),
       });
     } catch (error) {
-      window.showErrorMessage(`${error}`);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      window.showErrorMessage(`${error as any}`);
     }
   };
 
   /**
    * Cleans up and disposes of webview resources when the webview panel is closed.
    */
-  public dispose() {
+  public dispose(): void {
     MainPanel.currentPanel = undefined;
 
     // Dispose of the current webview panel
     this._panel.dispose();
 
     // Dispose of all disposables (i.e. commands) for the current webview panel
-    while (this._disposables.length) {
+    while (this._disposables.length > 0) {
       const disposable = this._disposables.pop();
-      if (disposable) {
+      if (disposable != null) {
         disposable.dispose();
       }
     }

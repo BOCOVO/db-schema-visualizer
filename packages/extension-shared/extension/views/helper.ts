@@ -1,12 +1,18 @@
-import { Disposable, ExtensionContext, Webview } from "vscode";
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error */
+/* eslint-disable @typescript-eslint/no-extraneous-class */
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
+import { type Disposable, type ExtensionContext, type Webview } from "vscode";
+import { type Theme } from "json-table-schema-visualizer/src/types/theme";
+
 import {
   WebviewCommand,
-  WebviewPostMessage,
-} from "@/extension/types/webviewCommand";
-import { WEBVIEW_HTML_MARKER_FOR_DEFAULT_CONFIG } from "@/extension/constants";
-import { DefaultPageConfig } from "@/extension/types/defaultPageConfig";
-import { ExtensionConfig } from "@/extension/helper/extensionConfigs";
-import { Theme } from "json-table-schema-visualizer/src/types/theme";
+  type WebviewPostMessage,
+} from "../types/webviewCommand";
+import { type DefaultPageConfig } from "../types/defaultPageConfig";
+import { type ExtensionConfig } from "../helper/extensionConfigs";
+import { WEBVIEW_HTML_MARKER_FOR_DEFAULT_CONFIG } from "../constants";
 
 export class WebviewHelper {
   public static setupHtml(
@@ -14,10 +20,11 @@ export class WebviewHelper {
     context: ExtensionContext,
     defaultConfig: DefaultPageConfig,
   ): string {
-    const html = process.env.VITE_DEV_SERVER_URL
+    const html: string = process.env.VITE_DEV_SERVER_URL
       ? /* @ts-ignore */
-        /* @ts-ignore */ __getWebviewHtml__(process.env.VITE_DEV_SERVER_URL)
-      : __getWebviewHtml__(webview, context);
+        __getWebviewHtml__(process.env.VITE_DEV_SERVER_URL)
+      : /* @ts-ignore */
+        __getWebviewHtml__(webview, context);
 
     return WebviewHelper.injectDefaultConfig(html, defaultConfig);
   }
@@ -41,10 +48,10 @@ export class WebviewHelper {
   ): void {
     switch (command) {
       case WebviewCommand.SET_THEME_PREFERENCES:
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         extensionConfig.setTheme(message as Theme);
-        return;
+        break;
       default:
-        return;
     }
   }
 
@@ -52,7 +59,7 @@ export class WebviewHelper {
     webview: Webview,
     extensionConfig: ExtensionConfig,
     disposables: Disposable[],
-  ) {
+  ): void {
     webview.onDidReceiveMessage(
       (message: WebviewPostMessage) => {
         const command = message.command;
