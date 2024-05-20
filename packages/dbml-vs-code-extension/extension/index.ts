@@ -1,8 +1,15 @@
-import { commands, ExtensionContext } from "vscode";
-import { MainPanel } from "@/extension/views/panel";
-import { EXTENSION_CONFIG_SESSION } from "@/extension/constants";
+import { commands, type ExtensionContext } from "vscode";
 
-export function activate(context: ExtensionContext) {
+import { parseDBMLToJSON } from "dbml-to-json-table-schema";
+
+import { MainPanel } from "extension-shared/extension/views/panel";
+import {
+  EXTENSION_CONFIG_SESSION,
+  WEB_VIEW_NAME,
+  WEB_VIEW_TITLE,
+} from "@/extension/constants";
+
+export function activate(context: ExtensionContext): void {
   // Add command to the extension context
   context.subscriptions.push(
     commands.registerCommand(
@@ -14,8 +21,18 @@ export function activate(context: ExtensionContext) {
   );
 }
 
-const lunchExtension = (context: ExtensionContext) => {
-  MainPanel.render(context, EXTENSION_CONFIG_SESSION);
+const lunchExtension = (context: ExtensionContext): void => {
+  MainPanel.render({
+    context,
+    extensionConfigSession: EXTENSION_CONFIG_SESSION,
+    webviewConfig: {
+      name: WEB_VIEW_NAME,
+      title: WEB_VIEW_TITLE,
+    },
+    parser: parseDBMLToJSON,
+    fileExt: "dbml",
+  });
 };
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function deactivate() {}

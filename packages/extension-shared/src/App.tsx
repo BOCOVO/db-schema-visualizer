@@ -2,11 +2,13 @@ import DiagramViewer from "json-table-schema-visualizer/src/components/DiagramVi
 import { useCreateTheme } from "json-table-schema-visualizer/src/hooks/theme";
 import ThemeProvider from "json-table-schema-visualizer/src/providers/ThemeProvider";
 import NoSchemaMessage from "json-table-schema-visualizer/src/components/Messages/NoSchemaMessage";
-import { Theme } from "json-table-schema-visualizer/src/types/theme";
+import { type Theme } from "json-table-schema-visualizer/src/types/theme";
+
 import {
   WebviewCommand,
-  WebviewPostMessage,
-} from "@/extension/types/webviewCommand";
+  type WebviewPostMessage,
+} from "../extension/types/webviewCommand";
+
 import { useSchema } from "./hooks/schema";
 
 const App = () => {
@@ -27,7 +29,7 @@ const App = () => {
       message: theme,
     };
 
-    if (!window.vsCodeWebviewAPI) {
+    if (window.vsCodeWebviewAPI === undefined) {
       console.error(
         "can't send message to extension due vsCodeWebviewAPI global variable is not defined",
       );

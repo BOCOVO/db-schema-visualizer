@@ -1,4 +1,4 @@
-import { JSONTableSchema, JSONTableTable } from "shared/types/tableSchema";
+import { type JSONTableSchema } from "shared/types/tableSchema";
 
 export enum WebviewCommand {
   SET_THEME_PREFERENCES = "SET_THEME_PREFERENCES",
