@@ -1,0 +1,10 @@
+{
+  "name": "prisma-to-json-table-schema",
+  "version": "0.0.1",
+  "description": "Transform prisma code to JSON table schema",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@mrleebo/prisma-ast": "^0.12.0"
+  }
+}
