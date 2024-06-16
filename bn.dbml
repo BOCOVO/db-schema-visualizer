@@ -1,0 +1,185 @@
+Project HECTOR {
+  database_type: 'PostgreSQL'
+  Note: '''
+
+  Hector est une application de gestion de travaux immo.
+
+  Ceci est la description de la base de données du système d'information du logiciel Hector.
+
+  '''
+}
+
+enum AccessStatus {
+ active
+ pending
+}
+
+enum Permission {
+  responsable
+  collaborateur
+}
+
+enum AddressType {
+  siege
+}
+
+Table users {
+  id integer [pk, increment]
+  firstName varchar [not null]
+  lastName varchar [not null]
+  gender varchar
+  email varchar [unique, not null]
+  emailemailemailemailemailemailemailemail varchar
+  phoneNumber varchar
+  password varchar
+  verified boolean [default: false]
+  createdAt datetime [not null]
+  deletedAt datetime 
+  updatedAt datetime [not null]
+  Note: '''
+  Cette table contient les informations sur les utilisateurs du logiciel Hector.
+
+  '''
+}
+
+Table spaces {
+  id integer [pk, increment]
+  name varchar [not null]
+  company varchar [not null]
+  siret varchar [not null]
+  logoPath varchar [note: "le chemin du logo dans Google Cloud Storage"]
+  onboardingComplete boolean [default: false]
+  createdAt datetime [not null]
+  deletedAt datetime 
+  updatedAt datetime [not null]
+  Note: '''
+  Cette table contient les informations sur les espaces crées dans le logiciel Hector.
+
+  '''
+}
+
+Table accesses {
+  id int [pk, increment]
+  status AccessStatus [not null]
+  space_id int  [ref: > spaces.id, note: 'many user can accessed to one Space']
+  user_id int [ref: > users.id, note: 'many spaces can give access to one User']
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+  Note: '''
+    Cette table materialise le lien entre les Users et les spaces
+    '''
+}
+
+Table configurations {
+  id int [pk, increment]
+  module_id int [ref: > modules.id]
+  value json [not null, note: 'the default value for the configuration']
+  label varchar [unique, not null]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+  Note: '''
+  Cette table contient la liste des configurations disponibles dans l'application. Les valeurs sont serialisées et déserialisée par le front
+    '''
+}
+
+Table spaces_configurations {
+  id int
+  value json [not null, note: 'the space defined value for the configuration']
+  space_id int [ref: > spaces.id, note: 'many configurations can has custom value for a company']
+  configuration_id int [ref: > configurations.id, note: 'many space can define custom for a configuration']
+}
+
+Table departments {
+  id int [pk, increment]
+  name varchar [unique, not null]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+  Note: '''
+      La table Pole  qui servira a identifier les differents poles (Commercial, Chantier, etc.).
+    '''
+}
+
+Table modules {
+  id int [pk, increment]
+  name varchar [not null]
+  department_id int [ref: > departments.id]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+  Note: '''
+      La table Module qui servira a identifier uniquement un module (Equipe, Prise de RDV, etc.) dans un pole donne.
+    '''
+}
+
+Table scopes {
+  id int [pk, increment]
+  object varchar [not null, note: "entiteé a laquelle le scope est relatif"]
+  object_id int [not null, note: "identifiant de l'entité a laquelle le scope est relatif"]
+  label Permission [not null, note: "nom du scope"]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+  Note: '''
+    le scope definit une autorisation particuliere dans l'application.
+    '''
+}
+
+Table accesses_scopes {
+  id int [pk, increment]
+  access_id int [ref: > accesses.id]
+  scope_id int [ref: > scopes.id]
+  details json [note: "les informations supplementaires relatives au scope"]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+
+}
+
+Table spaces_addresses {
+  id int [pk, increment]
+  name varchar [not null, note: "nom de l'adresse"]
+  details varchar [note: "complement d'adresse"]
+  city varchar [not null]
+  postcode varchar [not null]
+  label AddressType [not null, note: "le type de l'adresse pouvant etre une adresse siege etc."]
+  space_id int [ref: > spaces.id]
+  createdAt datetime [not null]
+  deletedAt datetime
+  updatedAt datetime [not null]
+}
+
+Table folders {
+  id int [pk, increment]
+  name varchar [not null, note: "Le nom du dossier"]
+  is_default boolean [not null, note:"Pour indiquer si le dossier est un dossier par défaut ou non."]
+  space_id integer [ref: > spaces.id]
+}
+
+Table department_folders {
+  id integer [pk, increment]
+  folder_id integer [ref: > folders.id]
+  departement_id integer [ref: > departments.id]
+} 
+
+
+Table medias {
+  id integer [pk, increment]
+  name text [note: "le nom du média"]
+  folder_id integer [ref: > folders.id]
+  url text [note: "L'URL qui permet d'accéder au fichier."]
+  
+  Note: '''
+  Cette table enregistre les fichiers.
+  Média signifie fichier.
+  '''
+}
+
+Ref: "users"."email" < "spaces_configurations"."space_id"
