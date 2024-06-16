@@ -9,6 +9,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Added
 
 - Make the table width fit the table content
+- Save and restore tables positions on exiting
+- Save and restore stage position on exiting
 
 ## [0.0.3]
 
