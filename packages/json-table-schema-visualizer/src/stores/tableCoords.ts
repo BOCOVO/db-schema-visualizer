@@ -61,6 +61,7 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
     >;
     if (recoveredStore === null || !Array.isArray(recoveredStore)) {
       this.resetPositions(newTables);
+      return;
     }
 
     this.tableCoords = new Map<string, XYPosition>(recoveredStore);
