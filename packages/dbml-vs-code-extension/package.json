@@ -61,6 +61,8 @@
     "build": "vite build && yarn run generate:css",
     "package": "yarn run build",
     "preview": "vite preview",
+    "create:package": "vsce package",
+    "publish": "vsce publish",
     "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../dbml-vs-code-extension/dist/webview/assets/index.css --minify"
   },
   "devDependencies": {
