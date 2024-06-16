@@ -1,0 +1,75 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  name   String  @unique
+  price  Float
+  colors Color[]
+  sizes  Size[]
+  photos Photo[]
+  orders Order[] @relation("ffv")
+}
+
+model Order {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  product         Product  @relation(fields: [productId], references: [id], name: "ffv")
+  color           Color
+  size            Size
+  shippingAddress Address
+  billingAddress  Address?
+  productId       String   @db.ObjectId
+}
+
+enum Color {
+  Red
+}
+
+enum Size {
+  Small
+  Medium
+  Large
+  XLarge
+}
+
+type Photo {
+  height Int    @default(200)
+  width  Int    @default(100)
+  url    String
+}
+
+type Address {
+  street String
+  city   String
+  zip    String
+}
+
+model Match {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  player1     User     @relation(fields: [player1Id], references: [id], "player1")
+  player1Id   String
+  player2     User     @relation(fields: [player2Id], references: [id],  "player2")
+  player2Id   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  leagueId    String
+}
+
+model User {
+  id             String   @id @default(uuid()) @map("_id")
+  email          String   @unique
+  password       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  player1Matches Match[]  @relation("player1")
+  player2Matches Match[]  @relation("player2")
+}

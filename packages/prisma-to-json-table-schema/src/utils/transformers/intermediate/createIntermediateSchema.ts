@@ -63,6 +63,5 @@ export const createIntermediateSchema = (
     rawRelations,
     inverseRelationMap,
     tablesNames,
-    compositeTypesNames: types,
   };
 };

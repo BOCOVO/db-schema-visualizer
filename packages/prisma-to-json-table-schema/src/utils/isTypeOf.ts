@@ -1,3 +1,8 @@
+import {
+  PrismaAstNodeType,
+  PrismaFieldAttributeType,
+} from "../enums/prismaAstNodeType";
+
 import type {
   Model,
   Enumerator,
@@ -10,12 +15,7 @@ import type {
   Type,
   Attribute,
 } from "@mrleebo/prisma-ast";
-import type { AstNode } from "@/types/node";
-
-import {
-  PrismaAstNodeType,
-  PrismaFieldAttributeType,
-} from "@/enums/prismaAstNodeType";
+import type { AstNode } from "../types/node";
 
 export const isEnumNode = (node: AstNode): node is Enum => {
   return node.type === PrismaAstNodeType.enum;

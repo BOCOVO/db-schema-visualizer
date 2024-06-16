@@ -44,6 +44,20 @@
       "options": {
         "cwd": "${workspaceFolder}/packages/dbml-vs-code-extension"
       }
+    },
+
+    // prisma
+    {
+      "type": "npm",
+      "script": "build:prisma",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "options": {
+        "cwd": "${workspaceFolder}/packages/prisma-vs-code-extension"
+      }
     }
   ]
 }

@@ -5,7 +5,7 @@ import { computeKey } from "../computeKey";
 import type {
   FieldRelationsMap,
   IntermediateSchema,
-} from "@/types/intermediateFormattedNode";
+} from "../../types/intermediateFormattedNode";
 
 export const createRefsAndFieldRelationsArray = (
   rawRelations: IntermediateSchema["rawRelations"],
