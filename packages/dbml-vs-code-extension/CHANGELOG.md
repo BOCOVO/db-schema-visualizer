@@ -4,7 +4,9 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [0.2.0]
+
+### Added
 
 - Support table header customization via table settings in the dbml code by [@tv-long](https://github.com/tv-long)
 
