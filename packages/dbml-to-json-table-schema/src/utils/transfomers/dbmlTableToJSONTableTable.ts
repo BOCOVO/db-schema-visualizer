@@ -6,12 +6,13 @@ import { dbmlIndexToJSONTableIndex } from "./dbmlIndexToJSONTableIndex";
 import type Table from "@dbml/core/types/model_structure/table";
 
 export const dbmlTableToJSONTableTable = (
-  { name, note, fields, indexes }: Table,
+  { name, note, headerColor, fields, indexes }: Table,
   relationalFieldMap: Map<string, string[]>,
   enumsMap: Set<string>,
 ): JSONTableTable => {
   return {
     name,
+    headerColor,
     // the note returned by the dbml parser is not string
     // but an object there is an typing error in their package
     note: (note as any)?.value,
