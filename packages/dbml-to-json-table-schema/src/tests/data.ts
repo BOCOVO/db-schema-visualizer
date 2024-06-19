@@ -6,7 +6,7 @@ export const dbmlTestCode = `
     inactive [note: "a note"]
   }
 
-  Table follows {
+  Table follows [headercolor: #3498DB] {
     id integer [primary key, not null, increment, note: "a note"]
     view integer [default: 0, note: "a note"]
     following_user_id integer [note: "a note"]
@@ -78,6 +78,7 @@ export const dbmlTestCodeInJSONTableFormat = {
     {
       name: "follows",
       note: "a note",
+      headerColor: "#3498DB",
       fields: [
         {
           name: "id",
