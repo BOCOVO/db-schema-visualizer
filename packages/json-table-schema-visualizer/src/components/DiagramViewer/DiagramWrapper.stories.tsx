@@ -24,7 +24,7 @@ export const DiagramWrapperWrapper: Story = {
   },
   decorators: [
     (Story) => (
-      <TablesPositionsProvider tables={[]}>
+      <TablesPositionsProvider tables={[]} refs={[]}>
         <Story />
       </TablesPositionsProvider>
     ),

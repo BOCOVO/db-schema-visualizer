@@ -18,7 +18,7 @@ export const ToolbarStory: Story = {
   decorators: [
     (Story) => (
       <div className="py-32">
-        <TablesPositionsProvider tables={[]}>
+        <TablesPositionsProvider tables={[]} refs={[]}>
           <Story />
         </TablesPositionsProvider>
       </div>

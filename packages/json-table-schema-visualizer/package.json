@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@dagrejs/dagre": "^1.1.2",
     "eventemitter3": "^5.0.1",
     "konva": "^9.3.6",
     "lucide-react": "^0.365.0",
