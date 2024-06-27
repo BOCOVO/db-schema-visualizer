@@ -17,7 +17,7 @@ export const AutoArrangeTableButtonStory: Story = {
   render: () => <AutoArrangeTableButton />,
   decorators: [
     (Story) => (
-      <TablesPositionsProvider tables={[]}>
+      <TablesPositionsProvider tables={[]} refs={[]}>
         <Story />
       </TablesPositionsProvider>
     ),

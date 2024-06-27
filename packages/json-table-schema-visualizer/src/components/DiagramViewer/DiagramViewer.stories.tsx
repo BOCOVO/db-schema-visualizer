@@ -33,7 +33,7 @@ export const DiagramViewerStory: Story = {
   },
   decorators: [
     (Story) => {
-      tableCoordsStore.resetPositions(tables);
+      tableCoordsStore.resetPositions(tables, exampleData.refs);
 
       return <Story />;
     },
