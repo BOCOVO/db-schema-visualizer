@@ -28,6 +28,7 @@ export const prismaASTToJSONTableSchema = (
       intermediateTable,
       enumsNames,
       fieldRelationsArray,
+      tablesNames,
     );
   });
 
