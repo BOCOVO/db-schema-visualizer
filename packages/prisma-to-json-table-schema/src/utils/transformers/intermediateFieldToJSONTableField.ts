@@ -20,7 +20,13 @@ export const intermediateFieldToJSONTableField = (
 
   const field: JSONTableField = {
     ...intermediateField,
-    type: { type_name: intermediateField.type.type_name, is_enum: isEnum },
+    type: {
+      type_name:
+        intermediateField.type.many === true
+          ? `${intermediateField.type.type_name} [ ]`
+          : intermediateField.type.type_name,
+      is_enum: isEnum,
+    },
     is_relation: relationship !== undefined && relationship.length > 0,
     relational_tables: relationship,
   };
