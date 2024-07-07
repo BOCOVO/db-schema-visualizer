@@ -1,5 +1,7 @@
 import { type Model } from "@mrleebo/prisma-ast";
 
+import { isField } from "../../isTypeOf";
+
 import { formatIntermediateTableField } from "./formatIntermediateField";
 import { lookForRelation } from "./lookForRelation";
 
@@ -8,7 +10,6 @@ import {
   type RawRelationInfo,
   type RelationType,
 } from "@/types/intermediateFormattedNode";
-import { isField } from "@/utils/isTypeOf";
 
 export const formatIntermediateTable = (
   node: Model,
