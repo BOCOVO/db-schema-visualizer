@@ -1,9 +1,8 @@
-import { type Field } from "@mrleebo/prisma-ast";
-
 import { isFunNodeType, isKeyValue } from "../isTypeOf";
+import { PrismaFieldAttributeType } from "../../enums/prismaAstNodeType";
 
-import { type FieldConfig } from "@/types/intermediateFormattedNode";
-import { PrismaFieldAttributeType } from "@/enums/prismaAstNodeType";
+import type { Field } from "@mrleebo/prisma-ast";
+import type { FieldConfig } from "@/types/intermediateFormattedNode";
 
 // Browse column attributes to identify its configurations
 export const getFieldConfig = (

@@ -1,5 +1,6 @@
 import { type JSONTableEnum } from "shared/types/tableSchema";
 
+import { isEnumNode, isModelNode, isTypeNode } from "../../isTypeOf";
 import { enumNodeToJSONTableEnum } from "../enumNodeToJSONTableEnum";
 
 import { formatIntermediateTable } from "./formatIntermediateTable";
@@ -12,7 +13,6 @@ import {
   type IntermediateTable,
   type RelationType,
 } from "@/types/intermediateFormattedNode";
-import { isEnumNode, isModelNode, isTypeNode } from "@/utils/isTypeOf";
 
 export const createIntermediateSchema = (
   nodes: Schema["list"],
@@ -63,6 +63,5 @@ export const createIntermediateSchema = (
     rawRelations,
     inverseRelationMap,
     tablesNames,
-    compositeTypesNames: types,
   };
 };

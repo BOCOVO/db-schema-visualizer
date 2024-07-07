@@ -1,13 +1,13 @@
 import { type Field } from "@mrleebo/prisma-ast";
 
 import { getFieldTypeName } from "../getFieldTypeName";
+import { scalarFieldType } from "../../../constants/scalarFieldType";
+import { isKeyValue, isRelationArray, isRelationNode } from "../../isTypeOf";
 
-import { isKeyValue, isRelationArray, isRelationNode } from "@/utils/isTypeOf";
 import {
   type RelationType,
   type RawRelationInfo,
 } from "@/types/intermediateFormattedNode";
-import { scalarFieldType } from "@/constants/scalarFieldType";
 
 export const lookForRelation = (
   field: Field,
