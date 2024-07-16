@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { type JSONTableSchema } from "shared/types/tableSchema";
 import { tableCoordsStore } from "json-table-schema-visualizer/src/stores/tableCoords";
 import { stageStateStore } from "json-table-schema-visualizer/src/stores/stagesState";
+import { detailLevelStore } from "json-table-schema-visualizer/src/stores/detailLevelStore";
 
 import { type SetSchemaCommandPayload } from "../../extension/types/webviewCommand";
 
@@ -24,6 +25,7 @@ export const useSchema = (): {
       // update stores
       tableCoordsStore.switchTo(message.key, message.payload.tables);
       stageStateStore.switchTo(message.key);
+      detailLevelStore.switchTo(message.key);
 
       setSchemaKey(message.key);
     }

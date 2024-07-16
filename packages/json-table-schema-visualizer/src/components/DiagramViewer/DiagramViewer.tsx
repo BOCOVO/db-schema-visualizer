@@ -12,6 +12,7 @@ import DiagramWrapper from "./DiagramWrapper";
 
 import TablesPositionsProvider from "@/providers/TablesPositionsProvider";
 import MainProviders from "@/providers/MainProviders";
+import TabelLevelDetailProvider from "@/providers/TableDetailLevelProvider";
 
 interface DiagramViewerProps {
   tables: JSONTableTable[];
@@ -25,15 +26,17 @@ const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
   }
 
   return (
-    <TablesPositionsProvider tables={tables}>
-      <MainProviders tables={tables} enums={enums}>
-        <DiagramWrapper>
-          <RelationsConnections refs={refs} />
+    <TabelLevelDetailProvider>
+      <TablesPositionsProvider tables={tables}>
+        <MainProviders tables={tables} enums={enums}>
+          <DiagramWrapper>
+            <RelationsConnections refs={refs} />
 
-          <Tables tables={tables} />
-        </DiagramWrapper>
-      </MainProviders>
-    </TablesPositionsProvider>
+            <Tables tables={tables} />
+          </DiagramWrapper>
+        </MainProviders>
+      </TablesPositionsProvider>
+    </TabelLevelDetailProvider>
   );
 };
 

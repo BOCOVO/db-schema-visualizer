@@ -1,5 +1,5 @@
 import { Group, Rect } from "react-konva";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import TableHeader from "./TableHeader";
 import Column from "./Column/Column";
@@ -23,16 +23,22 @@ import {
   useTableWidth,
 } from "@/hooks/table";
 import { tableCoordsStore } from "@/stores/tableCoords";
+import { useTableDetailLevel } from "@/hooks/tableDetailLevel";
+import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { filterByDetailLevel } from "@/utils/filterByDetailLevel";
 
 interface TableProps extends JSONTableTable {}
 
 const Table = ({ fields, name }: TableProps) => {
   const themeColors = useThemeColors();
+  const { detailLevel } = useTableDetailLevel();
   const tableRef = useRef<null | Konva.Group>(null);
   const { setHoveredTableName } = useTablesInfo();
   const { x: tableX, y: tableY } = useTableDefaultPosition(name);
   const tablePreferredWidth = useTableWidth();
-
+  const visibleFields = useMemo(() => {
+    return filterByDetailLevel(fields, detailLevel);
+  }, [detailLevel, fields]);
   useEffect(() => {
     if (tableRef.current != null) {
       tableRef.current.x(tableX);
@@ -44,7 +50,7 @@ const Table = ({ fields, name }: TableProps) => {
   const tableHeight =
     TABLE_COLOR_HEIGHT +
     COLUMN_HEIGHT +
-    fields.length * COLUMN_HEIGHT +
+    visibleFields.length * COLUMN_HEIGHT +
     PADDINGS.sm;
 
   const tableDragEventName = computeTableDragEventName(name);
@@ -96,22 +102,25 @@ const Table = ({ fields, name }: TableProps) => {
       />
 
       <TableHeader title={name} />
-
-      <Group y={TABLE_HEADER_HEIGHT}>
-        {fields.map((field, index) => (
-          <Column
-            key={field.name}
-            colName={field.name}
-            tableName={name}
-            isEnum={field.type.is_enum}
-            type={field.type.type_name}
-            isPrimaryKey={field.pk}
-            offsetY={index * COLUMN_HEIGHT}
-            relationalTables={field.relational_tables}
-            note={field.note}
-          />
-        ))}
-      </Group>
+      {detailLevel !== TableDetailLevel.HeaderOnly ? (
+        <Group y={TABLE_HEADER_HEIGHT}>
+          {visibleFields.map((field, index) => (
+            <Column
+              key={field.name}
+              colName={field.name}
+              tableName={name}
+              isEnum={field.type.is_enum}
+              type={field.type.type_name}
+              isPrimaryKey={field.pk}
+              offsetY={index * COLUMN_HEIGHT}
+              relationalTables={field.relational_tables}
+              note={field.note}
+            />
+          ))}
+        </Group>
+      ) : (
+        <></>
+      )}
     </Group>
   );
 };
