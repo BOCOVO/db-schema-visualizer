@@ -1,17 +1,27 @@
+import { filterByDetailLevel } from "./filterByDetailLevel";
+
 import type { ColsIndexesMap } from "@/types//tablesInfoProviderValue";
 import type { JSONTableTable } from "shared/types/tableSchema";
 
-export const computeColIndexes = (tables: JSONTableTable[]): ColsIndexesMap => {
+import { TableDetailLevel } from "@/types/tabelDetailLevel";
+
+export const computeColIndexes = (
+  tables: JSONTableTable[],
+  detailLevel: TableDetailLevel,
+): ColsIndexesMap => {
+  if (detailLevel === TableDetailLevel.HeaderOnly) {
+    return {};
+  }
   return tables.reduce<ColsIndexesMap>((acc, table) => {
-    const currentTableColsIndexes = table.fields.reduce<ColsIndexesMap>(
-      (tableAcc, field, index) => {
-        return {
-          ...tableAcc,
-          [computeColIndexesKey(table.name, field.name)]: index,
-        };
-      },
-      {},
-    );
+    const currentTableColsIndexes = filterByDetailLevel(
+      table.fields,
+      detailLevel,
+    ).reduce<ColsIndexesMap>((tableAcc, field, index) => {
+      return {
+        ...tableAcc,
+        [computeColIndexesKey(table.name, field.name)]: index,
+      };
+    }, {});
 
     return {
       ...acc,

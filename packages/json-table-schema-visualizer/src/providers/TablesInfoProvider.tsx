@@ -4,6 +4,7 @@ import type { TablesInfoProviderValue } from "@/types/tablesInfoProviderValue";
 import type { JSONTableTable } from "shared/types/tableSchema";
 
 import { computeColIndexes } from "@/utils/computeColIndexes";
+import { useTableDetailLevel } from "@/hooks/tableDetailLevel";
 
 export const TablesInfoContext = createContext<
   TablesInfoProviderValue | undefined
@@ -16,7 +17,8 @@ interface TablesInfoProviderProps {
 
 const TablesInfoProvider = ({ children, tables }: TablesInfoProviderProps) => {
   const [hoveredTableName, setHoveredTableName] = useState<string | null>(null);
-  const colsIndexes = computeColIndexes(tables);
+  const { detailLevel } = useTableDetailLevel();
+  const colsIndexes = computeColIndexes(tables, detailLevel);
 
   return (
     <TablesInfoContext.Provider
