@@ -25,7 +25,9 @@ interface TableLevelDetailProviderProps {
 const TableLevelDetailProvider = ({
   children,
 }: TableLevelDetailProviderProps) => {
-  const [state, setState] = useState(detailLevelStore.getCurrentDetailLevel());
+  const [state, setState] = useState(() =>
+    detailLevelStore.getCurrentDetailLevel(),
+  );
   useEffect(() => {
     if (state !== detailLevelStore.getCurrentDetailLevel()) {
       detailLevelStore.set(state);
