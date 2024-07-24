@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import ToolbarButton from "../Button";
 
 import { useTableDetailLevel } from "@/hooks/tableDetailLevel";
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 
 interface DetailLevelToggleProps {
   onClick: () => void;
