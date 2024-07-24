@@ -9,6 +9,7 @@ Allow to visualize the database schema in ERD ( Entity Relationship Diagram ) fr
 - Create Entity Relationship Diagram from your dbml file
 - Allow you to drag diagrams
 - Support both light and dark themes
+- Multiple display mode. Display all columns, relational columns only or table headers only
 
 ## Extension Settings
 
