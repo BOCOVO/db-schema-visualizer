@@ -1,6 +1,6 @@
 import { type JSONTableField } from "shared/types/tableSchema";
 
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 
 export function filterByDetailLevel(
   fields: JSONTableField[],

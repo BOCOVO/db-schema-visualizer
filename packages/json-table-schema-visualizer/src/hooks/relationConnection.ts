@@ -12,7 +12,7 @@ import { computeTableDragEventName } from "@/utils/eventName";
 import eventEmitter from "@/events-emitter";
 import { computeConnectionHandlePos } from "@/utils/computeConnectionHandlePositions";
 import { tableCoordsStore } from "@/stores/tableCoords";
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 import { TABLE_HEADER_HEIGHT } from "@/constants/sizing";
 
 interface UseRelationTablesCoordsReturn {

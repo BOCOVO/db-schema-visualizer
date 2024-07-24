@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import { TableDetailLevelContext } from "@/providers/TableDetailLevelProvider";
-import { type TableDetailLevel } from "@/types/tabelDetailLevel";
+import { type TableDetailLevel } from "@/types/tableDetailLevel";
 
 export const useTableDetailLevel = (): {
   detailLevel: TableDetailLevel;

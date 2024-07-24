@@ -3,7 +3,7 @@ import { filterByDetailLevel } from "./filterByDetailLevel";
 import type { ColsIndexesMap } from "@/types//tablesInfoProviderValue";
 import type { JSONTableTable } from "shared/types/tableSchema";
 
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 
 export const computeColIndexes = (
   tables: JSONTableTable[],

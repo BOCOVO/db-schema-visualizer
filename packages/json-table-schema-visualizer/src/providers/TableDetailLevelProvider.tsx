@@ -9,7 +9,7 @@ import {
 import {
   type TableDetailLevelValue,
   TableDetailLevel,
-} from "@/types/tabelDetailLevel";
+} from "@/types/tableDetailLevel";
 import { detailLevelStore } from "@/stores/detailLevelStore";
 
 export const TableDetailLevelContext = createContext<TableDetailLevelValue>({
@@ -17,14 +17,14 @@ export const TableDetailLevelContext = createContext<TableDetailLevelValue>({
   next() {},
 });
 
-interface TabelLevelDetailProviderProps {
+interface TableLevelDetailProviderProps {
   children: ReactNode;
   level?: TableDetailLevel;
 }
 
-const TabelLevelDetailProvider = ({
+const TableLevelDetailProvider = ({
   children,
-}: TabelLevelDetailProviderProps) => {
+}: TableLevelDetailProviderProps) => {
   const [state, setState] = useState(detailLevelStore.getCurrentDetailLevel());
   useEffect(() => {
     if (state !== detailLevelStore.getCurrentDetailLevel()) {
@@ -48,4 +48,4 @@ const TabelLevelDetailProvider = ({
   );
 };
 
-export default TabelLevelDetailProvider;
+export default TableLevelDetailProvider;

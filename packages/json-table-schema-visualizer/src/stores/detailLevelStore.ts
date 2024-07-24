@@ -1,7 +1,7 @@
 import { PersistableStore } from "./PersitableStore";
 
 import { AppLocalStorage } from "@/storages/local";
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 
 class DetailLevelStore extends PersistableStore<TableDetailLevel> {
   private detailLevel: TableDetailLevel = TableDetailLevel.FullDetails;

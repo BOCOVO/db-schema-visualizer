@@ -24,7 +24,7 @@ import {
 } from "@/hooks/table";
 import { tableCoordsStore } from "@/stores/tableCoords";
 import { useTableDetailLevel } from "@/hooks/tableDetailLevel";
-import { TableDetailLevel } from "@/types/tabelDetailLevel";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 import { filterByDetailLevel } from "@/utils/filterByDetailLevel";
 
 interface TableProps extends JSONTableTable {}
