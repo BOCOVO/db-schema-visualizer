@@ -9,4 +9,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Added
 
 - Create diagram from Prisma code
-- Add light and dark theme
+- Support light and dark theme
+- Save and restore tables positions on exiting
+- Save and restore stage position on exiting
+- Ability to toggle table visualization mode. Display all columns, relational columns only or table headers only by [@tv-long](https://github.com/tv-long)
