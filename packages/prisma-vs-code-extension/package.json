@@ -1,0 +1,94 @@
+{
+  "name": "prisma-erd-visualizer",
+  "displayName": "Prisma Entity-Relationship Diagrams visualizer",
+  "description": "A VS Code extension for viewing the ERD (Entity Relationship Diagram) database schema from a prismal file in your VS Code Editor.",
+  "version": "0.0.3",
+  "icon": "assets/logo.png",
+  "publisher": "bocovo",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension/index.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "prisma-erd-visualizer.previewDiagrams",
+        "title": "Show diagram",
+        "icon": {
+          "light": "./assets/icons/open-preview.svg",
+          "dark": "./assets/icons/open-preview-dark.svg"
+        }
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "when": "resourceLangId == prisma",
+          "command": "prisma-erd-visualizer.previewDiagrams",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Prisma Entity Relationship Diagram",
+      "properties": {
+        "prismaERDPreviewer.preferredTheme": {
+          "type": "string",
+          "default": "dark",
+          "enum": [
+            "dark",
+            "light"
+          ],
+          "enumDescriptions": [
+            "To use dark mode theme colors",
+            "To use light mode theme colors"
+          ]
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run build && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "build:prisma": "vite build && yarn run generate:css",
+    "package": "yarn run build",
+    "preview": "vite preview",
+    "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../prisma-vs-code-extension/dist/webview/assets/index.css --minify"
+  },
+  "devDependencies": {
+    "@tomjs/vite-plugin-vscode": "^2.2.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/react": "^18.2.75",
+    "@types/react-dom": "^18.2.24",
+    "@types/vscode": "^1.87.0",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
+    "@vitejs/plugin-react-swc": "^3.6.0",
+    "@vscode/test-cli": "^0.0.8",
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.57.0",
+    "ts-loader": "^9.5.1",
+    "vite": "^5.2.8",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "dependencies": {
+    "json-table-schema-visualizer": "1.0.0",
+    "prisma-to-json-table-schema": "0.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "shared": "0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BOCOVO/db-schema-visualizer"
+  }
+}
