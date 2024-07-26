@@ -4,7 +4,7 @@ Allow to visualize the database schema in ERD ( Entity Relationship Diagram ) fr
 
 ## Features
 
-![Demo](https://github.com/BOCOVO/db-schema-visualizer/assets/51182814/a59fd0c0-246d-4f00-be39-9885d88b8b85)
+![Demo](https://github.com/user-attachments/assets/12fbebff-afc7-4ef3-97b8-5ee844c93d3c)
 
 - Create Entity Relationship Diagram from your prisma file
 - Allow you to drag diagrams
