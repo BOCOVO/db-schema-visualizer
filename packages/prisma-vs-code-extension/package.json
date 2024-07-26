@@ -59,8 +59,10 @@
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
     "build:prisma": "vite build && yarn run generate:css",
-    "package": "yarn run build",
+    "package": "yarn run build:prisma",
     "preview": "vite preview",
+    "create:package": "vsce package",
+    "publish": "vsce publish",
     "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../prisma-vs-code-extension/dist/webview/assets/index.css --minify"
   },
   "devDependencies": {
