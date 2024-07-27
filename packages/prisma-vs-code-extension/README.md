@@ -10,6 +10,10 @@ Allow to visualize the database schema in ERD ( Entity Relationship Diagram ) fr
 - Allow you to drag diagrams
 - Support both light and dark themes
 
+## Tutorial
+
+This [tutorial](https://juste.bocovo.me/visualize-the-entity-relationship-diagram-from-prisma-code-in-the-vscode-editor) shows how to use it.
+
 ## Extension Settings
 
 The following Visual Studio Code settings are available for the extension.

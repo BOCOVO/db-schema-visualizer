@@ -18,11 +18,12 @@ Follow this article: <https://juste.bocovo.me/preview-dbml-code-from-vscode>
 ## Downloads
 
 - [The DBML extension](https://marketplace.visualstudio.com/items?itemName=bocovo.dbml-erd-visualizer)
+- [The Prisma extension](https://marketplace.visualstudio.com/items?itemName=bocovo.prisma-erd-visualizer)
 
 ## Extensions
 
 - [The DBML extension](./packages/dbml-vs-code-extension/README.md)
-- Prisma extension is coming soon
+- [The Prisma extension](./packages/prisma-vs-code-extension/README.md)
 
 ## Contribute
 
