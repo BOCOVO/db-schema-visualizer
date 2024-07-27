@@ -2,7 +2,7 @@
   "name": "prisma-erd-visualizer",
   "displayName": "Prisma Entity-Relationship Diagrams visualizer",
   "description": "A VsCode extension that lets you visualize the ERD (Entity Relationship Diagram) of your prisma database structure.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "icon": "assets/logo.png",
   "publisher": "bocovo",
   "engines": {
