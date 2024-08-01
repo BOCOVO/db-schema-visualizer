@@ -1,6 +1,8 @@
 import { type JSONTableField } from "shared/types/tableSchema";
 import { computeRelationalFieldKey } from "shared/utils/computeRelationalFieldKey";
 
+import { computeNameWithSchemaName } from "../computeNameWithSchemaName";
+
 import type Field from "@dbml/core/types/model_structure/field";
 
 interface DbmlToJSONTableFieldParams {
@@ -28,6 +30,11 @@ export const dbmlFieldToJSONTableField = ({
   const fieldKey = computeRelationalFieldKey(ownerTable, name);
 
   const hasRelation = relationalFieldMap.has(fieldKey);
+  const typeName = computeNameWithSchemaName(
+    type.type_name as string,
+    type.schemaName as string | undefined,
+  );
+
   return {
     name,
     pk,
@@ -37,8 +44,8 @@ export const dbmlFieldToJSONTableField = ({
     note: (note as any)?.value,
     not_null,
     type: {
-      type_name: type.type_name,
-      is_enum: enumsMap.has(type.type_name as string),
+      type_name: typeName,
+      is_enum: enumsMap.has(typeName),
     },
     is_relation: hasRelation,
     relational_tables: hasRelation ? relationalFieldMap.get(fieldKey) : null,

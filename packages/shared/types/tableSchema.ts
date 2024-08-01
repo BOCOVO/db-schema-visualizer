@@ -46,7 +46,10 @@ export interface JSONTableIndex
 }
 
 export interface JSONTableTable
-  extends PartialRequired<Pick<Table, "name" | "note" | "headerColor">, "name"> {
+  extends PartialRequired<
+    Pick<Table, "name" | "note" | "headerColor">,
+    "name"
+  > {
   fields: JSONTableField[];
   indexes: JSONTableIndex[];
 }
