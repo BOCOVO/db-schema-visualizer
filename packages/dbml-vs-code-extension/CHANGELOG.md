@@ -4,6 +4,13 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.3.3]
+
+### Fixed
+
+- Prevent table names from being truncated for long table name
+- Typo in preview tab name
+
 ## [0.3.2]
 
 ### Fixed

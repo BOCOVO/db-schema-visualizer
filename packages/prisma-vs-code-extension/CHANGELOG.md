@@ -4,6 +4,12 @@ All notable changes to the "prisma-erd-visualizer" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.1.1]
+
+### Fixed
+
+- Prevent table names from being truncated for long table name
+
 ## [0.1.0]
 
 ### Fixed
