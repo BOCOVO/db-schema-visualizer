@@ -47,7 +47,7 @@ const TableHeader = ({ title }: TableHeaderProps) => {
         align="center"
         strokeWidth={PADDINGS.xs}
         padding={PADDINGS.xs}
-        fontSize={FONT_SIZES.lg}
+        fontSize={FONT_SIZES.tableTitle}
       />
     </Group>
   );
