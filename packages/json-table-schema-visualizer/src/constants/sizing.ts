@@ -23,6 +23,7 @@ export const TABLE_FIELD_TYPE_PADDING = PADDINGS.sm;
 export const FONT_SIZES = {
   md: 15,
   lg: 18,
+  tableTitle: 18,
 };
 
 export const FIELD_DETAILS_CARET = {
