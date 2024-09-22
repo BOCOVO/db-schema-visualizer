@@ -14,6 +14,19 @@
   "activationEvents": [],
   "main": "./dist/extension/index.js",
   "contributes": {
+    "languages": [
+      {
+        "id": "dbml",
+        "aliases": [
+          "DBML",
+          "dbml",
+          "Database Markup Language"
+        ],
+        "extensions": [
+          ".dbml"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "dbml-erd-visualizer.previewDiagrams",
