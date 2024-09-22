@@ -4,6 +4,16 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [Unreleased]
+
+### Added
+
+- Added DBML logo as file icon for dbml file
+
+### Fixed
+
+- Dependence with the `vscode-dbml` VS Code plugin
+
 ## [0.3.3]
 
 ### Fixed
