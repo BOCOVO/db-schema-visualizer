@@ -1,51 +1,43 @@
-import { type JSONTableTable } from "shared/types/tableSchema";
+import dagre from "@dagrejs/dagre";
 
 import { computeTableDimension } from "../computeTableDimension";
 
-import { getColsNumber } from "./getColsNumber";
+import type { JSONTableRef, JSONTableTable } from "shared/types/tableSchema";
 
 import { TABLES_GAP_X, TABLES_GAP_Y } from "@/constants/sizing";
 import { type XYPosition } from "@/types/positions";
 
 const computeTablesPositions = (
   tables: JSONTableTable[],
+  refs: JSONTableRef[],
 ): Map<string, XYPosition> => {
-  const colNumber = getColsNumber(tables.length);
-
-  let nextColsY = 0;
-
   const tablesPositions = new Map<string, XYPosition>();
-  let nextTableX = 0;
 
-  for (let colIndex = 0; colIndex < colNumber; colIndex++) {
-    let currentColMaxW = 0;
+  const graph = new dagre.graphlib.Graph();
+  graph.setGraph({
+    nodesep: TABLES_GAP_X * 3,
+    ranksep: TABLES_GAP_Y * 3,
+    rankdir: "LR",
+  });
+  graph.setDefaultEdgeLabel(function () {
+    return {};
+  });
 
-    const currentColX = nextTableX;
+  tables.forEach((table) => {
+    const { height, width } = computeTableDimension(table);
+    graph.setNode(table.name, { width, height });
+  });
 
-    for (
-      let tableIndex = colIndex;
-      tableIndex < tables.length;
-      tableIndex += colNumber
-    ) {
-      const table = tables[tableIndex];
-      const colY = nextColsY ?? 0;
+  refs.forEach((ref) => {
+    graph.setEdge(ref.endpoints[0].tableName, ref.endpoints[1].tableName);
+  });
 
-      tablesPositions.set(table.name, { x: currentColX, y: colY });
+  dagre.layout(graph);
 
-      const tableDimension = computeTableDimension(table);
-      const isLastTableInCol = tableIndex + colNumber > tables.length - 1;
-      nextColsY = isLastTableInCol
-        ? 0
-        : colY + tableDimension.height + TABLES_GAP_Y;
-
-      currentColMaxW = Math.max(tableDimension.width, currentColMaxW);
-
-      nextTableX = isLastTableInCol
-        ? currentColMaxW + TABLES_GAP_X + currentColX
-        : currentColX;
-    }
-  }
-
+  graph.nodes().forEach((node) => {
+    const { x, y } = graph.node(node);
+    tablesPositions.set(node, { x, y });
+  });
   return tablesPositions;
 };
 

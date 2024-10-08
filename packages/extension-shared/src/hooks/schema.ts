@@ -23,7 +23,11 @@ export const useSchema = (): {
 
     if (message.key !== schemaKey) {
       // update stores
-      tableCoordsStore.switchTo(message.key, message.payload.tables);
+      tableCoordsStore.switchTo(
+        message.key,
+        message.payload.tables,
+        message.payload.refs,
+      );
       stageStateStore.switchTo(message.key);
       detailLevelStore.switchTo(message.key);
 

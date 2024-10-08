@@ -19,7 +19,10 @@ type Story = StoryObj<typeof RelationConnection>;
 
 export const RelationConnectionStory: Story = {
   render: (props) => (
-    <TablesPositionsProvider tables={exampleData.tables}>
+    <TablesPositionsProvider
+      tables={exampleData.tables}
+      refs={exampleData.refs}
+    >
       <MainProviders enums={exampleData.enums} tables={exampleData.tables}>
         <RelationConnection {...props} />
 

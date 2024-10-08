@@ -1,6 +1,6 @@
 import { createContext, useMemo, type PropsWithChildren } from "react";
-import { type JSONTableTable } from "shared/types/tableSchema";
 
+import type { JSONTableRef, JSONTableTable } from "shared/types/tableSchema";
 import type { TablesPositionsContextValue } from "@/types/dimension";
 
 import { tableCoordsStore } from "@/stores/tableCoords";
@@ -10,14 +10,16 @@ export const TablesPositionsContext =
 
 interface TablesPositionsProviderProps extends PropsWithChildren {
   tables: JSONTableTable[];
+  refs: JSONTableRef[];
 }
 
 const TablesPositionsProvider = ({
   tables,
+  refs,
   children,
 }: TablesPositionsProviderProps) => {
   const resetPositions = () => {
-    tableCoordsStore.resetPositions(tables);
+    tableCoordsStore.resetPositions(tables, refs);
   };
 
   const contextValue = useMemo(() => ({ resetPositions }), [resetPositions]);

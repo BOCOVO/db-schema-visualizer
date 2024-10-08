@@ -1,7 +1,6 @@
-import { type JSONTableTable } from "shared/types/tableSchema";
-
 import { PersistableStore } from "./PersitableStore";
 
+import type { JSONTableRef, JSONTableTable } from "shared/types/tableSchema";
 import type { XYPosition } from "@/types/positions";
 
 import computeTablesPositions from "@/utils/tablePositioning/computeTablesPositions";
@@ -35,8 +34,8 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
     };
   }
 
-  public resetPositions(tables: JSONTableTable[]): void {
-    const newTablesPos = computeTablesPositions(tables);
+  public resetPositions(tables: JSONTableTable[], refs: JSONTableRef[]): void {
+    const newTablesPos = computeTablesPositions(tables, refs);
     this.tableCoords = newTablesPos;
     eventEmitter.emit(TableCoordsStore.RESET_POS_EVENT_NAME, newTablesPos);
   }
@@ -52,7 +51,11 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
     this.persist(this.currentStoreKey, storeValue);
   }
 
-  public switchTo(newStoreKey: string, newTables: JSONTableTable[]): void {
+  public switchTo(
+    newStoreKey: string,
+    newTables: JSONTableTable[],
+    refs: JSONTableRef[],
+  ): void {
     this.saveCurrentStore();
 
     this.currentStoreKey = newStoreKey;
@@ -60,7 +63,7 @@ class TableCoordsStore extends PersistableStore<Array<[string, XYPosition]>> {
       [string, XYPosition]
     >;
     if (recoveredStore === null || !Array.isArray(recoveredStore)) {
-      this.resetPositions(newTables);
+      this.resetPositions(newTables, refs);
       return;
     }
 
