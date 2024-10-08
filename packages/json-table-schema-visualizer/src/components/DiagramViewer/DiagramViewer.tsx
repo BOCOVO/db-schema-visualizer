@@ -27,7 +27,7 @@ const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
 
   return (
     <TableLevelDetailProvider>
-      <TablesPositionsProvider tables={tables}>
+      <TablesPositionsProvider tables={tables} refs={refs}>
         <MainProviders tables={tables} enums={enums}>
           <DiagramWrapper>
             <RelationsConnections refs={refs} />
