@@ -26,6 +26,7 @@ import { tableCoordsStore } from "@/stores/tableCoords";
 import { useTableDetailLevel } from "@/hooks/tableDetailLevel";
 import { TableDetailLevel } from "@/types/tableDetailLevel";
 import { filterByDetailLevel } from "@/utils/filterByDetailLevel";
+import computeFieldDisplayTypeName from "@/utils/getFieldType";
 
 interface TableProps extends JSONTableTable {}
 
@@ -110,7 +111,7 @@ const Table = ({ fields, name }: TableProps) => {
               colName={field.name}
               tableName={name}
               isEnum={field.type.is_enum}
-              type={field.type.type_name}
+              type={computeFieldDisplayTypeName(field)}
               isPrimaryKey={field.pk}
               offsetY={index * COLUMN_HEIGHT}
               relationalTables={field.relational_tables}
