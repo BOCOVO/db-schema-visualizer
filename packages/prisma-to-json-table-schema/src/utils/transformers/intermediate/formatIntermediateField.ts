@@ -15,6 +15,7 @@ export const formatIntermediateTableField = (
       type_name: getFieldTypeName(node.fieldType),
       many: node.array,
     },
+    not_null: node.optional === undefined ? true : !node.optional,
     ...fieldConfig,
   };
 };
