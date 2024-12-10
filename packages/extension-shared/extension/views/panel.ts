@@ -1,6 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
+  Diagnostic,
+  DiagnosticSeverity,
   type Disposable,
   type ExtensionContext,
+  languages,
+  Position,
+  Range,
   type TextDocument,
   type TextEditor,
   Uri,
@@ -10,6 +16,7 @@ import {
   workspace,
 } from "vscode";
 import { type JSONTableSchema } from "shared/types/tableSchema";
+import { DiagnosticError } from "shared/types/diagnostic";
 
 import { DIAGRAM_UPDATER_DEBOUNCE_TIME } from "../constants";
 import { ExtensionConfig } from "../helper/extensionConfigs";
@@ -26,6 +33,8 @@ export class MainPanel {
   private _lastTimeout: NodeJS.Timeout | null = null;
   public static parseCode: (code: string) => JSONTableSchema;
   public static fileExt: string;
+  public static diagnosticCollection =
+    languages.createDiagnosticCollection("dbml");
 
   private constructor(
     panel: WebviewPanel,
@@ -163,9 +172,28 @@ export class MainPanel {
         payload: schema,
         key: document.uri.toString(),
       });
+
+      MainPanel.diagnosticCollection.clear();
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      window.showErrorMessage(`${error as any}`);
+      console.error(JSON.stringify(error));
+      if (error instanceof DiagnosticError) {
+        MainPanel.diagnosticCollection.set(document.uri, [
+          new Diagnostic(
+            new Range(
+              new Position(
+                error.location.start.line,
+                error.location.start.column,
+              ),
+              new Position(error.location.end.line, error.location.end.column),
+            ),
+            error.message,
+            DiagnosticSeverity.Error,
+          ),
+        ]);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        window.showErrorMessage(`${error as any}`);
+      }
     }
   };
 
