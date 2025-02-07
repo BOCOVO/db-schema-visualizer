@@ -180,6 +180,9 @@ export class MainPanel {
         // Get all prisma files in the folder
         const files = await workspace.findFiles(`**/*.prisma`);
 
+        // Clear code
+        code = "";
+
         // Merge all prisma files
         for (const uri of files) {
           // Check file in the same folder
