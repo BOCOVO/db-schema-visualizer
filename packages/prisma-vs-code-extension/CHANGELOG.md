@@ -4,7 +4,16 @@ All notable changes to the "prisma-erd-visualizer" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.3.0]
+
+### Added
+
+- Showing diagnostics error directly on the code editor lines instead showing toast messages
+- Showing `not_null` label for not null columns
+
 ## [0.2.0]
+
+### Added
 
 - Improve auto layout with dagrejs
 
