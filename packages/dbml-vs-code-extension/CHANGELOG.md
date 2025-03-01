@@ -4,7 +4,16 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.5.0]
+
+### Added
+
+- Display diagnostic errors directly on code editor lines instead of displaying toast messages
+- Showing `not_null` label for not null columns
+
 ## [0.4.0]
+
+### Added
 
 - Improve auto layout with dagrejs
 
