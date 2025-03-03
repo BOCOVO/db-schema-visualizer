@@ -103,10 +103,6 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     }
   };
 
-  useEffect(() => {
-    fitToView();
-  }, [windowWidth, windowHeight]);
-
   return (
     <main
       className={`relative flex flex-col items-center ${theme === Theme.dark ? "dark" : ""}`}
