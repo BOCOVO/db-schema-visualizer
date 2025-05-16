@@ -3,6 +3,7 @@ import { useCreateTheme } from "json-table-schema-visualizer/src/hooks/theme";
 import ThemeProvider from "json-table-schema-visualizer/src/providers/ThemeProvider";
 import NoSchemaMessage from "json-table-schema-visualizer/src/components/Messages/NoSchemaMessage";
 import { type Theme } from "json-table-schema-visualizer/src/types/theme";
+import ScrollDirectionProvider from "json-table-schema-visualizer/src/providers/ScrollDirectionProvider";
 
 import {
   WebviewCommand,
@@ -44,7 +45,11 @@ const App = () => {
       setTheme={saveThemePreference}
       themeColors={themeColors}
     >
-      <DiagramViewer key={key} {...schema} />
+      <ScrollDirectionProvider
+        scrollDirection={window.EXTENSION_DEFAULT_CONFIG?.scrollDirection}
+      >
+        <DiagramViewer key={key} {...schema} />
+      </ScrollDirectionProvider>
     </ThemeProvider>
   );
 };
