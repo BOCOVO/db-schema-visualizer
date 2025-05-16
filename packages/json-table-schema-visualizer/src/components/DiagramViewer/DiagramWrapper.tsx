@@ -13,6 +13,8 @@ import { useThemeColors, useThemeContext } from "@/hooks/theme";
 import { Theme } from "@/types/theme";
 import { useStageStartingState } from "@/hooks/stage";
 import { stageStateStore } from "@/stores/stagesState";
+import { useScrollDirectionContext } from "@/hooks/scrollDirection";
+import { ScrollDirection } from "@/types/scrollDirection";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -22,6 +24,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const scaleBy = 1.02;
   const { height: windowHeight, width: windowWidth } = useWindowSize();
   const { theme } = useThemeContext();
+  const { scrollDirection } = useScrollDirectionContext();
   const { onChange: onGrabbing, onRestore: onGrabRelease } =
     useCursorChanger("grabbing");
   const themeColors = useThemeColors();
@@ -53,7 +56,12 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     };
 
     // how to scale? Zoom in? Or zoom out?
-    let direction = e.evt.deltaY > 0 ? 1 : -1;
+    let direction = 0;
+    if (scrollDirection === ScrollDirection.UpOut) {
+      direction = e.evt.deltaY > 0 ? 1 : -1;
+    } else if (scrollDirection === ScrollDirection.UpIn) {
+      direction = e.evt.deltaY > 0 ? -1 : 1;
+    }
 
     // when we zoom on trackpad, e.evt.ctrlKey is true
     // in that case lets revert direction

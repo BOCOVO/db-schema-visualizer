@@ -1,4 +1,5 @@
 import { Theme } from "json-table-schema-visualizer/src/types/theme";
+import { ScrollDirection } from "json-table-schema-visualizer/src/types/scrollDirection";
 import { workspace, type WorkspaceConfiguration } from "vscode";
 
 import { ConfigKeys } from "../types/configKeys";
@@ -29,9 +30,19 @@ export class ExtensionConfig {
     return Theme.dark;
   }
 
+  getScrollDirection(): ScrollDirection {
+    const scrollDirection = this.config.get(ConfigKeys.scrollDirection);
+    if (ScrollDirection.UpIn === scrollDirection) {
+      return scrollDirection;
+    }
+
+    return ScrollDirection.UpOut;
+  }
+
   getDefaultPageConfig(): DefaultPageConfig {
     const theme = this.getPreferredTheme();
+    const scrollDirection = this.getScrollDirection();
 
-    return { theme };
+    return { theme, scrollDirection };
   }
 }
