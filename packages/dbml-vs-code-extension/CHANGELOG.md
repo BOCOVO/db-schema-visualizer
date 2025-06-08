@@ -4,6 +4,13 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.6.0]
+
+### Added
+
+- Added support for controlling scroll behavior via the prismaERDPreviewer.scrollDirection setting
+- Added an option to automatically fit the diagram to the viewport dimensions
+
 ## [0.5.0]
 
 ### Added
