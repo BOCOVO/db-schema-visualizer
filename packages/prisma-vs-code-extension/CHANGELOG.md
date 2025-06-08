@@ -4,6 +4,13 @@ All notable changes to the "prisma-erd-visualizer" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.4.0]
+
+### Added
+
+- Added support for controlling scroll behavior via the prismaERDPreviewer.scrollDirection setting
+- Added an option to automatically fit the diagram to the viewport dimensions
+
 ## [0.3.0]
 
 ### Added
