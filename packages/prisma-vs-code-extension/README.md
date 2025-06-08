@@ -19,6 +19,7 @@ This [tutorial](https://juste.bocovo.me/visualize-the-entity-relationship-diagra
 The following Visual Studio Code settings are available for the extension.
 
 - `prismaERDPreviewer.preferredTheme`: This configuration define the theme to use. There are two different theme the `light` and `dark`. The default theme is `dark`.
+- `prismaERDPreviewer.scrollDirection`: This configuration define the scroll direction. There are two different scroll direction the `up-out` and `up-in`. The default scroll direction is `up-out`.
 
 ## Release Notes
 

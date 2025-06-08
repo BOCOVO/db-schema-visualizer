@@ -47,6 +47,18 @@
             "To use dark mode theme colors",
             "To use light mode theme colors"
           ]
+        },
+        "prismaERDPreviewer.scrollDirection": {
+          "type": "string",
+          "default": "up-out",
+          "enum": [
+            "up-out",
+            "up-in"
+          ],
+          "enumDescriptions": [
+            "To zoom out when scrolling up",
+            "To zoom in when scrolling up"
+          ]
         }
       }
     }
