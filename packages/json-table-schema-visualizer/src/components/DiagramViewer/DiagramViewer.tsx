@@ -5,10 +5,11 @@ import {
 } from "shared/types/tableSchema";
 
 import EmptyTableMessage from "../Messages/EmptyTableMessage";
+import Search from "../Search/Search";
 
-import Tables from "./Tables";
-import RelationsConnections from "./Connections";
 import DiagramWrapper from "./DiagramWrapper";
+import RelationsConnections from "./Connections";
+import Tables from "./Tables";
 
 import TablesPositionsProvider from "@/providers/TablesPositionsProvider";
 import MainProviders from "@/providers/MainProviders";
@@ -29,11 +30,13 @@ const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
     <TableLevelDetailProvider>
       <TablesPositionsProvider tables={tables} refs={refs}>
         <MainProviders tables={tables} enums={enums}>
-          <DiagramWrapper>
-            <RelationsConnections refs={refs} />
-
-            <Tables tables={tables} />
-          </DiagramWrapper>
+          <>
+            <Search tables={tables} />
+            <DiagramWrapper>
+              <RelationsConnections refs={refs} />
+              <Tables tables={tables} />
+            </DiagramWrapper>
+          </>
         </MainProviders>
       </TablesPositionsProvider>
     </TableLevelDetailProvider>

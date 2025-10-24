@@ -14,7 +14,8 @@ import {
   TABLE_COLOR_HEIGHT,
   TABLE_HEADER_HEIGHT,
 } from "@/constants/sizing";
-import { useThemeColors } from "@/hooks/theme";
+import { useThemeColors, useThemeContext } from "@/hooks/theme";
+import { Theme } from "@/types/theme";
 import eventEmitter from "@/events-emitter";
 import { computeTableDragEventName } from "@/utils/eventName";
 import {
@@ -34,6 +35,8 @@ const Table = ({ fields, name }: TableProps) => {
   const themeColors = useThemeColors();
   const { detailLevel } = useTableDetailLevel();
   const tableRef = useRef<null | Konva.Group>(null);
+  const highlightRef = useRef<null | Konva.Rect>(null);
+  const { theme } = useThemeContext();
   const { setHoveredTableName } = useTablesInfo();
   const { x: tableX, y: tableY } = useTableDefaultPosition(name);
   const tablePreferredWidth = useTableWidth();
@@ -55,6 +58,31 @@ const Table = ({ fields, name }: TableProps) => {
     PADDINGS.sm;
 
   const tableDragEventName = computeTableDragEventName(name);
+
+  // Subscribe to highlight events for this table and animate the border
+  useEffect(() => {
+    const eventName = `highlight:table:${name}`;
+    const handler = () => {
+      // Animate using Konva to make transition smooth
+      const rect = highlightRef.current;
+      if (rect != null) {
+        // Set stroke color according to theme
+        const color = theme === Theme.dark ? "#FBBF24" : "#3B82F6";
+        rect.stroke(color);
+        rect.to({ strokeWidth: 3, opacity: 1, duration: 0.18 });
+
+        // After 2s, animate out
+        setTimeout(() => {
+          rect.to({ strokeWidth: 0, opacity: 0, duration: 0.28 });
+        }, 2000);
+      }
+    };
+
+    eventEmitter.on(eventName, handler);
+    return () => {
+      eventEmitter.off(eventName, handler);
+    };
+  }, [name, theme]);
 
   const propagateCoordinates = (node: Konva.Group) => {
     const tableCoords = { x: node.x(), y: node.y() };
@@ -83,6 +111,7 @@ const Table = ({ fields, name }: TableProps) => {
 
   return (
     <Group
+      name={`table-${name.replace(/\s+/g, "_")}`}
       ref={tableRef}
       draggable
       onDragMove={handleOnDrag}
@@ -122,6 +151,18 @@ const Table = ({ fields, name }: TableProps) => {
       ) : (
         <></>
       )}
+
+      {/* Highlight border temporarily when the a search option is clicked */}
+      <Rect
+        ref={highlightRef}
+        height={tableHeight}
+        width={tablePreferredWidth}
+        cornerRadius={PADDINGS.sm}
+        stroke={theme === Theme.dark ? "#FBBF24" : "#3B82F6"}
+        strokeWidth={0}
+        opacity={0}
+        listening={false}
+      />
     </Group>
   );
 };
