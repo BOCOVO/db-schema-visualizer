@@ -15,6 +15,8 @@ import { useStageStartingState } from "@/hooks/stage";
 import { stageStateStore } from "@/stores/stagesState";
 import { useScrollDirectionContext } from "@/hooks/scrollDirection";
 import { ScrollDirection } from "@/types/scrollDirection";
+import eventEmitter from "@/events-emitter";
+import { tableCoordsStore } from "@/stores/tableCoords";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -110,6 +112,66 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
       stageStateStore.set({ scale, position: stage.position() });
     }
   };
+
+  /**
+   * Center handler: listen for requests to center the stage on a given table
+   *  when the search option is clicked.
+   */
+  useEffect(() => {
+    const handler = ({ tableName }: { tableName: string }) => {
+      if (stageRef.current == null) return;
+
+      const stage = stageRef.current;
+      const container = stage.container();
+      const containerWidth = container.offsetWidth;
+      const containerHeight = container.offsetHeight;
+
+      // Try to find the node by name first
+      const nodeName = `table-${tableName.replace(/\s+/g, "_")}`;
+      // Konva's findOne accepts a selector like `.name`
+      const node = stage.findOne(`.${nodeName}`);
+
+      // Get bounding rect relative to stage
+      let rect: { x: number; y: number; width: number; height: number };
+      if (node != null && typeof (node as any).getClientRect === "function") {
+        rect = (node as any).getClientRect({ relativeTo: stage });
+      } else {
+        // Fallback to stored coords (top-left) and assume a small box
+        const coords = tableCoordsStore.getCoords(tableName);
+        rect = { x: coords.x, y: coords.y, width: 200, height: 100 };
+      }
+
+      const scale = stage.scaleX();
+
+      const newPos = {
+        x: containerWidth / 2 - (rect.x + rect.width / 2) * scale,
+        y: containerHeight / 2 - (rect.y + rect.height / 2) * scale,
+      };
+
+      // animate stage position for a smooth pan
+      try {
+        (stage as any).to({
+          x: newPos.x,
+          y: newPos.y,
+          duration: 0.45,
+          onFinish: () => {
+            stage.batchDraw();
+            stageStateStore.set({ scale: stage.scaleX(), position: newPos });
+          },
+        });
+      } catch (e) {
+        // fallback to immediate set
+        stage.position(newPos);
+        stage.batchDraw();
+        stageStateStore.set({ scale: stage.scaleX(), position: newPos });
+      }
+    };
+
+    eventEmitter.on("table:center", handler);
+    return () => {
+      eventEmitter.off("table:center", handler);
+    };
+  }, []);
 
   return (
     <main
