@@ -32,7 +32,12 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     useCursorChanger("grabbing");
   const themeColors = useThemeColors();
   const stageRef = useRef<null | CoreStage>(null);
-  const { hoveredTableName, setHoveredTableName } = useTablesInfo();
+  const {
+    hoveredTableName,
+    setHoveredTableName,
+    highlightedColumn,
+    setHighlightedColumn,
+  } = useTablesInfo();
 
   // repositioning the stage only once
   const { scale: defaultStageScale, position: defaultStagePosition } =
@@ -105,9 +110,10 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const handleStagePointerDown = (
     e: KonvaEventObject<MouseEvent | TouchEvent>,
   ) => {
-    if (hoveredTableName == null) return;
+    if (hoveredTableName == null && highlightedColumn == null) return;
     if (nodeBelongsToTable(e.target)) return;
     setHoveredTableName(null);
+    setHighlightedColumn(null);
   };
 
   const fitToView = () => {

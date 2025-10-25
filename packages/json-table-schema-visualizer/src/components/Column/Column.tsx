@@ -51,6 +51,7 @@ const Column = ({
       relationalTables={relationalTables}
       offsetY={offsetY}
       tableName={tableName}
+      columnName={colName}
     >
       {(highlighted) => (
         <>

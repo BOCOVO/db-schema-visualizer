@@ -11,6 +11,7 @@ interface ColumnWrapperProps {
   tableName: string;
   relationalTables?: string[] | null;
   highlightColor: string;
+  columnName: string;
 }
 
 const ColumnWrapper = ({
@@ -19,8 +20,9 @@ const ColumnWrapper = ({
   tableName,
   relationalTables,
   highlightColor,
+  columnName,
 }: ColumnWrapperProps) => {
-  const { hoveredTableName } = useTablesInfo();
+  const { hoveredTableName, highlightedColumn } = useTablesInfo();
   const [hovered, setHovered] = useState(false);
   const tablePreferredWidth = useTableWidth();
 
@@ -36,6 +38,8 @@ const ColumnWrapper = ({
     hovered,
     tableName,
     hoveredTableName,
+    highlightedColumn,
+    columnName,
     relationalTables,
   );
 

@@ -17,12 +17,21 @@ interface TablesInfoProviderProps {
 
 const TablesInfoProvider = ({ children, tables }: TablesInfoProviderProps) => {
   const [hoveredTableName, setHoveredTableName] = useState<string | null>(null);
+  const [highlightedColumn, setHighlightedColumn] = useState<string | null>(
+    null,
+  );
   const { detailLevel } = useTableDetailLevel();
   const colsIndexes = computeColIndexes(tables, detailLevel);
 
   return (
     <TablesInfoContext.Provider
-      value={{ colsIndexes, hoveredTableName, setHoveredTableName }}
+      value={{
+        colsIndexes,
+        hoveredTableName,
+        setHoveredTableName,
+        highlightedColumn,
+        setHighlightedColumn,
+      }}
     >
       {children}
     </TablesInfoContext.Provider>
