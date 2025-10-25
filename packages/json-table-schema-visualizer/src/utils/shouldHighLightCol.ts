@@ -3,7 +3,7 @@ export const shouldHighLightCol = (
   hovered: boolean,
   tableName: string | null,
   hoveredTable: string | null,
-  highlightedColumn: string | null,
+  highlightedColumns: string[],
   columnName: string | null,
   relationalTables?: string[] | null,
 ): boolean => {
@@ -17,11 +17,17 @@ export const shouldHighLightCol = (
       : null;
 
   if (
-    highlightedColumn != null &&
     columnKey != null &&
-    highlightedColumn === columnKey
+    highlightedColumns?.some((key) => key === columnKey)
   ) {
     return true;
+  }
+
+  const hasExplicitHighlights =
+    Array.isArray(highlightedColumns) && highlightedColumns.length > 0;
+
+  if (hasExplicitHighlights && hoveredTable == null) {
+    return false;
   }
 
   if (hoveredTable === tableName && !!relationalTables) {

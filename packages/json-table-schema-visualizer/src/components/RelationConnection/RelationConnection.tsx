@@ -40,6 +40,8 @@ const RelationConnection = ({ source, target }: RelationConnectionProps) => {
         sourceTableName={source.tableName}
         targetTableName={target.tableName}
         relationOwner={relationOwner}
+        sourceFieldNames={source.fieldNames ?? []}
+        targetFieldNames={target.fieldNames ?? []}
       />
     </>
   );
