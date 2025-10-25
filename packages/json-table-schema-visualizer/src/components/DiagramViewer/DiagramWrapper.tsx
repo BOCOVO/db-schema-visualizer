@@ -9,8 +9,7 @@ import type { Stage as CoreStage } from "konva/lib/Stage";
 import { useWindowSize } from "@/hooks/window";
 import { useCursorChanger } from "@/hooks/cursor";
 import { DIAGRAM_PADDING } from "@/constants/sizing";
-import { useThemeColors, useThemeContext } from "@/hooks/theme";
-import { Theme } from "@/types/theme";
+import { useThemeColors } from "@/hooks/theme";
 import { useStageStartingState } from "@/hooks/stage";
 import { stageStateStore } from "@/stores/stagesState";
 import { useScrollDirectionContext } from "@/hooks/scrollDirection";
@@ -26,7 +25,6 @@ interface DiagramWrapperProps {
 const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   const scaleBy = 1.02;
   const { height: windowHeight, width: windowWidth } = useWindowSize();
-  const { theme } = useThemeContext();
   const { scrollDirection } = useScrollDirectionContext();
   const { onChange: onGrabbing, onRestore: onGrabRelease } =
     useCursorChanger("grabbing");
@@ -211,9 +209,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
   }, []);
 
   return (
-    <main
-      className={`relative flex flex-col items-center ${theme === Theme.dark ? "dark" : ""}`}
-    >
+    <>
       <Stage
         draggable
         ref={stageRef}
@@ -234,7 +230,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
       </Stage>
 
       <Toolbar onFitToView={fitToView} />
-    </main>
+    </>
   );
 };
 

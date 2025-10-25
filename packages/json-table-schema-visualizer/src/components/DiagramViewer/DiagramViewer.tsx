@@ -14,7 +14,8 @@ import Tables from "./Tables";
 import TablesPositionsProvider from "@/providers/TablesPositionsProvider";
 import MainProviders from "@/providers/MainProviders";
 import TableLevelDetailProvider from "@/providers/TableDetailLevelProvider";
-
+import { useThemeContext } from "@/hooks/theme";
+import { Theme } from "@/types/theme";
 interface DiagramViewerProps {
   tables: JSONTableTable[];
   refs: JSONTableRef[];
@@ -22,6 +23,8 @@ interface DiagramViewerProps {
 }
 
 const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
+  const { theme } = useThemeContext();
+
   if (tables.length === 0) {
     return <EmptyTableMessage />;
   }
@@ -30,13 +33,16 @@ const DiagramViewer = ({ refs, tables, enums }: DiagramViewerProps) => {
     <TableLevelDetailProvider>
       <TablesPositionsProvider tables={tables} refs={refs}>
         <MainProviders tables={tables} enums={enums}>
-          <>
+          <main
+            className={`relative flex flex-col items-center ${theme === Theme.dark ? "dark" : ""}`}
+          >
             <Search tables={tables} />
+
             <DiagramWrapper>
               <RelationsConnections refs={refs} />
               <Tables tables={tables} />
             </DiagramWrapper>
-          </>
+          </main>
         </MainProviders>
       </TablesPositionsProvider>
     </TableLevelDetailProvider>

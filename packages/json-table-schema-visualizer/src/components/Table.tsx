@@ -62,20 +62,31 @@ const Table = ({ fields, name }: TableProps) => {
   // Subscribe to highlight events for this table and animate the border
   useEffect(() => {
     const eventName = `highlight:table:${name}`;
-    const handler = () => {
-      // Animate using Konva to make transition smooth
-      const rect = highlightRef.current;
-      if (rect != null) {
-        // Set stroke color according to theme
-        const color = theme === Theme.dark ? "#FBBF24" : "#3B82F6";
-        rect.stroke(color);
-        rect.to({ strokeWidth: 3, opacity: 1, duration: 0.18 });
 
-        // After 2s, animate out
-        setTimeout(() => {
-          rect.to({ strokeWidth: 0, opacity: 0, duration: 0.28 });
-        }, 2000);
-      }
+    const handler = () => {
+      const rect = highlightRef.current;
+      if (rect === null || rect === undefined) return;
+
+      const color = theme === Theme.dark ? "#FBBF24" : "#3B82F6";
+
+      // Nombre de clignotements et intervalle
+      const flashes = 3;
+      const interval = 200; // ms
+
+      let count = 0;
+      rect.stroke(color);
+      rect.opacity(1);
+      rect.strokeWidth(5);
+
+      const blinkInterval = setInterval(() => {
+        rect.opacity(rect.opacity() === 1 ? 0 : 1);
+        count++;
+        if (count >= flashes * 2) {
+          clearInterval(blinkInterval);
+          // Reset strokeWidth and opacity
+          rect.to({ strokeWidth: 0, opacity: 0, duration: 0.5 });
+        }
+      }, interval);
     };
 
     eventEmitter.on(eventName, handler);

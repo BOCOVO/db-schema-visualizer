@@ -87,9 +87,9 @@
     "pretest": "yarn run compile-tests && yarn run build && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "vscode-test",
-    "build": "vite build && yarn run generate:css",
+    "build": "npx vite build && yarn run generate:css",
     "package": "yarn run build",
-    "preview": "vite preview",
+    "preview": "npx vite preview",
     "create:package": "vsce package",
     "publish": "vsce publish",
     "generate:css": "cd ../json-table-schema-visualizer && npx tailwindcss -i ./src/styles/index.css >  ../dbml-vs-code-extension/dist/webview/assets/index.css --minify"
