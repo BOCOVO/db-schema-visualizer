@@ -1,5 +1,7 @@
 import { Path, Group, Circle, RegularPolygon } from "react-konva";
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
+
+import type { XYPosition } from "@/types/positions";
 
 import eventEmitter from "@/events-emitter";
 import { tableCoordsStore } from "@/stores/tableCoords";
@@ -57,6 +59,62 @@ const ConnectionPath = ({
   const arrowGroupRef = useRef<any>(null);
 
   const colsIndexes = tablesInfo.colsIndexes ?? {};
+
+  const countFieldsForTable = (tableName: string): number =>
+    Object.keys(colsIndexes).filter((k) => k.startsWith(`${tableName}.`))
+      .length;
+
+  const [sourceFieldsCount, targetFieldsCount] = useMemo(
+    () => [
+      countFieldsForTable(sourceTableName),
+      countFieldsForTable(targetTableName),
+    ],
+    [colsIndexes, sourceTableName, targetTableName],
+  );
+
+  const srcHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * sourceFieldsCount;
+  const tgtHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * targetFieldsCount;
+
+  interface TableBounds {
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+  }
+
+  const buildTableBounds = (
+    coords: XYPosition,
+    width: number,
+    height: number,
+  ): TableBounds => ({
+    left: coords.x ?? 0,
+    right: (coords.x ?? 0) + width,
+    top: coords.y ?? 0,
+    bottom: (coords.y ?? 0) + height,
+  });
+
+  const distanceToBounds = (point: XYPosition, bounds: TableBounds): number => {
+    const clampedX = Math.max(bounds.left, Math.min(point.x, bounds.right));
+    const clampedY = Math.max(bounds.top, Math.min(point.y, bounds.bottom));
+    return Math.hypot(point.x - clampedX, point.y - clampedY);
+  };
+
+  const resolveTargetByEdgeDistance = (
+    point: XYPosition,
+    srcCoords: XYPosition,
+    tgtCoords: XYPosition,
+  ): string => {
+    const sourceBounds = buildTableBounds(srcCoords, srcWidth, srcHeight);
+    const targetBounds = buildTableBounds(tgtCoords, tgtWidth, tgtHeight);
+    const sourceDistance = distanceToBounds(point, sourceBounds);
+    const targetDistance = distanceToBounds(point, targetBounds);
+    return sourceDistance < targetDistance ? targetTableName : sourceTableName;
+  };
+
+  const normalizeAngle = (angle: number): number => {
+    const normalized = angle % 360;
+    return normalized < 0 ? normalized + 360 : normalized;
+  };
 
   const highlight =
     hoveredTableName === sourceTableName ||
@@ -155,8 +213,14 @@ const ConnectionPath = ({
       END_LINE_TOLERATE,
     );
 
-    setBtnPos({ x: localX, y: localY });
-    if (computedArrow != null) setBtnTarget(computedArrow);
+    const buttonPoint: XYPosition = { x: localX, y: localY };
+    setBtnPos(buttonPoint);
+    const edgeTarget = resolveTargetByEdgeDistance(
+      buttonPoint,
+      srcCoords,
+      tgtCoords,
+    );
+    setBtnTarget(edgeTarget);
 
     // Ensure arrow is above relation lines but below table nodes. We look for
     // the first child whose name starts with `table-` and set the arrow's
@@ -165,7 +229,17 @@ const ConnectionPath = ({
     if (!tooClose && arrowGroupRef.current != null) {
       setArrowZIndexRelativeToTables(arrowGroupRef.current);
     }
-    if (computedAngle != null) setBtnAngle(computedAngle + ARROW_ANGLE_OFFSET);
+    if (computedAngle != null) {
+      let finalAngle = computedAngle;
+      if (
+        computedArrow != null &&
+        edgeTarget != null &&
+        edgeTarget !== computedArrow
+      ) {
+        finalAngle += 180;
+      }
+      setBtnAngle(normalizeAngle(finalAngle) + ARROW_ANGLE_OFFSET);
+    }
 
     setBtnVisible(!tooClose);
   };
@@ -173,7 +247,7 @@ const ConnectionPath = ({
   const handleBtnLeave = () => {
     document.body.style.cursor = "default";
     setBtnHovering(false);
-    setIsHovered(false); // unhover both line and circle
+    setIsHovered(false);
     if (hideTimeoutRef.current != null) {
       window.clearTimeout(hideTimeoutRef.current);
     }
@@ -201,38 +275,7 @@ const ConnectionPath = ({
     const btnLocal = btnPos;
     let targetToUse: string | null = btnTarget;
     if (btnLocal != null) {
-      // Derive visible fields count from colsIndexes in tablesInfo
-      const colsIndexes = tablesInfo.colsIndexes ?? {};
-      const countKeysWithPrefix = (prefix: string) =>
-        Object.keys(colsIndexes).filter((k) => k.startsWith(`${prefix}.`))
-          .length;
-
-      const srcFields = countKeysWithPrefix(sourceTableName);
-      const tgtFields = countKeysWithPrefix(targetTableName);
-
-      const srcHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * srcFields;
-      const tgtHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * tgtFields;
-
-      const srcCenter = {
-        x: (srcCoords.x ?? 0) + srcWidth / 2,
-        y: (srcCoords.y ?? 0) + srcHeight / 2,
-      };
-      const tgtCenter = {
-        x: (tgtCoords.x ?? 0) + tgtWidth / 2,
-        y: (tgtCoords.y ?? 0) + tgtHeight / 2,
-      };
-
-      const ds = Math.hypot(
-        (btnLocal.x ?? 0) - srcCenter.x,
-        (btnLocal.y ?? 0) - srcCenter.y,
-      );
-      const dt = Math.hypot(
-        (btnLocal.x ?? 0) - tgtCenter.x,
-        (btnLocal.y ?? 0) - tgtCenter.y,
-      );
-
-      // Farther table wins
-      targetToUse = ds < dt ? targetTableName : sourceTableName;
+      targetToUse = resolveTargetByEdgeDistance(btnLocal, srcCoords, tgtCoords);
     }
 
     if (targetToUse == null || targetToUse.length === 0) return;
