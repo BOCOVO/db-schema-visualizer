@@ -41,6 +41,9 @@ const Column = ({
   const colTextColor = themeColors.text[900];
   const typeTextColor = themeColors.text[700];
   const fontStyle = isPrimaryKey ? "bold" : "normal";
+  const colNameBaseFill = isPrimaryKey
+    ? tableColors?.regular ?? colTextColor
+    : colTextColor;
 
   return (
     <ColumnWrapper
@@ -55,8 +58,11 @@ const Column = ({
             ellipsis
             wrap="none"
             text={colName}
-            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing
-            fill={(highlighted && tableColors?.regular) || colTextColor}
+            fill={
+              highlighted
+                ? tableColors?.regular ?? colNameBaseFill
+                : colNameBaseFill
+            }
             width={tablePreferredWidth}
             fontStyle={fontStyle}
             padding={PADDINGS.sm}
