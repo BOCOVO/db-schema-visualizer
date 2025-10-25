@@ -1,58 +1,68 @@
 import computeTablesPositions from "../computeTablesPositions";
 import { getColsNumber } from "../getColsNumber";
 
-import {
-  COLUMN_HEIGHT,
-  TABLE_HEADER_HEIGHT,
-  TABLE_DEFAULT_MIN_WIDTH,
-  TABLES_GAP_X,
-  TABLES_GAP_Y,
-} from "@/constants/sizing";
+import { TABLES_GAP_Y } from "@/constants/sizing";
 import { createBookingsTableClone, exampleData } from "@/fake/fakeJsonTables";
 
 jest.mock("../getColsNumber", () => ({
   getColsNumber: jest.fn(),
 }));
 
-const TABLE_WIDTH_WITH_GAP = TABLE_DEFAULT_MIN_WIDTH + TABLES_GAP_X;
+jest.mock("../../computeTableDimension", () => ({
+  computeTableDimension: () => ({
+    width: 200,
+    height: 150,
+  }),
+}));
 
-describe("compute tables positions", () => {
-  test("less than 6 tables positions", () => {
-    (getColsNumber as jest.Mock).mockReturnValue(3);
+describe("compute tables positions (dagre)", () => {
+  test("keeps coordinates non-negative and unique per table", () => {
+    const map = computeTablesPositions(exampleData.tables, []);
 
-    const tablesPositions = computeTablesPositions([
-      ...exampleData.tables,
-      createBookingsTableClone("1"),
-    ]);
+    expect(map.size).toBe(exampleData.tables.length);
 
-    expect(tablesPositions).toEqual(
-      new Map<string, [number, number]>([
-        ["follows", [0, 0]],
-        ["users", [TABLE_WIDTH_WITH_GAP, 0]],
-        ["bookings", [TABLE_WIDTH_WITH_GAP * 2, 0]],
-        [
-          "bookings_1",
-          [0, TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * 5 + TABLES_GAP_Y],
-        ],
-      ]),
-    );
+    const coords = Array.from(map.values());
+    coords.forEach(({ x, y }) => {
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(y).toBeGreaterThanOrEqual(0);
+    });
+
+    const uniqueKeys = new Set(coords.map(({ x, y }) => `${x}-${y}`));
+    expect(uniqueKeys.size).toBe(coords.length);
   });
 
-  test("more than 6 tables positions", () => {
-    (getColsNumber as jest.Mock).mockReturnValue(4);
-
-    const tablesPositions = computeTablesPositions([
-      ...exampleData.tables,
-      createBookingsTableClone("1"),
-    ]);
-
-    expect(tablesPositions).toEqual(
-      new Map<string, [number, number]>([
-        ["follows", [0, 0]],
-        ["users", [TABLE_WIDTH_WITH_GAP, 0]],
-        ["bookings", [TABLE_WIDTH_WITH_GAP * 2, 0]],
-        ["bookings_1", [TABLE_WIDTH_WITH_GAP * 3, 0]],
-      ]),
+  test("orders tables consistently when column count changes", () => {
+    (getColsNumber as jest.Mock).mockReturnValueOnce(3);
+    const gridThree = computeTablesPositions(
+      [...exampleData.tables, createBookingsTableClone("1")],
+      [],
     );
+
+    (getColsNumber as jest.Mock).mockReturnValueOnce(4);
+    const gridFour = computeTablesPositions(
+      [...exampleData.tables, createBookingsTableClone("1")],
+      [],
+    );
+
+    const usersThree = gridThree.get("users");
+    const bookingsThree = gridThree.get("bookings_1");
+    expect(usersThree?.x ?? 0).toBeLessThanOrEqual(bookingsThree?.x ?? 0);
+
+    const usersFour = gridFour.get("users");
+    const bookingsFour = gridFour.get("bookings_1");
+    expect(usersFour?.x ?? 0).toBeLessThanOrEqual(bookingsFour?.x ?? 0);
+  });
+
+  test("vertical spacing respects TABLES_GAP_Y between rows", () => {
+    (getColsNumber as jest.Mock).mockReturnValue(3);
+
+    const positions = computeTablesPositions(exampleData.tables, []);
+    const sorted = Array.from(positions.values())
+      .sort((a, b) => a.y - b.y)
+      .map(({ y }) => y);
+
+    for (let i = 1; i < sorted.length; i++) {
+      expect(sorted[i] - sorted[i - 1]).toBeGreaterThanOrEqual(TABLES_GAP_Y);
+    }
   });
 });

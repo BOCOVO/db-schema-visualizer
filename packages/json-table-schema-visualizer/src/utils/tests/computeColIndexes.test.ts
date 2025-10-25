@@ -1,10 +1,13 @@
 import { computeColIndexes } from "../computeColIndexes";
 
 import { exampleData } from "@/fake/fakeJsonTables";
+import { TableDetailLevel } from "@/types/tableDetailLevel";
 
 describe("compute cols index map", () => {
   test("compute cols index map", () => {
-    expect(computeColIndexes(exampleData.tables)).toEqual({
+    expect(
+      computeColIndexes(exampleData.tables, TableDetailLevel.FullDetails),
+    ).toEqual({
       "users.id": 0,
       "users.email": 1,
       "bookings.booking_date": 2,
