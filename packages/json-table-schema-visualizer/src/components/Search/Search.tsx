@@ -107,10 +107,12 @@ const Search = ({ tables }: SearchProps) => {
                 className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 dark:hover:bg-gray-600 flex flex-col items-start"
               >
                 <div className="flex space-x-2 w-full items-start">
-                  <span className="text-xs text-gray-500 dark:text-gray-400 mt-[2px]">
+                  <span className="text-xs mt-[2px]">
                     {result.type === "table" ? "📋" : "🔤"}
                   </span>
-                  <span className="font-medium break-all">{result.name}</span>
+                  <span className="font-medium break-all text-gray-700">
+                    {result.name}
+                  </span>
                 </div>
                 {result.type === "column" && (
                   <div className="mt-1 text-xs text-gray-500 dark:text-gray-400 break-all">
