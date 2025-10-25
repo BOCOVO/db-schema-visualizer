@@ -17,9 +17,7 @@ interface TablesInfoProviderProps {
 
 const TablesInfoProvider = ({ children, tables }: TablesInfoProviderProps) => {
   const [hoveredTableName, setHoveredTableName] = useState<string | null>(null);
-  const [highlightedColumn, setHighlightedColumn] = useState<string | null>(
-    null,
-  );
+  const [highlightedColumns, setHighlightedColumns] = useState<string[]>([]);
   const { detailLevel } = useTableDetailLevel();
   const colsIndexes = computeColIndexes(tables, detailLevel);
 
@@ -29,8 +27,8 @@ const TablesInfoProvider = ({ children, tables }: TablesInfoProviderProps) => {
         colsIndexes,
         hoveredTableName,
         setHoveredTableName,
-        highlightedColumn,
-        setHighlightedColumn,
+        highlightedColumns,
+        setHighlightedColumns,
       }}
     >
       {children}

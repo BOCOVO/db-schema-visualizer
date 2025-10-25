@@ -4,6 +4,6 @@ export interface TablesInfoProviderValue {
   colsIndexes: ColsIndexesMap;
   hoveredTableName: string | null;
   setHoveredTableName: (tableName: string | null) => void;
-  highlightedColumn: string | null;
-  setHighlightedColumn: (columnKey: string | null) => void;
+  highlightedColumns: string[];
+  setHighlightedColumns: (columnKeys: string[]) => void;
 }

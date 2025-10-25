@@ -21,11 +21,11 @@ interface SearchProps {
 const Search = ({ tables }: SearchProps) => {
   const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const { setHoveredTableName, setHighlightedColumn } = useTablesInfo();
+  const { setHoveredTableName, setHighlightedColumns } = useTablesInfo();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const searchResults = useMemo(() => {
-    if (search === "") return [];
+    if (search.length < 2) return [];
 
     const results: SearchResult[] = [];
     const searchLower = search.toLowerCase();
@@ -58,9 +58,9 @@ const Search = ({ tables }: SearchProps) => {
   const handleSelect = (result: SearchResult) => {
     setHoveredTableName(null);
     if (result.type === "column") {
-      setHighlightedColumn(`${result.tableName}.${result.name}`);
+      setHighlightedColumns([`${result.tableName}.${result.name}`]);
     } else {
-      setHighlightedColumn(null);
+      setHighlightedColumns([]);
     }
     // Center the diagram on the selected table and ask the table to highlight itself
     eventEmitter.emit("table:center", { tableName: result.tableName });

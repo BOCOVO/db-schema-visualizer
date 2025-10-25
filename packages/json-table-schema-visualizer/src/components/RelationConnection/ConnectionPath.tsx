@@ -27,6 +27,8 @@ interface ConnectionPathProps {
   sourceTableName: string;
   targetTableName: string;
   relationOwner: string;
+  sourceFieldNames: string[];
+  targetFieldNames: string[];
 }
 
 const ARROW_ANGLE_OFFSET = 90;
@@ -39,10 +41,13 @@ const ConnectionPath = ({
   sourceTableName,
   targetTableName,
   relationOwner,
+  sourceFieldNames,
+  targetFieldNames,
 }: ConnectionPathProps) => {
   const themeColors = useThemeColors();
   const tablesInfo = useTablesInfo();
-  const { hoveredTableName, setHoveredTableName } = tablesInfo;
+  const { hoveredTableName, setHoveredTableName, setHighlightedColumns } =
+    tablesInfo;
   const sourceTableColors = useTableColor(relationOwner);
   const srcWidth = useTableWidthStoredValue(sourceTableName);
   const tgtWidth = useTableWidthStoredValue(targetTableName);
@@ -74,6 +79,23 @@ const ConnectionPath = ({
 
   const srcHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * sourceFieldsCount;
   const tgtHeight = TABLE_HEADER_HEIGHT + COLUMN_HEIGHT * targetFieldsCount;
+
+  const relationColumnKeys = useMemo(() => {
+    const keys = new Set<string>();
+    const addKeys = (tableName: string, fields: string[]) => {
+      fields
+        .filter(
+          (fieldName) =>
+            typeof fieldName === "string" && fieldName.trim() !== "",
+        )
+        .forEach((fieldName) => {
+          keys.add(`${tableName}.${fieldName}`);
+        });
+    };
+    addKeys(sourceTableName, sourceFieldNames);
+    addKeys(targetTableName, targetFieldNames);
+    return Array.from(keys);
+  }, [sourceFieldNames, targetFieldNames, sourceTableName, targetTableName]);
 
   interface TableBounds {
     left: number;
@@ -270,6 +292,7 @@ const ConnectionPath = ({
   };
 
   const handleBtnClick = () => {
+    setHighlightedColumns(relationColumnKeys);
     // Recompute the intended target using the stored stage-position of the button
     const srcCoords = tableCoordsStore.getCoords(sourceTableName);
     const tgtCoords = tableCoordsStore.getCoords(targetTableName);
@@ -282,7 +305,7 @@ const ConnectionPath = ({
 
     if (targetToUse == null || targetToUse.length === 0) return;
     try {
-      setHoveredTableName(targetToUse);
+      setHoveredTableName(null);
     } catch (e) {
       // Ignore
     }

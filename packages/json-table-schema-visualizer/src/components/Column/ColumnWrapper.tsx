@@ -22,7 +22,7 @@ const ColumnWrapper = ({
   highlightColor,
   columnName,
 }: ColumnWrapperProps) => {
-  const { hoveredTableName, highlightedColumn } = useTablesInfo();
+  const { hoveredTableName, highlightedColumns } = useTablesInfo();
   const [hovered, setHovered] = useState(false);
   const tablePreferredWidth = useTableWidth();
 
@@ -38,7 +38,7 @@ const ColumnWrapper = ({
     hovered,
     tableName,
     hoveredTableName,
-    highlightedColumn,
+    highlightedColumns,
     columnName,
     relationalTables,
   );
