@@ -4,6 +4,12 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.7.0]
+
+### Added
+
+- Added search feature
+
 ## [0.6.0]
 
 ### Added

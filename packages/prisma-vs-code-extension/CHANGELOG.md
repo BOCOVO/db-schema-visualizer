@@ -4,6 +4,12 @@ All notable changes to the "prisma-erd-visualizer" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.5.0]
+
+### Added
+
+- Added search feature
+
 ## [0.4.0]
 
 ### Added
