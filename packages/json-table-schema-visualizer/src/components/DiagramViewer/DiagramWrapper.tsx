@@ -17,6 +17,7 @@ import { useScrollDirectionContext } from "@/hooks/scrollDirection";
 import { ScrollDirection } from "@/types/scrollDirection";
 import eventEmitter from "@/events-emitter";
 import { tableCoordsStore } from "@/stores/tableCoords";
+import { useTablesInfo } from "@/hooks/table";
 
 interface DiagramWrapperProps {
   children: ReactNode;
@@ -31,6 +32,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     useCursorChanger("grabbing");
   const themeColors = useThemeColors();
   const stageRef = useRef<null | CoreStage>(null);
+  const { hoveredTableName, setHoveredTableName } = useTablesInfo();
 
   // repositioning the stage only once
   const { scale: defaultStageScale, position: defaultStagePosition } =
@@ -81,6 +83,31 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     };
     stage.position(newPos);
     stageStateStore.set({ scale: newScale, position: newPos });
+  };
+
+  const nodeBelongsToTable = (node: any): boolean => {
+    let currentNode = node;
+    while (currentNode != null) {
+      if (
+        typeof currentNode.name === "function" &&
+        typeof currentNode.name() === "string"
+      ) {
+        const names = (currentNode.name() as string).split(/\s+/);
+        if (names.some((n) => n.startsWith("table-"))) {
+          return true;
+        }
+      }
+      currentNode = currentNode.getParent?.() ?? null;
+    }
+    return false;
+  };
+
+  const handleStagePointerDown = (
+    e: KonvaEventObject<MouseEvent | TouchEvent>,
+  ) => {
+    if (hoveredTableName == null) return;
+    if (nodeBelongsToTable(e.target)) return;
+    setHoveredTableName(null);
   };
 
   const fitToView = () => {
@@ -183,6 +210,8 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         onDragStart={onGrabbing}
         onDragEnd={onGrabRelease}
         onWheel={handleZooming}
+        onMouseDown={handleStagePointerDown}
+        onTouchStart={handleStagePointerDown}
         width={windowWidth}
         height={windowHeight}
         style={{ width: "fit-content", backgroundColor: themeColors.bg }}
