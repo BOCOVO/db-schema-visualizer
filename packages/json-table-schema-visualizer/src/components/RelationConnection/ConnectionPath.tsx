@@ -48,7 +48,7 @@ const ConnectionPath = ({
   const tgtWidth = useTableWidthStoredValue(targetTableName);
   const [isHovered, setIsHovered] = useState(false);
   const [btnVisible, setBtnVisible] = useState(false);
-  const [btnPos, setBtnPos] = useState({ x: 0, y: 0 });
+  const [btnPos, setBtnPos] = useState<XYPosition>({ x: 0, y: 0 });
   const [btnAngle, setBtnAngle] = useState(0);
   const [btnTarget, setBtnTarget] = useState<string | null>(null);
   const [btnHovering, setBtnHovering] = useState(false);
@@ -201,6 +201,17 @@ const ConnectionPath = ({
       localY = py + DIAGRAM_PADDING;
       btnStagePosRef.current = { x: px, y: py };
     }
+    if (btnStagePosRef.current == null) {
+      btnStagePosRef.current = { x: px, y: py };
+    }
+    const buttonPoint: XYPosition = { x: localX, y: localY };
+    setBtnPos(buttonPoint);
+    const edgeTarget = resolveTargetByEdgeDistance(
+      buttonPoint,
+      srcCoords,
+      tgtCoords,
+    );
+    setBtnTarget(edgeTarget);
 
     // Decide visibility: hide when too close to path endpoints (prevents overlap with tables and relation markers).
     // Use a robust stage-space distance check between the current button
@@ -212,15 +223,6 @@ const ConnectionPath = ({
       MIN_LINE_OFFSET,
       END_LINE_TOLERATE,
     );
-
-    const buttonPoint: XYPosition = { x: localX, y: localY };
-    setBtnPos(buttonPoint);
-    const edgeTarget = resolveTargetByEdgeDistance(
-      buttonPoint,
-      srcCoords,
-      tgtCoords,
-    );
-    setBtnTarget(edgeTarget);
 
     // Ensure arrow is above relation lines but below table nodes. We look for
     // the first child whose name starts with `table-` and set the arrow's
