@@ -59,7 +59,36 @@ const Search = ({ tables }: SearchProps) => {
       });
     });
 
-    return results;
+    const collator = new Intl.Collator(undefined, {
+      sensitivity: "base",
+      numeric: true,
+    });
+
+    const isExact = (r: SearchResult) =>
+      r.name.toLowerCase() === search.toLowerCase();
+
+    const resultsSorted = results.sort((a, b) => {
+      // 0) exact name match goes to the very top (table or column)
+      const aExact = isExact(a);
+      const bExact = isExact(b);
+      if (aExact !== bExact) return aExact ? -1 : 1;
+
+      // 1) put tables before columns
+      if (a.type !== b.type) return a.type === "table" ? -1 : 1;
+
+      // 2) within tables: sort by table name (same as `name`)
+      if (a.type === "table") {
+        return collator.compare(a.name, b.name);
+      }
+
+      // 3) within columns: sort by column name, then by table name
+      const byColName = collator.compare(a.name, b.name);
+      if (byColName !== 0) return byColName;
+
+      return collator.compare(a.tableName, b.tableName);
+    });
+
+    return resultsSorted;
   }, [tables, search]);
 
   const handleSelect = (result: SearchResult) => {
