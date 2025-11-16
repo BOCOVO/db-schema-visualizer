@@ -4,6 +4,12 @@ All notable changes to the "dbml-erd-visualizer" extension will be documented in
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.8.0]
+
+### Added
+
+- Export diagram to png
+
 ## [0.7.0]
 
 ### Added
