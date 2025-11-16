@@ -12,5 +12,6 @@ export interface WebviewPostMessage {
 export interface SetSchemaCommandPayload {
   type: string;
   payload: JSONTableSchema;
+  message?: string;
   key: string;
 }

@@ -45,8 +45,6 @@
         "cwd": "${workspaceFolder}/packages/dbml-vs-code-extension"
       }
     },
-
-    // prisma
     {
       "type": "npm",
       "script": "build:prisma",
@@ -58,6 +56,15 @@
       "options": {
         "cwd": "${workspaceFolder}/packages/prisma-vs-code-extension"
       }
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "path": "packages/dbml-vs-code-extension",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: build - packages/dbml-vs-code-extension",
+      "detail": "npx vite build && yarn run generate:css"
     }
   ]
 }

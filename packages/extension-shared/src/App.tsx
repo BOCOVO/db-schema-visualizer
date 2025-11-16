@@ -2,6 +2,7 @@ import DiagramViewer from "json-table-schema-visualizer/src/components/DiagramVi
 import { useCreateTheme } from "json-table-schema-visualizer/src/hooks/theme";
 import ThemeProvider from "json-table-schema-visualizer/src/providers/ThemeProvider";
 import NoSchemaMessage from "json-table-schema-visualizer/src/components/Messages/NoSchemaMessage";
+import ErrorMessage from "json-table-schema-visualizer/src/components/Messages/ErrorMessage";
 import { type Theme } from "json-table-schema-visualizer/src/types/theme";
 import ScrollDirectionProvider from "json-table-schema-visualizer/src/providers/ScrollDirectionProvider";
 
@@ -16,7 +17,11 @@ const App = () => {
   const { setTheme, theme, themeColors } = useCreateTheme(
     window.EXTENSION_DEFAULT_CONFIG?.theme,
   );
-  const { schema, key } = useSchema();
+  const { schema, key, schemaErrorMessage } = useSchema();
+
+  if (schemaErrorMessage !== null && schema === null) {
+    return <ErrorMessage message={schemaErrorMessage} />;
+  }
 
   if (schema === null) {
     return <NoSchemaMessage />;

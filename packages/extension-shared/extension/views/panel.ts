@@ -176,7 +176,15 @@ export class MainPanel {
       MainPanel.diagnosticCollection.clear();
     } catch (error) {
       console.error(JSON.stringify(error));
+
       if (error instanceof DiagnosticError) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        this.currentPanel?._panel.webview.postMessage({
+          type: "setSchemaErrorMessage",
+          message: `${error.message}\n Line : ${error.location.start.line}:${error.location.start.column}`,
+          key: document.uri.toString(),
+        });
+
         MainPanel.diagnosticCollection.set(document.uri, [
           new Diagnostic(
             new Range(

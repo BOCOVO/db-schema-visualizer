@@ -27,7 +27,7 @@
       "outFiles": [
         "${workspaceFolder}/packages/dbml-vs-code-extension/dist/extension/*.js"
       ],
-      "preLaunchTask": "yarn: build"
+      "preLaunchTask": "npm: build"
     },
     {
       "name": "Preview Prisma Extension",
@@ -39,7 +39,7 @@
       "outFiles": [
         "${workspaceFolder}/packages/prisma-vs-code-extension/dist/extension/*.js"
       ],
-      "preLaunchTask": "yarn: build:prisma"
+      "preLaunchTask": "npm: build:prisma"
     }
   ]
 }
