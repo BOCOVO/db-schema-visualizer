@@ -9,12 +9,26 @@ import { type SetSchemaCommandPayload } from "../../extension/types/webviewComma
 export const useSchema = (): {
   schema: JSONTableSchema | null;
   key: string | null;
+  schemaErrorMessage: string | null;
 } => {
+  const [schemaErrorMessage, setSchemaErrorMessage] = useState<string | null>(
+    null,
+  );
   const [schema, setSchema] = useState<JSONTableSchema | null>(null);
   const [schemaKey, setSchemaKey] = useState<string | null>(null);
 
   const updater = (e: MessageEvent): void => {
     const message = e.data as SetSchemaCommandPayload;
+
+    if (
+      message.type === "setSchemaErrorMessage" &&
+      typeof message.message === "string"
+    ) {
+      setSchemaErrorMessage(message.message);
+
+      return;
+    }
+
     if (
       !(message.type === "setSchema" && typeof message.payload === "object")
     ) {
@@ -35,6 +49,7 @@ export const useSchema = (): {
     }
 
     setSchema(message.payload);
+    setSchemaErrorMessage(null);
   };
 
   useEffect(() => {
@@ -47,5 +62,5 @@ export const useSchema = (): {
     };
   }, []);
 
-  return { schema, key: schemaKey };
+  return { schema, key: schemaKey, schemaErrorMessage };
 };
