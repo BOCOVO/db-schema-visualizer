@@ -208,6 +208,45 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
     };
   }, []);
 
+  const onDownload = () => {
+    if (stageRef.current == null) return;
+    const stage = stageRef.current;
+
+    // Save current stage state
+    const originalScale = stage.scaleX();
+    const originalPosition = { ...stage.position() };
+
+    // Reset stage to scale 1 and position 0,0 to get actual content bounds
+    stage.scale({ x: 1, y: 1 });
+    stage.position({ x: 0, y: 0 });
+
+    const contentBounds = stage.getClientRect({ relativeTo: stage });
+
+    // Calculate square dimensions (use the larger dimension)
+    const maxDimension = Math.max(contentBounds.width, contentBounds.height);
+
+    // Center the content in the square
+    const offsetX = (maxDimension - contentBounds.width) / 2;
+    const offsetY = (maxDimension - contentBounds.height) / 2;
+
+    const data = stage.toDataURL({
+      x: contentBounds.x - offsetX,
+      y: contentBounds.y - offsetY,
+      width: maxDimension,
+      height: maxDimension,
+      pixelRatio: 2,
+    });
+
+    // Restore original stage state
+    stage.scale({ x: originalScale, y: originalScale });
+    stage.position(originalPosition);
+
+    const link = document.createElement("a");
+    link.href = data;
+    link.download = `diagram-${Date.now()}.png`;
+    link.click();
+  };
+
   return (
     <>
       <Stage
@@ -229,7 +268,7 @@ const DiagramWrapper = ({ children }: DiagramWrapperProps) => {
         </Layer>
       </Stage>
 
-      <Toolbar onFitToView={fitToView} />
+      <Toolbar onFitToView={fitToView} onDownload={onDownload} />
     </>
   );
 };
