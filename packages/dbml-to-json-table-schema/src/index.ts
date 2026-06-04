@@ -1,6 +1,7 @@
 import { Parser, type CompilerDiagnostic } from "@dbml/core";
 import { DiagnosticError } from "shared/types/diagnostic";
 
+import { normalizePostgresIndexTypesForDBMLParser } from "./utils/normalizePostgresIndexTypes";
 import { dbmlSchemaToJSONTableSchema } from "./utils/transfomers/dbmlSchemaToJSONTableSchema";
 import { validateSchema } from "./validators";
 
@@ -8,7 +9,10 @@ import type { JSONTableSchema } from "shared/types/tableSchema";
 
 export const parseDBMLToJSON = (dbmlCode: string): JSONTableSchema => {
   try {
-    const rawParsedSchema = Parser.parseDBMLToJSON(dbmlCode);
+    const parserInput = normalizePostgresIndexTypesForDBMLParser(dbmlCode);
+    const rawParsedSchema = Parser.parseDBMLToJSON(parserInput.dbmlCode);
+
+    parserInput.restoreIndexTypes(rawParsedSchema);
     validateSchema(rawParsedSchema);
     return dbmlSchemaToJSONTableSchema(rawParsedSchema);
   } catch (error) {
